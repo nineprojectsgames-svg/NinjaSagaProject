@@ -720,231 +720,303 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .bsm-lbl{font-size:9px;color:var(--text2);letter-spacing:1px;margin-top:2px;}
 
 /* ══════════════════════════════════════════
-   MOBILE — full responsive overhaul
-   Target: phones 360-430px wide
+   MOBILE — responsive overhaul v2
+   Funciona en cualquier telefono 360-430px
    ══════════════════════════════════════════ */
 
-/* Bottom tab bar (mobile nav) */
+/* Escala base para que todo sea legible */
+html { font-size: 14px; }
+
+/* Bottom tab bar */
 .bottom-nav{
   display:none;
   position:fixed;bottom:0;left:0;right:0;z-index:200;
   background:var(--panel);border-top:1px solid var(--border);
-  height:56px;overflow-x:auto;overflow-y:hidden;
+  height:60px;overflow-x:auto;overflow-y:hidden;
   scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  padding-bottom:env(safe-area-inset-bottom);
 }
 .bottom-nav::-webkit-scrollbar{display:none;}
 .bottom-nav-inner{
-  display:flex;min-width:100%;height:100%;
-  padding:0 4px;
+  display:flex;min-width:100%;height:100%;padding:0 2px;
 }
 .bnav-btn{
-  flex:0 0 auto;min-width:60px;height:100%;
+  flex:0 0 auto;min-width:64px;height:100%;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2px;cursor:pointer;padding:0 8px;
+  gap:3px;cursor:pointer;padding:0 8px;
   background:transparent;border:none;color:var(--text2);
-  font-family:'Noto Sans JP',sans-serif;font-size:8px;letter-spacing:.3px;
+  font-family:'Noto Sans JP',sans-serif;font-size:9px;letter-spacing:.3px;
   transition:color .2s;position:relative;
   -webkit-tap-highlight-color:transparent;
 }
 .bnav-btn.on{color:var(--gold);}
 .bnav-btn.on::after{
-  content:'';position:absolute;top:0;left:20%;right:20%;
+  content:'';position:absolute;top:0;left:15%;right:15%;
   height:2px;background:var(--gold);border-radius:0 0 2px 2px;
 }
-.bnav-ico{font-size:20px;line-height:1;}
+.bnav-ico{font-size:22px;line-height:1;}
 .bnav-lk{
-  position:absolute;top:4px;right:6px;
-  font-size:7px;color:var(--red);background:rgba(255,51,51,.15);
+  position:absolute;top:4px;right:4px;
+  font-size:8px;color:var(--red);background:rgba(255,51,51,.15);
   padding:1px 3px;border-radius:2px;
 }
 
 @media (max-width: 700px) {
 
-  /* Allow scroll everywhere */
+  /* Scroll libre */
   body{height:auto;overflow:auto;}
   .screen{height:auto;min-height:100svh;}
 
-  /* Show bottom nav, hide side nav */
+  /* Nav */
   .bottom-nav{display:flex;}
   .nav-col{display:none!important;}
   .right-col{display:none!important;}
 
-  /* Game layout: single column, bottom padding for tab bar */
+  /* Layout una columna */
   .game-body{
     display:block!important;
     grid-template-columns:unset!important;
-    padding-bottom:56px;
+    padding-bottom:68px;
   }
   .main-col{
-    padding:12px 10px 16px;
-    min-height:calc(100svh - 56px - 80px);
+    padding:12px 12px 20px;
     overflow-y:visible;
     max-height:none;
   }
 
-  /* ── HUD mobile ── */
+  /* ── HUD ── */
   .hud{
-    padding:6px 10px;gap:8px;
+    padding:8px 12px;gap:10px;
     flex-wrap:nowrap;overflow-x:auto;
     scrollbar-width:none;
   }
   .hud::-webkit-scrollbar{display:none;}
-  .hud-avatar{width:38px;height:38px;font-size:20px;flex-shrink:0;}
-  .hud-bars{min-width:130px;gap:3px;}
-  .bar{gap:4px;}
-  .bar-track{height:7px;}
-  .bar-num{display:none;} /* hide numbers, save space */
-  .hud-nums{gap:6px;flex-wrap:nowrap;flex-shrink:0;}
-  .num-box{padding:3px 8px;min-width:50px;}
-  .num-lbl{font-size:8px;}
-  .num-val{font-size:12px;}
-  .regen-pill{display:none;} /* shown in right-col on desktop, removed on mobile */
+  .hud-avatar{width:44px;height:44px;font-size:24px;flex-shrink:0;}
+  .hud-bars{min-width:140px;gap:5px;}
+  .bar{gap:5px;}
+  .bar-lbl{font-size:11px;}
+  .bar-track{height:10px;}
+  .bar-num{display:none;}
+  .hud-nums{gap:8px;flex-wrap:nowrap;flex-shrink:0;}
+  .num-box{padding:5px 10px;min-width:56px;}
+  .num-lbl{font-size:10px;}
+  .num-val{font-size:14px;}
+  .regen-pill{display:none;}
   .stamina-pill{display:none;}
 
-  /* ── Title screen ── */
-  .logo{font-size:clamp(32px,12vw,56px);letter-spacing:2px;}
-  .tagline{letter-spacing:4px;font-size:11px;}
-  .menu-btn{padding:14px 40px;font-size:13px;}
+  /* ── Títulos de sección ── */
+  .sec{font-size:12px;padding-bottom:8px;margin-bottom:14px;}
 
-  /* ── Create screen ── */
-  #create{padding:16px 12px;overflow-y:auto;}
-  .create-panel{padding:20px 16px;}
-  .class-row{grid-template-columns:1fr;gap:8px;}
-  .cls-card{display:flex;align-items:center;gap:12px;padding:12px 14px;text-align:left;}
-  .cls-em{font-size:28px;margin-bottom:0;}
-  .cls-name{margin-bottom:2px;}
+  /* ── Pantalla título ── */
+  .logo{font-size:clamp(36px,13vw,60px);letter-spacing:2px;}
+  .tagline{letter-spacing:4px;font-size:12px;margin:14px 0 40px;}
+  .menu-btn{padding:16px 44px;font-size:14px;margin:10px auto;}
 
-  /* ── Map ── */
-  .map-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
-  .zone-card{padding:12px 10px;}
-  .zone-em{font-size:28px;margin-bottom:4px;}
-  .fight-btn{font-size:9px;padding:6px;}
+  /* ── Crear personaje ── */
+  #create{padding:20px 14px;overflow-y:auto;}
+  .create-panel{padding:24px 18px;}
+  .create-title{font-size:16px;margin-bottom:20px;}
+  .field-label{font-size:12px;margin-bottom:8px;}
+  .name-input{font-size:18px;padding:12px 14px;margin-bottom:22px;}
+  .class-row{grid-template-columns:1fr;gap:10px;}
+  .cls-card{display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;}
+  .cls-em{font-size:32px;margin-bottom:0;flex-shrink:0;}
+  .cls-name{font-size:13px;margin-bottom:4px;}
+  .cls-stats{font-size:11px;line-height:1.7;}
 
-  /* ── Battle screen ── */
-  .battle-wrap{padding:8px;gap:6px;padding-bottom:12px;}
-  .fighters{
-    grid-template-columns:1fr 36px 1fr;
-    gap:6px;
-  }
-  .fighter{padding:8px 6px;min-height:unset;gap:4px;}
-  .f-name{font-size:10px;}
-  .f-sprite{font-size:52px;}
-  .vs{font-size:18px;}
+  /* ── Mapa ── */
+  .map-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .zone-card{padding:14px 12px;}
+  .zone-em{font-size:32px;margin-bottom:6px;}
+  .zone-name{font-size:12px;}
+  .zone-info{font-size:11px;line-height:1.8;}
+  .zone-enemies{font-size:12px;}
+  .fight-btn{font-size:11px;padding:9px;margin-top:12px;}
+
+  /* ── Batalla ── */
+  .battle-wrap{padding:10px;gap:8px;padding-bottom:14px;}
+  .battle-header > *{font-size:12px!important;}
+  .combo-count{font-size:18px!important;}
+  .fighters{grid-template-columns:1fr 40px 1fr;gap:8px;}
+  .fighter{padding:10px 8px;min-height:unset;gap:5px;}
+  .f-name{font-size:12px;}
+  .f-sprite{font-size:56px;}
+  .vs{font-size:20px;}
   .f-bars .bar-num{display:none;}
-  .f-bars .bar-track{height:6px;}
+  .f-bars .bar-lbl{font-size:10px;}
+  .f-bars .bar-track{height:8px;}
+  .status-pill{font-size:11px;}
 
-  /* Skill buttons — 2x2 grid, large touch targets */
-  .skill-bar{
-    grid-template-columns:repeat(2,1fr)!important;
-    gap:8px;
-  }
-  .sk-btn{padding:12px 8px;min-height:72px;}
-  .sk-btn-ico{font-size:28px;margin-bottom:2px;}
-  .sk-btn-name{font-size:10px;}
-  .sk-btn-cost{font-size:9px;}
+  /* Habilidades 2x2 */
+  .skill-bar{grid-template-columns:repeat(2,1fr)!important;gap:10px;}
+  .sk-btn{padding:14px 8px;min-height:80px;}
+  .sk-btn-ico{font-size:30px;margin-bottom:4px;}
+  .sk-btn-name{font-size:11px;}
+  .sk-btn-cost{font-size:10px;}
+  .sk-est{font-size:11px;}
   .sk-pow-bar-track{height:4px;}
 
-  /* Energy bar compact */
-  .energy-wrap{padding:7px 10px;}
-  .energy-label-row{flex-wrap:wrap;gap:6px;margin-bottom:4px;}
+  /* Barra de energía */
+  .energy-wrap{padding:8px 12px;}
+  .energy-title{font-size:11px;}
+  .energy-val{font-size:14px;}
   .energy-hint{display:none;}
-  .energy-track{height:10px;margin-bottom:5px;}
-  .ultimate-bar{gap:5px;}
-  .ult-btn{padding:8px 4px;}
-  .ult-ico{font-size:20px;}
-  .ult-name{font-size:8px;}
+  .energy-track{height:12px;margin-bottom:7px;}
+  .ultimate-bar{gap:6px;}
+  .ult-btn{padding:10px 6px;}
+  .ult-ico{font-size:22px;}
+  .ult-name{font-size:9px;}
   .ult-desc{display:none;}
 
-  /* Battle log smaller */
-  .blog{height:70px;font-size:10px;}
+  /* Log de batalla */
+  .blog{height:80px;font-size:11px;padding:8px 10px;}
+  .blog-entry{line-height:1.6;}
 
-  /* Battle actions */
-  .bactions{gap:6px;}
-  .bactions button{font-size:9px;padding:7px 12px;}
+  /* Botones de acción */
+  .bactions{gap:8px;}
+  .bactions button{font-size:11px!important;padding:10px 14px!important;}
 
-  /* Pet battle slot */
-  .pet-battle-slot{padding:5px 8px;}
-  .pet-battle-em{font-size:22px;}
+  /* Mascota en batalla */
+  .pet-battle-slot{padding:6px 10px;}
+  .pet-battle-em{font-size:26px;}
+  .pet-battle-name{font-size:11px;}
+  .pet-battle-status{font-size:10px;}
 
-  /* ── Item / equip grids ── */
-  .item-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
-  .icard{padding:9px 7px;}
-  .icard-ico{font-size:24px;}
+  /* ── Equipamiento ── */
+  .slot-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
+  .slot{min-height:80px;padding:10px 6px;gap:5px;}
+  .slot-lbl{font-size:10px;}
+  .slot-ico{font-size:26px;}
+  .slot-nm{font-size:10px;}
+  .slot-st{font-size:9px;}
 
-  /* ── Skill tree ── */
+  /* ── Items / inventario ── */
+  .item-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .icard{padding:12px 10px;}
+  .icard-ico{font-size:28px;margin-bottom:6px;}
+  .icard-name{font-size:12px;}
+  .icard-desc{font-size:10px;}
+  .icard-stats{font-size:10px;}
+  .icard-price{font-size:12px;}
+
+  /* ── Stats ── */
+  .stat-grid{grid-template-columns:1fr!important;gap:6px;}
+  .stat-row{padding:9px 12px;}
+  .stat-nm{font-size:12px;}
+  .stat-vl{font-size:14px;}
+  .stat-bo{font-size:10px;}
+
+  /* ── Habilidades lista ── */
+  .sk-list{gap:8px;}
+  .sk-row{padding:11px 13px;gap:10px;}
+  .sk-ico{font-size:24px;}
+  .sk-name{font-size:13px;}
+  .sk-desc{font-size:10px;line-height:1.5;}
+  .sk-cost{font-size:10px;}
+  .sk-badge{font-size:9px;}
+
+  /* ── Árbol de habilidades ── */
   .skill-tree-grid{grid-template-columns:1fr;}
-  .stree-node{padding:11px;}
+  .stree-node{padding:13px;}
+  .stree-btn{min-height:44px;font-size:11px;}
 
-  /* ── Stats grid ── */
-  .stat-grid{grid-template-columns:1fr!important;}
+  /* ── Tienda ── */
+  .icard button{font-size:11px!important;padding:7px 10px!important;}
 
-  /* ── Pet grid ── */
-  .pet-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
-  .pet-em{font-size:38px;}
+  /* ── Mascotas ── */
+  .pet-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .pet-em{font-size:42px;}
+  .pet-name{font-size:13px;}
+  .pet-rarity{font-size:9px;}
+  .pet-desc{font-size:10px;}
+  .pet-stat-lbl{font-size:9px;}
+  .pet-stat-val{font-size:12px;}
+  .pet-sp{font-size:10px;}
+  .pet-cost{font-size:10px;}
 
-  /* ── Bestiary ── */
-  .bestiary-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  /* ── Bestiario ── */
+  .bestiary-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .beast-em{font-size:42px;}
+  .beast-name{font-size:13px;}
+  .beast-zone{font-size:10px;}
+  .bs-lbl{font-size:10px;}
+  .bs-val{font-size:12px;}
+  .beast-special{font-size:10px;}
+  .beast-drops{font-size:10px;}
+  .beast-kills{font-size:11px;}
 
-  /* ── Ach grid ── */
-  .ach-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  /* ── Logros ── */
+  .ach-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .ach-em{font-size:32px;}
+  .ach-name{font-size:11px;}
+  .ach-desc{font-size:10px;}
+  .ach-reward{font-size:10px;}
 
-  /* ── Equip slots ── */
-  .slot-grid{grid-template-columns:repeat(3,1fr);}
-  .slot{min-height:70px;}
-
-  /* ── Level up overlay ── */
-  .lvlup-box{padding:22px 16px;}
-  .lvlup-title{font-size:26px;}
-  .lvlup-bonuses{gap:6px;}
-  .bonus{padding:5px 8px;font-size:10px;}
-
-  /* ── Quest cards ── */
-  .quest-card{flex-wrap:wrap;gap:8px;}
+  /* ── Misiones ── */
+  .quest-card{flex-wrap:nowrap;gap:10px;padding:12px 14px;}
+  .qc-icon{font-size:28px;}
+  .qc-name{font-size:12px;}
+  .qc-desc{font-size:10px;}
+  .qc-prog{font-size:10px;}
+  .qc-xp{font-size:12px;}
+  .qc-gld{font-size:10px;}
+  .qc-claim-btn{font-size:11px;min-height:38px;padding:8px 14px;}
   .qc-reward{min-width:unset;}
+  .quest-tier-badge{font-size:10px;}
 
-  /* ── Dungeon rewards ── */
-  .dungeon-reward-choice{grid-template-columns:1fr;gap:8px;}
+  /* ── Subida de nivel ── */
+  .lvlup-box{padding:24px 18px;}
+  .lvlup-title{font-size:28px;}
+  .lvlup-bonuses{gap:8px;}
+  .bonus{padding:7px 12px;font-size:12px;}
+  #lu-lv{font-size:14px!important;}
+  #lu-pts-left{font-size:18px!important;}
+  .alloc-lbl{font-size:12px;}
+  .alloc-cur{font-size:13px;}
 
-  /* ── Rivals ── */
-  .rival-card{flex-wrap:wrap;}
-  .rival-avatar{font-size:36px;}
-
-  /* ── Forge ── */
+  /* ── Forja ── */
   .forge-grid{grid-template-columns:1fr;}
-  .enchant-grid{grid-template-columns:repeat(2,1fr);}
+  .enchant-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .enchant-card{padding:12px;}
 
-  /* ── Rhythm game ── */
-  .rh-wrap{padding:8px;}
-  .rh-keys{gap:6px;}
-  .rh-key{width:64px;height:56px;}
+  /* ── Mazmorra ── */
+  .dungeon-reward-choice{grid-template-columns:1fr;gap:10px;}
 
-  /* ── Rank ── */
+  /* ── Rivales ── */
+  .rival-card{flex-wrap:wrap;gap:10px;padding:14px;}
+  .rival-avatar{font-size:40px;}
+  .rival-name{font-size:13px;}
+  .rival-class{font-size:11px;}
+  .rival-stat{font-size:11px;}
+  .rival-record{font-size:10px;}
+
+  /* ── Rango ── */
   .rank-progress-grid{grid-template-columns:repeat(3,1fr);}
 
-  /* ── Scroll toasts higher up ── */
-  #toast{top:auto;bottom:70px;right:10px;left:10px;max-width:none;text-align:center;}
+  /* ── Ritmo ── */
+  .rh-wrap{padding:10px;}
+  .rh-keys{gap:8px;}
+  .rh-key{width:68px;height:60px;}
 
-  /* ── Larger tap targets for all buttons ── */
-  button,
-  .zone-card,
-  .cls-card,
-  .dungeon-reward-card,
-  .enchant-card{
+  /* ── Toast ── */
+  #toast{top:auto;bottom:72px;right:10px;left:10px;max-width:none;text-align:center;font-size:13px;}
+
+  /* Tap targets */
+  button,.zone-card,.cls-card,.dungeon-reward-card,.enchant-card{
     -webkit-tap-highlight-color:transparent;
   }
-  .stree-btn{min-height:40px;font-size:10px;}
-  .qc-claim-btn{min-height:36px;}
 }
 
-/* Very small screens (360px) */
-@media (max-width:390px){
-  .fighters{grid-template-columns:1fr 28px 1fr;}
-  .f-sprite{font-size:44px;}
-  .skill-bar{gap:5px;}
-  .sk-btn{min-height:64px;}
+/* Pantallas muy chicas 360px */
+@media (max-width:380px){
+  .fighters{grid-template-columns:1fr 32px 1fr;}
+  .f-sprite{font-size:46px;}
+  .skill-bar{gap:6px;}
+  .sk-btn{min-height:70px;}
   .map-grid{grid-template-columns:1fr;}
-  .pet-grid{grid-template-columns:1fr;}
-  .num-box{min-width:42px;padding:2px 6px;}
+  .num-box{min-width:46px;padding:4px 8px;}
+  .hud-avatar{width:38px;height:38px;font-size:20px;}
+  .bnav-btn{min-width:58px;font-size:8px;}
 }
 
 </style>
