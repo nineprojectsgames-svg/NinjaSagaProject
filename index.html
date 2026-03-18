@@ -1044,6 +1044,418 @@ html { font-size: 14px; }
   .bnav-btn{min-width:58px;font-size:8px;}
 }
 
+
+
+
+
+/* ── CONTROLES DE AUDIO ── */
+.audio-controls{
+  position:fixed;bottom:68px;right:10px;z-index:300;
+  display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+}
+.audio-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--panel);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:15px;transition:all .2s;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+.audio-btn:hover{border-color:var(--gold);box-shadow:0 0 12px rgba(232,192,64,.3);}
+.audio-btn.muted{opacity:.45;filter:grayscale(1);}
+.audio-vol{
+  background:var(--panel);border:1px solid var(--border);
+  padding:8px;border-radius:4px;display:none;flex-direction:column;gap:6px;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+.audio-vol.show{display:flex;}
+.audio-vol-row{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--text2);}
+.audio-vol-row span{width:20px;text-align:center;}
+.audio-vol input[type=range]{
+  -webkit-appearance:none;width:80px;height:4px;
+  background:var(--border);border-radius:2px;outline:none;
+}
+.audio-vol input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:12px;height:12px;border-radius:50%;
+  background:var(--gold);cursor:pointer;
+}
+@media(max-width:700px){
+  .audio-controls{bottom:72px;right:8px;}
+}
+
+/* ── MAPA DE ETAPA ── */
+.stage-screen{
+  padding:16px 14px 20px;
+}
+.stage-header{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:18px;padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.stage-back{
+  background:transparent;border:1px solid var(--border);color:var(--text2);
+  font-family:'Cinzel Decorative',serif;font-size:9px;letter-spacing:1px;
+  padding:7px 12px;cursor:pointer;transition:all .2s;flex-shrink:0;
+}
+.stage-back:hover{border-color:var(--gold);color:var(--gold);}
+.stage-title{
+  font-family:'Cinzel Decorative',serif;font-size:16px;color:var(--gold);
+  letter-spacing:2px;flex:1;
+}
+.stage-subtitle{font-size:10px;color:var(--text2);margin-top:3px;letter-spacing:1px;}
+
+/* Línea de progresión */
+.stage-path{
+  display:flex;flex-direction:column;gap:0;
+  position:relative;
+  padding-bottom:8px;
+}
+/* Línea vertical conectora */
+.stage-path::before{
+  content:'';position:absolute;
+  left:28px;top:28px;bottom:28px;width:2px;
+  background:linear-gradient(180deg, var(--border) 0%, var(--border) 100%);
+  z-index:0;
+}
+
+.stage-node{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 14px;
+  background:var(--panel);border:1px solid var(--border);
+  cursor:pointer;transition:all .25s;
+  position:relative;z-index:1;
+  margin-bottom:8px;
+}
+.stage-node:hover:not(.sn-locked):not(.sn-done){
+  border-color:var(--gold);
+  transform:translateX(4px);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+}
+.stage-node.sn-done{
+  opacity:.6;border-color:#33ff8844;
+  cursor:default;
+}
+.stage-node.sn-active{
+  border-color:var(--gold);
+  box-shadow:0 0 14px rgba(232,192,64,.2);
+}
+.stage-node.sn-locked{
+  opacity:.35;cursor:not-allowed;filter:grayscale(.6);
+}
+.stage-node.sn-miniboss{border-color:#ff883344;}
+.stage-node.sn-miniboss:hover:not(.sn-locked):not(.sn-done){border-color:#ff8833;box-shadow:0 0 14px rgba(255,136,51,.3);}
+.stage-node.sn-finalboss{border-color:#ff000066;}
+.stage-node.sn-finalboss:hover:not(.sn-locked):not(.sn-done){border-color:#ff0000;box-shadow:0 0 20px rgba(255,0,0,.4);}
+.stage-node.sn-farm{border-color:#33ff8844;}
+.stage-node.sn-farm:hover:not(.sn-locked){border-color:#33ff88;box-shadow:0 0 14px rgba(51,255,136,.2);}
+
+.sn-icon{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--panel2);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;transition:all .25s;
+}
+.sn-active .sn-icon{border-color:var(--gold);background:#1a1a08;}
+.sn-done .sn-icon{border-color:#33ff8866;background:#081a08;}
+.sn-miniboss .sn-icon{border-color:#ff883366;}
+.sn-finalboss .sn-icon{border-color:#ff000066;}
+.sn-farm .sn-icon{border-color:#33ff8866;}
+
+.sn-body{flex:1;}
+.sn-label{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.sn-done .sn-label{color:var(--text2);}
+.sn-active .sn-label{color:var(--gold);}
+.sn-enemy{font-size:10px;color:var(--text2);}
+.sn-badge{
+  font-size:8px;padding:2px 7px;border-radius:2px;
+  font-weight:700;letter-spacing:1px;margin-top:4px;display:inline-block;
+}
+.sn-b-done{background:rgba(51,255,136,.1);border:1px solid #33ff8844;color:#33ff88;}
+.sn-b-active{background:rgba(232,192,64,.1);border:1px solid var(--gold);color:var(--gold);}
+.sn-b-boss{background:rgba(255,136,51,.1);border:1px solid #ff883344;color:#ff8833;}
+.sn-b-fboss{background:rgba(255,0,0,.1);border:1px solid #ff000044;color:#ff6666;}
+.sn-b-farm{background:rgba(51,255,136,.08);border:1px solid #33ff8833;color:#33ff88;}
+.sn-b-locked{background:rgba(136,136,136,.1);border:1px solid #44444466;color:#666;}
+
+.sn-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.sn-xp{font-size:10px;color:var(--gold);}
+.sn-done-check{font-size:18px;}
+
+/* Progreso de zona */
+.stage-progress-bar{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:14px;
+}
+.stage-prog-track{
+  flex:1;height:6px;background:var(--panel2);
+  border:1px solid var(--border);border-radius:3px;overflow:hidden;
+}
+.stage-prog-fill{
+  height:100%;background:linear-gradient(90deg,var(--gold),#ffcc00);
+  border-radius:3px;transition:width .5s ease;
+}
+.stage-prog-lbl{font-size:10px;color:var(--text2);white-space:nowrap;}
+
+@media(max-width:700px){
+  .stage-title{font-size:13px;}
+  .stage-node{padding:10px 12px;gap:12px;}
+  .sn-icon{width:36px;height:36px;font-size:18px;}
+  .sn-label{font-size:11px;}
+  .sn-enemy{font-size:9px;}
+}
+
+/* ── MODO AUTO ── */
+.auto-toggle{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 12px;
+  background:var(--panel2);border:1px solid var(--border);
+  cursor:pointer;transition:all .25s;user-select:none;
+  font-family:'Cinzel Decorative',serif;font-size:10px;letter-spacing:1px;
+}
+.auto-toggle.on{
+  border-color:#33aaff;
+  background:rgba(51,170,255,.1);
+  box-shadow:0 0 12px rgba(51,170,255,.2);
+}
+.auto-toggle-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--border);transition:background .25s;
+  flex-shrink:0;
+}
+.auto-toggle.on .auto-toggle-dot{
+  background:#33aaff;
+  box-shadow:0 0 6px #33aaff;
+  animation:autopulse .8s ease-in-out infinite;
+}
+@keyframes autopulse{
+  0%,100%{box-shadow:0 0 4px #33aaff}
+  50%{box-shadow:0 0 12px #33aaff,0 0 20px rgba(51,170,255,.4)}
+}
+.auto-toggle-lbl{color:var(--text2);transition:color .25s;}
+.auto-toggle.on .auto-toggle-lbl{color:#33aaff;}
+.auto-paused-msg{
+  font-size:10px;color:var(--orange);
+  animation:blink .8s ease-in-out infinite;
+  display:none;
+}
+.auto-paused-msg.show{display:block;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+@media(max-width:700px){
+  .auto-toggle{padding:6px 10px;font-size:9px;}
+}
+
+/* ── COMBATE REACTIVO ── */
+.combat-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;}
+.cbt-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:9px 4px;border:1px solid var(--border);background:var(--panel2);
+  cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.cbt-btn:disabled{opacity:.3;cursor:not-allowed;}
+.cbt-btn:not(:disabled):hover{transform:translateY(-2px);}
+.cbt-btn-ico{font-size:20px;line-height:1;}
+.cbt-btn-name{font-size:9px;letter-spacing:.5px;font-family:'Cinzel Decorative',serif;}
+.cbt-btn-hint{font-size:8px;color:var(--text2);text-align:center;line-height:1.3;}
+.cbt-cd{position:absolute;bottom:0;left:0;right:0;height:3px;transition:width .3s;}
+#btn-dodge:not(:disabled){border-color:#33aaff;color:#33aaff;}
+#btn-dodge:not(:disabled):hover{background:rgba(51,170,255,.1);}
+#btn-dodge .cbt-cd{background:#33aaff;}
+#btn-block:not(:disabled){border-color:#33ff88;color:#33ff88;}
+#btn-block:not(:disabled):hover{background:rgba(51,255,136,.1);}
+#btn-block .cbt-cd{background:#33ff88;}
+#btn-counter:not(:disabled){border-color:#ff3333;color:#ff3333;}
+#btn-counter:not(:disabled):hover{background:rgba(255,51,51,.1);}
+#btn-counter .cbt-cd{background:#ff3333;}
+
+/* ── FARMEO ── */
+.farm-bar{display:none;position:fixed;bottom:60px;left:0;right:0;z-index:190;
+  background:linear-gradient(135deg,#0a0a1a,#141428);border-top:1px solid #e8c04044;
+  padding:8px 14px;flex-direction:row;align-items:center;gap:10px;}
+.farm-bar.active{display:flex;}
+.farm-bar-ico{font-size:20px;animation:farmspin 1.5s linear infinite;}
+@keyframes farmspin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.farm-bar-info{flex:1;}
+.farm-bar-title{font-family:'Cinzel Decorative',serif;font-size:10px;color:var(--gold);letter-spacing:1px;}
+.farm-bar-stats{font-size:10px;color:var(--text2);margin-top:2px;}
+.farm-stop-btn{font-family:'Cinzel Decorative',serif;font-size:9px;letter-spacing:1px;
+  background:rgba(255,51,51,.12);border:1px solid var(--red);color:var(--red);
+  padding:8px 14px;cursor:pointer;flex-shrink:0;}
+.farm-btn{display:block;width:100%;margin-top:6px;background:transparent;
+  border:1px solid #33ff8866;color:#33ff8899;font-family:'Cinzel Decorative',serif;
+  font-size:10px;padding:7px;cursor:pointer;letter-spacing:1px;transition:all .2s;
+  position:relative;z-index:2;}
+.farm-btn:hover{border-color:#33ff88;color:#33ff88;background:rgba(51,255,136,.1);}
+.farm-btn.is-farming{border-color:#33ff88;color:#33ff88;animation:farmglow .8s ease-in-out infinite;}
+@keyframes farmglow{0%,100%{box-shadow:0 0 6px rgba(51,255,136,.2)}50%{box-shadow:0 0 18px rgba(51,255,136,.5)}}
+.farm-next-bar{height:3px;background:var(--border);position:fixed;bottom:100px;left:0;right:0;z-index:191;display:none;}
+.farm-next-fill{height:100%;background:var(--gold);transition:width linear;}
+
+/* ── DERROTA ── */
+#defeat-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9992;
+  display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
+#defeat-overlay.show{display:flex;}
+.defeat-skull{font-size:72px;animation:skullpulse 1.2s ease-in-out infinite;margin-bottom:12px;}
+@keyframes skullpulse{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.1) rotate(3deg)}}
+.defeat-title{font-family:'Cinzel Decorative',serif;font-size:26px;color:#ff3333;
+  text-shadow:0 0 30px rgba(255,51,51,.7);margin-bottom:6px;}
+.defeat-sub{font-size:12px;color:var(--text2);margin-bottom:20px;letter-spacing:1px;}
+.defeat-gold{background:rgba(255,51,51,.1);border:1px solid rgba(255,51,51,.3);
+  padding:12px 20px;margin-bottom:16px;max-width:300px;width:100%;}
+.defeat-gold-amt{font-family:'Cinzel Decorative',serif;font-size:22px;color:#ff6666;margin-bottom:4px;}
+.defeat-gold-lbl{font-size:10px;color:var(--text2);letter-spacing:1px;}
+.defeat-broke{background:rgba(255,136,0,.08);border:1px solid rgba(255,136,0,.3);
+  padding:14px 18px;margin-bottom:16px;max-width:300px;width:100%;display:none;}
+.defeat-broke-title{font-family:'Cinzel Decorative',serif;font-size:12px;color:var(--orange);margin-bottom:6px;}
+.defeat-broke-desc{font-size:11px;color:var(--text2);line-height:1.7;margin-bottom:10px;}
+.defeat-timer{font-family:'Cinzel Decorative',serif;font-size:30px;color:var(--orange);}
+.defeat-hp-track{height:8px;background:#0a0a18;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-top:8px;max-width:260px;width:100%;}
+.defeat-hp-fill{height:100%;background:linear-gradient(90deg,#881111,#ff3333);border-radius:4px;transition:width 1s linear;}
+.defeat-btn{font-family:'Cinzel Decorative',serif;font-size:12px;letter-spacing:2px;
+  background:rgba(255,51,51,.12);border:1px solid #ff3333;color:#ff6666;
+  padding:13px 36px;cursor:pointer;margin-top:16px;}
+.defeat-btn:disabled{opacity:.35;cursor:not-allowed;}
+
+/* ── BOSS ZONE ── */
+.zone-card.boss-zone{border-color:#ff000066!important;animation:bosszone 2s ease-in-out infinite;}
+@keyframes bosszone{0%,100%{box-shadow:0 0 15px rgba(255,0,0,.15)}50%{box-shadow:0 0 35px rgba(255,0,0,.4)}}
+.zone-card.boss-zone .zone-name{color:#ff6666!important;}
+
+@media(max-width:700px){
+  .combat-actions{gap:5px;}
+  .cbt-btn{padding:8px 3px;}
+  .cbt-btn-ico{font-size:18px;}
+  .cbt-btn-name{font-size:8px;}
+  .cbt-btn-hint{font-size:7px;}
+  .farm-bar{bottom:58px;}
+  .farm-next-bar{bottom:102px;}
+}
+
+
+/* ══════════════════════════════════════════
+   FEEDBACK VISUAL — partículas, ripple, glow
+   ══════════════════════════════════════════ */
+
+/* Ripple genérico en botones */
+.ripple-container{position:relative;overflow:hidden;}
+.ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(232,192,64,.35);
+  transform:scale(0);animation:rippleAnim .5s ease-out forwards;
+  pointer-events:none;z-index:10;
+}
+@keyframes rippleAnim{
+  to{transform:scale(4);opacity:0;}
+}
+
+/* Partícula flotante genérica */
+.particle{
+  position:fixed;pointer-events:none;z-index:9996;
+  font-size:14px;font-weight:900;
+  animation:particleFloat 1.1s ease-out forwards;
+  text-shadow:0 0 8px currentColor;
+}
+@keyframes particleFloat{
+  0%  {opacity:1;transform:translate(0,0) scale(1);}
+  60% {opacity:1;transform:translate(var(--px),var(--py)) scale(1.2);}
+  100%{opacity:0;transform:translate(var(--px2),var(--py2)) scale(.6);}
+}
+
+/* Flash de pantalla completa (compra épica, nivel, etc.) */
+.screen-flash{
+  position:fixed;inset:0;pointer-events:none;z-index:9997;
+  animation:screenFlash .4s ease-out forwards;
+}
+@keyframes screenFlash{
+  0%  {opacity:.5;}
+  100%{opacity:0;}
+}
+
+/* Shake en cls-card al seleccionar */
+.cls-selected{animation:clsSelect .3s ease-out!important;}
+@keyframes clsSelect{
+  0%  {transform:scale(1);}
+  40% {transform:scale(1.05);}
+  100%{transform:scale(1);}
+}
+
+/* Glow pulse en menu-btn al hover */
+.menu-btn{position:relative;overflow:hidden;}
+
+/* Notificación de tab con badge de pulso */
+.tab-ping{
+  position:absolute;top:-3px;right:-3px;
+  width:8px;height:8px;border-radius:50%;
+  background:#ff3333;animation:tabPing 1s ease-in-out infinite;
+}
+@keyframes tabPing{
+  0%,100%{transform:scale(1);opacity:1;}
+  50%{transform:scale(1.5);opacity:.6;}
+}
+
+/* Coin rain — monedas cayendo en compra/venta */
+.coin-pop{
+  position:fixed;pointer-events:none;z-index:9996;
+  font-size:18px;animation:coinPop .8s cubic-bezier(.2,.8,.4,1) forwards;
+}
+@keyframes coinPop{
+  0%  {opacity:1;transform:translateY(0) scale(.5);}
+  40% {opacity:1;transform:translateY(-40px) scale(1.2);}
+  100%{opacity:0;transform:translateY(-80px) scale(.8);}
+}
+
+/* XP bar flash al ganar XP */
+.xp-flash{animation:xpFlash .4s ease!important;}
+@keyframes xpFlash{
+  0%,100%{filter:brightness(1);}
+  50%{filter:brightness(2.5) saturate(2);}
+}
+
+/* Clase select glow */
+.cls-card.sel{
+  animation:clsGlow 1.5s ease-in-out infinite!important;
+}
+@keyframes clsGlow{
+  0%,100%{box-shadow:0 0 10px rgba(232,192,64,.2);}
+  50%{box-shadow:0 0 24px rgba(232,192,64,.5),0 0 40px rgba(232,192,64,.2);}
+}
+
+/* Skill unlock flash */
+.sk-unlocked-flash{animation:skUnlock .5s ease!important;}
+@keyframes skUnlock{
+  0%{filter:brightness(1) saturate(1);}
+  50%{filter:brightness(3) saturate(3);}
+  100%{filter:brightness(1) saturate(1);}
+}
+
+/* Item drop sparkle */
+.drop-sparkle{
+  position:fixed;pointer-events:none;z-index:9996;
+  animation:dropSparkle 1s ease-out forwards;
+}
+@keyframes dropSparkle{
+  0%  {opacity:1;transform:scale(0) rotate(0deg);}
+  50% {opacity:1;transform:scale(1.5) rotate(180deg);}
+  100%{opacity:0;transform:scale(.5) rotate(360deg);}
+}
+
+/* Quest complete burst */
+.quest-burst{
+  position:fixed;pointer-events:none;z-index:9996;
+  font-size:22px;animation:questBurst .9s ease-out forwards;
+}
+@keyframes questBurst{
+  0%  {opacity:1;transform:scale(0);}
+  50% {opacity:1;transform:scale(1.4);}
+  100%{opacity:0;transform:scale(1) translateY(-50px);}
+}
+
+/* Stage node — pulse al desbloquear */
+.sn-just-unlocked{animation:nodeUnlock .6s ease!important;}
+@keyframes nodeUnlock{
+  0%{transform:scale(1);}
+  30%{transform:scale(1.06);}
+  60%{transform:scale(.97);}
+  100%{transform:scale(1);}
+}
+
 </style>
 </head>
 <body>
@@ -1306,12 +1718,37 @@ html { font-size: 14px; }
       </div>
     </div>
 
+    <div class="combat-actions">
+      <button class="cbt-btn" id="btn-dodge" onclick="combatDodge()" disabled>
+        <span class="cbt-btn-ico">💨</span>
+        <span class="cbt-btn-name">Esquivar</span>
+        <span class="cbt-btn-hint">Evita ataque (cede turno)</span>
+        <div class="cbt-cd" id="cd-dodge" style="width:0%"></div>
+      </button>
+      <button class="cbt-btn" id="btn-block" onclick="combatBlock()" disabled>
+        <span class="cbt-btn-ico">🛡️</span>
+        <span class="cbt-btn-name">Bloquear</span>
+        <span class="cbt-btn-hint">Daño -60% (cede turno)</span>
+        <div class="cbt-cd" id="cd-block" style="width:0%"></div>
+      </button>
+      <button class="cbt-btn" id="btn-counter" onclick="combatCounter()" disabled>
+        <span class="cbt-btn-ico">⚡</span>
+        <span class="cbt-btn-name">Contraatacar</span>
+        <span class="cbt-btn-hint">Devuelve ×1.5 (cede turno)</span>
+        <div class="cbt-cd" id="cd-counter" style="width:0%"></div>
+      </button>
+    </div>
     <div class="bactions">
       <button id="btn-pot" onclick="battlePotion()" style="font-family:'Cinzel Decorative',serif;font-size:10px;letter-spacing:2px;
         background:transparent;border:1px solid var(--border);color:var(--text2);padding:8px 16px;cursor:pointer;transition:all .2s;">🍶 Poción</button>
       <button onclick="flee()" style="font-family:'Cinzel Decorative',serif;font-size:10px;letter-spacing:2px;
         background:transparent;border:1px solid var(--red);color:var(--red);padding:8px 16px;cursor:pointer;transition:all .2s;">🏃 Huir</button>
+      <div class="auto-toggle" id="auto-toggle" onclick="toggleAuto()">
+        <div class="auto-toggle-dot"></div>
+        <span class="auto-toggle-lbl" id="auto-lbl">AUTO</span>
+      </div>
     </div>
+    <div class="auto-paused-msg" id="auto-paused-msg">⚠️ Auto pausado — HP bajo</div>
 
     <div class="sec">📜 BATALLA</div>
     <div class="blog" id="b-log"></div>
@@ -1347,6 +1784,12 @@ html { font-size: 14px; }
 // ═══════════════════════════════════════
 //  DATA TABLES
 // ═══════════════════════════════════════
+
+// Globals de sistemas — deben existir antes que cualquier render
+const FARM={active:false,zoneIdx:-1,fights:0,xpGained:0,goldGained:0,_t:null,DELAY:1800};
+const CBT_CD    = {dodge:0, block:0, counter:0};
+const CBT_STATE = {dodging:false, blocking:false, countering:false};
+const CBT_MAX   = {dodge:3, block:2, counter:4};
 
 const CLS = {
   katon:  { n:'Katon', em:'🔥', base:{hp:110,mp:80,atk:20,def:8,spd:10,crit:12},  g:{hp:10,mp:5,atk:2,def:1,spd:.5,crit:.3},
@@ -1554,22 +1997,30 @@ const SK = {
 
 // Enemies: varied behaviors, some have counter-attacks or specials
 const ENEMIES = [
-  {n:'Bandido Ronin',    em:'🗡️', hp:55, atk:9,  def:3, spd:8,  xp:12, gld:10, drops:['mat_herb'],   special:'none'},
-  {n:'Samurái Rojo',     em:'⚔️', hp:90, atk:14, def:6, spd:11, xp:20, gld:18, drops:['mat_scroll'], special:'counter'},
-  {n:'Oni Menor',        em:'👹', hp:135,atk:19, def:9, spd:7,  xp:32, gld:28, drops:['mat_claw'],   special:'berserk'},
-  {n:'Serpiente Ninja',  em:'🐍', hp:110,atk:21, def:5, spd:16, xp:38, gld:32, drops:['mat_scale'],  special:'poison'},
-  {n:'Maestro Oscuro',   em:'🧙', hp:165,atk:27, def:11,spd:13, xp:55, gld:50, drops:['mat_crystal'],special:'drain'},
-  {n:'Dragón de Sombra', em:'🐉', hp:240,atk:34, def:16,spd:14, xp:80, gld:75, drops:['mat_dscale'], special:'berserk'},
-  {n:'Gran Oni',         em:'👺', hp:320,atk:42, def:22,spd:9,  xp:110,gld:100,drops:['mat_horn'],   special:'counter'},
+  {n:'Bandido Ronin',    em:'🗡️', hp:55,  atk:9,   def:3,  spd:8,  xp:12,  gld:10,  drops:['mat_herb'],    special:'none'},
+  {n:'Samurái Rojo',     em:'⚔️', hp:90,  atk:14,  def:6,  spd:11, xp:20,  gld:18,  drops:['mat_scroll'],  special:'counter'},
+  {n:'Oni Menor',        em:'👹', hp:135, atk:19,  def:9,  spd:7,  xp:32,  gld:28,  drops:['mat_claw'],    special:'berserk'},
+  {n:'Serpiente Ninja',  em:'🐍', hp:110, atk:21,  def:5,  spd:16, xp:38,  gld:32,  drops:['mat_scale'],   special:'poison'},
+  {n:'Maestro Oscuro',   em:'🧙', hp:165, atk:27,  def:11, spd:13, xp:55,  gld:50,  drops:['mat_crystal'], special:'drain'},
+  {n:'Dragón de Sombra', em:'🐉', hp:240, atk:34,  def:16, spd:14, xp:80,  gld:75,  drops:['mat_dscale'],  special:'berserk'},
+  {n:'Gran Oni',         em:'👺', hp:320, atk:42,  def:22, spd:9,  xp:110, gld:100, drops:['mat_horn'],    special:'counter'},
+  {n:'Espectro Ninja',   em:'👻', hp:480, atk:55,  def:28, spd:18, xp:160, gld:140, drops:['mat_crystal'], special:'drain'},
+  {n:'Señor de Llamas',  em:'🔥', hp:620, atk:68,  def:35, spd:15, xp:220, gld:190, drops:['mat_dscale'],  special:'berserk'},
+  {n:'Demonio Vacío',    em:'🌀', hp:800, atk:80,  def:45, spd:20, xp:300, gld:260, drops:['mat_horn'],    special:'poison'},
+  {n:'Kurai',            em:'💀', hp:2500,atk:120, def:80, spd:16, xp:2000,gld:1500,drops:['mat_dscale','mat_crystal','mat_horn'], special:'berserk', isBoss:true},
 ];
 
 const ZONES = [
-  {n:'Pueblo Hirano', em:'🏘️', bg:'#1a1a00', border:'#aaaa00', minLv:1,  er:[0,1], zc:'rgba(200,200,0,.06)'},
-  {n:'Bosque Maldito',em:'🌲', bg:'#001a00', border:'#00aa44', minLv:4,  er:[1,2], zc:'rgba(0,200,80,.06)'},
-  {n:'Montaña Sangre',em:'🏔️', bg:'#1a0000', border:'#aa4400', minLv:8,  er:[2,4], zc:'rgba(200,60,0,.06)'},
-  {n:'Templo Oscuro', em:'⛩️', bg:'#0a001a', border:'#8800aa', minLv:13, er:[3,5], zc:'rgba(130,0,200,.06)'},
-  {n:'Fortaleza Oni', em:'🏯', bg:'#1a0a00', border:'#aa6600', minLv:17, er:[4,6], zc:'rgba(200,100,0,.06)'},
-  {n:'Abismo Eterno', em:'🌑', bg:'#050510', border:'#6666ff', minLv:22, er:[5,6], zc:'rgba(80,80,255,.06)'},
+  {n:'Pueblo Hirano',    em:'🏘️', bg:'#1a1a00', border:'#aaaa00', minLv:1,  er:[0,1],   zc:'rgba(200,200,0,.06)'},
+  {n:'Bosque Maldito',   em:'🌲', bg:'#001a00', border:'#00aa44', minLv:4,  er:[1,2],   zc:'rgba(0,200,80,.06)'},
+  {n:'Montaña Sangre',   em:'🏔️', bg:'#1a0000', border:'#aa4400', minLv:8,  er:[2,4],   zc:'rgba(200,60,0,.06)'},
+  {n:'Templo Oscuro',    em:'⛩️', bg:'#0a001a', border:'#8800aa', minLv:13, er:[3,5],   zc:'rgba(130,0,200,.06)'},
+  {n:'Fortaleza Oni',    em:'🏯', bg:'#1a0a00', border:'#aa6600', minLv:17, er:[4,6],   zc:'rgba(200,100,0,.06)'},
+  {n:'Abismo Eterno',    em:'🌑', bg:'#050510', border:'#6666ff', minLv:22, er:[5,6],   zc:'rgba(80,80,255,.06)'},
+  {n:'Valle Maldito',    em:'🌫️', bg:'#0a0a1a', border:'#4466ff', minLv:25, er:[7,8],   zc:'rgba(60,80,255,.06)'},
+  {n:'Ciudadela Caída',  em:'🏚️', bg:'#100808', border:'#ff4422', minLv:30, er:[8,9],   zc:'rgba(255,60,20,.06)'},
+  {n:'Dominio de Sombra',em:'🌀', bg:'#0a000f', border:'#cc00ff', minLv:38, er:[9,10],  zc:'rgba(180,0,255,.06)'},
+  {n:'⚠️ Trono del Vacío',em:'💀',bg:'#000000', border:'#ff0000', minLv:45, er:[10,10], zc:'rgba(255,0,0,.08)', isBossZone:true},
 ];
 
 // Equipment — 6 slots
@@ -1945,20 +2396,35 @@ function showTab(t){
 //  MAP — shows enemy roster per zone
 // ═══════════════════════════════════════
 function renderMap(v){
-  v.innerHTML=`<div class="sec" style="margin-bottom:12px">🗾 MAPA DEL MUNDO</div>
-  <div class="map-grid">${ZONES.map((z,i)=>{
-    const locked=H.lv<z.minLv;
-    const enemies=ENEMIES.slice(z.er[0],z.er[1]+1);
-    return`<div class="zone-card${locked?' locked':''}" style="--zc:${z.zc};--zb:${z.border}">
-      ${locked?`<div class="zone-lock">🔒</div>`:''}
-      <div class="zone-em">${z.em}</div>
-      <div class="zone-name">${z.n}</div>
-      <div class="zone-info">Nv. ${z.minLv}+ ${locked?'— ¡Sube!':'— ¡Disponible!'}
-      <div class="zone-enemies">${enemies.map(e=>e.em).join(' ')}</div>
-      XP: ${enemies.map(e=>e.xp).join('–')} · Oro: ${enemies.map(e=>e.gld).join('–')}
-      </div>
-      ${!locked?`<button class="fight-btn" onclick="event.stopPropagation();enterZone(${i})">⚔ COMBATIR</button>`:''}
-    </div>`;}).join('')}</div>`;
+  let mapHtml = '<div class="sec" style="margin-bottom:12px">🗾 MAPA DEL MUNDO</div><div class="map-grid">';
+  ZONES.forEach(function(z,i){
+    const locked = H.lv < z.minLv;
+    const isBoss = z.isBossZone || false;
+    const enemies = ENEMIES.slice(z.er[0], z.er[1]+1);
+    const bossClass = isBoss ? ' boss-zone' : '';
+    const bossTag = isBoss ? '<div style="font-size:9px;color:#ff6666;letter-spacing:1px;margin-bottom:4px">☠ JEFE FINAL</div>' : '';
+    const fightLabel = isBoss ? '💀 ENFRENTAR JEFE' : '⚔ COMBATIR';
+    const farmClass = (FARM.active && FARM.zoneIdx===i) ? ' is-farming' : '';
+    const farmBtn = ''; // El farmeo ahora está dentro de cada etapa
+    const fightBtn = !locked
+      ? '<button class="fight-btn" onclick="event.stopPropagation();openStage('+i+')">'+fightLabel+'</button>'
+      : '';
+    const lockIcon = locked ? '<div class="zone-lock">🔒</div>' : '';
+    mapHtml += '<div class="zone-card' + (locked?' locked':'') + bossClass + '" style="--zc:'+z.zc+';--zb:'+z.border+'">'
+      + lockIcon
+      + bossTag
+      + '<div class="zone-em">'+z.em+'</div>'
+      + '<div class="zone-name">'+z.n+'</div>'
+      + '<div class="zone-info">Nv. '+z.minLv+'+ '+(locked?'— ¡Sube!':'— ¡Disponible!')
+      + '<div class="zone-enemies">'+enemies.map(function(e){return e.em;}).join(' ')+'</div>'
+      + 'XP: '+enemies.map(function(e){return e.xp;}).join('–')+' · Oro: '+enemies.map(function(e){return e.gld;}).join('–')
+      + '</div>'
+      + farmBtn
+      + fightBtn
+      + '</div>';
+  });
+  mapHtml += '</div>';
+  v.innerHTML = mapHtml;
 }
 
 // ═══════════════════════════════════════
@@ -2372,8 +2838,98 @@ const SPECIAL_INFO={
 };
 // Which zones each enemy appears in (by enemy index)
 const ENEMY_ZONES=[
-  [0,1],[0,1,2],[1,2,3],[2,3,4],[3,4,5],[4,5],[5]
+  [0,1],
+  [0,1,2],
+  [1,2,3],
+  [2,3,4],
+  [3,4,5],
+  [4,5],
+  [5],
+  [6],
+  [6,7],
+  [7,8],
+  [9]
 ];
+
+// ═══════════════════════════════════════════════════════════
+//  STAGE DATA — nodos por zona
+//  e: índice en ENEMIES  |  miniboss: enemigo más fuerte fijo
+//  farm: nodo libre al final
+// ═══════════════════════════════════════════════════════════
+const ZONE_STAGES = [
+  // 0 — Pueblo Hirano (Lv1)
+  { nodes:[
+    {e:0, lbl:'Entrada del Pueblo'},
+    {e:0, lbl:'Mercado'},
+    {e:1, lbl:'Guardia del Camino'},
+    {e:1, lbl:'Cruce Peligroso', isMiniboss:true},
+  ]},
+  // 1 — Bosque Maldito (Lv4)
+  { nodes:[
+    {e:1, lbl:'Sendero Oscuro'},
+    {e:2, lbl:'Claro Maldito'},
+    {e:1, lbl:'Árbol del Mal'},
+    {e:2, lbl:'Corazón del Bosque', isMiniboss:true},
+  ]},
+  // 2 — Montaña Sangre (Lv8)
+  { nodes:[
+    {e:2, lbl:'Falda de la Montaña'},
+    {e:3, lbl:'Cueva del Veneno'},
+    {e:2, lbl:'Cima Roja'},
+    {e:3, lbl:'Nido de Serpientes'},
+    {e:4, lbl:'Cima — Guardián', isMiniboss:true},
+  ]},
+  // 3 — Templo Oscuro (Lv13)
+  { nodes:[
+    {e:3, lbl:'Pórtico del Templo'},
+    {e:4, lbl:'Sala de Ofrendas'},
+    {e:3, lbl:'Biblioteca Prohibida'},
+    {e:4, lbl:'Altar Maldito'},
+    {e:5, lbl:'Sanctum — Sumo Sacerdote', isMiniboss:true},
+  ]},
+  // 4 — Fortaleza Oni (Lv17)
+  { nodes:[
+    {e:4, lbl:'Muralla Exterior'},
+    {e:5, lbl:'Patio de Batalla'},
+    {e:4, lbl:'Torre Vigía'},
+    {e:5, lbl:'Salón del Trono'},
+    {e:6, lbl:'Trono — Jefe Oni', isMiniboss:true},
+  ]},
+  // 5 — Abismo Eterno (Lv22)
+  { nodes:[
+    {e:5, lbl:'Borde del Abismo'},
+    {e:6, lbl:'Grieta Infinita'},
+    {e:5, lbl:'Eco del Vacío'},
+    {e:6, lbl:'Fondo del Abismo', isMiniboss:true},
+  ]},
+  // 6 — Valle Maldito (Lv25)
+  { nodes:[
+    {e:7, lbl:'Neblina Espectral'},
+    {e:7, lbl:'Cementerio Ninja'},
+    {e:8, lbl:'Ruinas del Valle'},
+    {e:8, lbl:'Señor del Valle', isMiniboss:true},
+  ]},
+  // 7 — Ciudadela Caída (Lv30)
+  { nodes:[
+    {e:8, lbl:'Puerta Incendiada'},
+    {e:8, lbl:'Plaza en Llamas'},
+    {e:9, lbl:'Torre del Fuego'},
+    {e:8, lbl:'Cripta Ardiente'},
+    {e:9, lbl:'Último Guardián', isMiniboss:true},
+  ]},
+  // 8 — Dominio de Sombra (Lv38)
+  { nodes:[
+    {e:9, lbl:'Portal Dimensional'},
+    {e:9, lbl:'Vacío Creciente'},
+    {e:9, lbl:'Núcleo de Sombra'},
+    {e:10, lbl:'Avatar del Vacío', isMiniboss:true},
+  ]},
+  // 9 — Trono del Vacío (Lv45) — boss zone, un solo nodo
+  { nodes:[
+    {e:10, lbl:'Trono del Vacío', isFinalBoss:true},
+  ]},
+];
+
 
 function renderBestiary(v){
   const seen=H.enemyKills||{};
@@ -2396,7 +2952,7 @@ function renderBestiary(v){
       const kills=seen[e.n]||0;
       const isSeen=kills>0;
       const sp=SPECIAL_INFO[e.special]||SPECIAL_INFO.none;
-      const zoneNames=ENEMY_ZONES[i].map(zi=>ZONES[zi].n).join(', ');
+      const zoneNames=(ENEMY_ZONES[i]||[]).map(zi=>ZONES[zi]?ZONES[zi].n:'?').join(', ')||'Desconocida';
       const dropNames=(e.drops||[]).map(d=>MATS[d]?MATS[d].em+' '+MATS[d].n:'?').join(', ');
 
       if(!isSeen){
@@ -2714,10 +3270,19 @@ function updateQuestLog(){
 //  BATTLE
 // ═══════════════════════════════════════
 function enterZone(zi){
+  // Bloquear sin oro + HP bajo
+  if(H && H.gld < 5 && H.hp < gMhp()*0.50){
+    showToast('⚠️ Sin oro — esperá a recuperar HP'); return;
+  }
   const zone=ZONES[zi];
+  // Boss: mostrar intro
+  if(zone.isBossZone){ showBossIntro(zi); return; }
   const [mn,mx]=zone.er;
   const eBase={...ENEMIES[mn+Math.floor(Math.random()*(mx-mn+1))]};
   const scale=1+(H.lv-1)*0.12;
+  // Resetear cooldowns de combate reactivo
+  CBT_CD.dodge=0; CBT_CD.block=0; CBT_CD.counter=0;
+  CBT_STATE.dodging=false; CBT_STATE.blocking=false; CBT_STATE.countering=false;
   BT={
     zone, combo:0, energy:0,
     e:{...eBase,chp:Math.round(eBase.hp*scale),mhp:Math.round(eBase.hp*scale),atk:Math.round(eBase.atk*scale)},
@@ -2807,6 +3372,8 @@ function updateBUI(){
   const ehp=Math.max(0,BT.e.chp);
   document.getElementById('be-hpb').style.width=(ehp/BT.e.mhp*100)+'%';
   document.getElementById('be-hpn').textContent=`${ehp}/${BT.e.mhp}`;
+  checkBossPhase();
+  updateCombatBtns();
   document.getElementById('be-atkb').style.width=Math.min(100,BT.e.atk*1.5)+'%';
   document.getElementById('be-atkn').textContent=BT.e.atk;
   document.getElementById('b-combo').textContent=combo;
@@ -3065,20 +3632,48 @@ function enemyTurn(){
   // Poison special: applies poison to player
   const isPoison=BT.e.special==='poison'&&Math.random()<0.25&&!BT.playerPoisoned;
 
+  // ── Combate reactivo ──────────────────────
+  if(CBT_STATE.dodging){
+    CBT_STATE.dodging=false;
+    const pfd=document.getElementById('pf-sp');
+    if(pfd){pfd.style.transform='translateX(-40px)';setTimeout(()=>pfd.style.transform='',400);}
+    bLog('player',`💨 ¡${H.name} esquivó el ataque! 0 daño.`);
+    spawnDmg(0,true,false,false); gainEnergy(6);
+    tickCombatCDs();
+    if(BT.e.chp<=0){endBattle(true);return;}
+    applyDoT(); setTimeout(()=>{BT.pTurn=true;updateBUI();renderBSkills();},500); return;
+  }
   let dmg=Math.max(1,Math.round(BT.e.atk-gDef()*0.5));
   const spec=Math.random()<0.18;
   if(spec)dmg=Math.round(dmg*1.65);
+  if(CBT_STATE.blocking){
+    CBT_STATE.blocking=false;
+    dmg=Math.round(dmg*0.40);
+    bLog('player',`🛡️ ¡Bloqueado! ${BT.e.n} hace solo ${dmg} daño (-60%)`);
+  }
+  const counterDmg = CBT_STATE.countering ? Math.round(dmg*1.5+gAtk()*0.3) : 0;
+  if(CBT_STATE.countering){
+    CBT_STATE.countering=false;
+  }
   H.hp=Math.max(0,H.hp-dmg);
-  gainEnergy(spec ? 14 : 8); // taking damage charges energy too
-  if(BT)BT.tookDmg=true; // mark that player took damage this battle
-
+  gainEnergy(spec ? 14 : 8);
+  if(BT)BT.tookDmg=true;
   spawnDmg(dmg,true,spec,false);
   const pf=document.getElementById('pf');
   pf.classList.add('shake');setTimeout(()=>pf.classList.remove('shake'),320);
-
   const specTxt=spec?' con FURIA':'';
   bLog('enemy',`${BT.e.n}${specTxt} → ${dmg} daño`);
-  combo=0;// enemy hit resets combo
+  // Contraataque
+  if(counterDmg>0){
+    BT.e.chp=Math.max(0,BT.e.chp-counterDmg);
+    H.dmgDealt=(H.dmgDealt||0)+counterDmg;
+    spawnDmg(counterDmg,false,true,false);
+    const efs=document.getElementById('ef-sp');
+    if(efs){efs.style.transform='translateX(50px)';setTimeout(()=>efs.style.transform='',400);}
+    bLog('player',`⚡ ¡CONTRAATAQUE! ${H.name} devuelve ${counterDmg} daño!`);
+    checkBossPhase();
+  }
+  combo=0;
 
   if(isDrain){const heal=Math.round(dmg*0.2);BT.e.chp=Math.min(BT.e.mhp,BT.e.chp+heal);bLog('sys',`🩸 ${BT.e.n} se drena +${heal} HP`);}
   if(isPoison){BT.playerPoisoned=3;bLog('sys',`🐍 ${BT.e.n} te envenena — 3 turnos`);}
@@ -3115,12 +3710,19 @@ function battlePotion(){
 }
 
 function flee(){
+  if(!BT) return;
   if(Math.random()<0.55){
-    combo=0;showToast('🏃 ¡Escapaste!');BT=null;
+    combo=0;
+    // Detener farmeo y auto al huir
+    if(FARM.active){ stopFarm(); }
+    cancelAutoAction(); AUTO.on=false; updateAutoUI();
+    showToast('🏃 ¡Escapaste!');
+    BT=null;
     showScreen('game');updateHUD();showTab('map');
   } else {
-    showToast('❌ ¡No pudiste escapar!');bLog('sys',`${H.name} intentó huir pero falló`);
-    BT.pTurn=false;updateBUI();setTimeout(enemyTurn,600);
+    showToast('❌ ¡No pudiste escapar!');
+    bLog('sys',`${H.name} intentó huir pero falló`);
+    if(BT){ BT.pTurn=false; updateBUI(); setTimeout(enemyTurn,600); }
   }
 }
 
@@ -3164,15 +3766,57 @@ function endBattle(won){
     if(BT.isDungeon&&DG){
       setTimeout(()=>{BT=null;const done=onDungeonRoomWon();if(!done)updateHUD();if(leveled)setTimeout(()=>showLvlUp(newLv),500);},1400);
     } else {
-      setTimeout(()=>{BT=null;showScreen('game');updateHUD();showTab('map');updateQuestLog();checkAchievements();if(leveled)showLvlUp(newLv);},1400);
+      setTimeout(()=>{
+        const _wasFarming = FARM.active;
+        const _xp = xp, _gld = gld;
+        const _wasStageNode = BT ? BT.isStageNode : false;
+        const _stageZi = BT ? BT.stageZi : -1;
+        const _stageNi = BT ? BT.stageNi : -1;
+        BT=null;
+        updateHUD(); updateQuestLog(); checkAchievements();
+        if(leveled) showLvlUp(newLv);
+
+        if(_wasFarming){
+          // Modo farmeo — encadenar siguiente combate
+          FARM.fights++;
+          FARM.xpGained  += _xp;
+          FARM.goldGained += _gld;
+          updateFarmBar();
+          farmNextFight();
+        } else if(_wasStageNode){
+          // Victoria en nodo de etapa — guardar progreso y volver al mapa de etapa
+          setStageProgress(_stageZi, _stageNi);
+          showScreen('game');
+          // Re-renderizar la pantalla de etapa con el progreso actualizado
+          STAGE.inStage = true;
+          STAGE.zi = _stageZi;
+          renderStageScreen(_stageZi);
+          // Mensaje de avance
+          const stageDef = ZONE_STAGES[_stageZi];
+          const allDone = _stageNi >= stageDef.nodes.length - 1;
+          if(allDone){
+            showToast('🏆 ¡Etapa completada! Zona libre desbloqueada.');
+          } else {
+            showToast('✅ Nodo completado — siguiente desbloqueado');
+          }
+        } else {
+          // Fallback robusto: siempre volver al mapa
+          BT=null;
+          showScreen('game');
+          updateHUD();
+          showTab('map');
+        }
+      },1400);
     }
   } else {
     H.streak=0;combo=0;
     if(BT.isRival){if(!H.rivalData)H.rivalData={};if(!H.rivalData[BT.isRival])H.rivalData[BT.isRival]={wins:0,losses:0};H.rivalData[BT.isRival].losses++;H.rivalData[BT.isRival].lastResult='loss';}
     if(BT.isDungeon){DG=null;showToast('💀 Mazmorra fallida.');}
-    bLog('sys',`☠️ ${H.name} fue derrotado...`);showToast('💀 Derrotado. Recuperando HP...');
-    H.hp=Math.round(gMhp()*0.35);
-    setTimeout(()=>{BT=null;showScreen('game');updateHUD();showTab('map');},1800);
+    // Parar farmeo si estaba activo
+    if(FARM.active){ FARM.active=false; updateFarmBar(); }
+    bLog('sys',`☠️ ${H.name} fue derrotado...`);
+    const _defeatedBy = BT.e ? BT.e.n : 'el enemigo';
+    setTimeout(()=>{ showDefeatScreen(_defeatedBy); }, 900);
   }
 }
 
@@ -3852,7 +4496,10 @@ const RANKS=[
   {id:'jonin',    em:'🗡️', name:'Jōnin',       short:'Jonin',    color:'#4488ff', req:{lv:10, wins:60 }, perks:{xpBonus:.10, goldBonus:.10, atkBonus:3}},
   {id:'anbu',     em:'🌑', name:'ANBU',         short:'ANBU',     color:'#8844ff', req:{lv:15, wins:150}, perks:{xpBonus:.18, goldBonus:.15, atkBonus:6}},
   {id:'sannin',   em:'🐉', name:'Sannin',       short:'Sannin',   color:'#ff8844', req:{lv:20, wins:300}, perks:{xpBonus:.28, goldBonus:.25, atkBonus:10}},
-  {id:'kage',     em:'👑', name:'Kage',         short:'Kage',     color:'#ffcc00', req:{lv:25, wins:600}, perks:{xpBonus:.40, goldBonus:.40, atkBonus:18}},
+  {id:'kage',     em:'👑', name:'Kage',          short:'Kage',    color:'#ffcc00', req:{lv:25, wins:600},  perks:{xpBonus:.40, goldBonus:.40, atkBonus:18}},
+  {id:'shadow',   em:'🌑', name:'Kage de Sombra', short:'Sombra',  color:'#8866ff', req:{lv:32, wins:1000}, perks:{xpBonus:.55, goldBonus:.55, atkBonus:28}},
+  {id:'dragon',   em:'🐉', name:'Dragón Eterno',  short:'Dragón',  color:'#ff4444', req:{lv:40, wins:1800}, perks:{xpBonus:.75, goldBonus:.70, atkBonus:42}},
+  {id:'legend',   em:'⭐', name:'Leyenda Ninja',  short:'Leyenda', color:'#ffffff', req:{lv:50, wins:3000}, perks:{xpBonus:1.00,goldBonus:.90, atkBonus:60}},
 ];
 
 function getCurrentRank(){
@@ -4347,6 +4994,2243 @@ function showToast(msg){
   const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
   clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),3000);
 }
+
+// ═══════════════════════════════════════════════════════════
+//  COMBATE REACTIVO — Esquivar / Bloquear / Contraatacar
+// ═══════════════════════════════════════════════════════════
+
+function updateCombatBtns(){
+  if(!BT) return;
+  const on = BT.pTurn;
+  ['dodge','block','counter'].forEach(k=>{
+    const btn = document.getElementById('btn-'+k);
+    const bar = document.getElementById('cd-'+k);
+    const hint = btn ? btn.querySelector('.cbt-btn-hint') : null;
+    if(!btn) return;
+    const cd = CBT_CD[k];
+    btn.disabled = !on || cd > 0;
+    if(bar) bar.style.width = (cd > 0 ? Math.round(cd/CBT_MAX[k]*100) : 0)+'%';
+    if(hint) hint.textContent = cd > 0 ? `CD: ${cd} turno${cd>1?'s':''}` :
+      {dodge:'Evita ataque (turno)', block:'Daño -60% (turno)', counter:'Devuelve ×1.5 (turno)'}[k];
+  });
+}
+
+function tickCombatCDs(){
+  ['dodge','block','counter'].forEach(k=>{ if(CBT_CD[k]>0) CBT_CD[k]--; });
+  updateCombatBtns();
+}
+
+function combatDodge(){
+  if(!BT||!BT.pTurn||CBT_CD.dodge>0) return;
+  CBT_STATE.dodging = true;
+  CBT_CD.dodge = CBT_MAX.dodge;
+  BT.pTurn = false;
+  updateBUI();
+  bLog('player','💨 '+H.name+' se prepara para ESQUIVAR — turno cedido!');
+  showToast('💨 Esquiva activa — turno del enemigo');
+  updateCombatBtns();
+  setTimeout(enemyTurn, 700);
+}
+
+function combatBlock(){
+  if(!BT||!BT.pTurn||CBT_CD.block>0) return;
+  CBT_STATE.blocking = true;
+  CBT_CD.block = CBT_MAX.block;
+  BT.pTurn = false;
+  updateBUI();
+  bLog('player','🛡️ '+H.name+' adopta postura defensiva — turno cedido!');
+  showToast('🛡️ Bloqueo activo — turno del enemigo');
+  updateCombatBtns();
+  setTimeout(enemyTurn, 700);
+}
+
+function combatCounter(){
+  if(!BT||!BT.pTurn||CBT_CD.counter>0) return;
+  CBT_STATE.countering = true;
+  CBT_CD.counter = CBT_MAX.counter;
+  BT.pTurn = false;
+  updateBUI();
+  bLog('player','⚡ '+H.name+' entra en stance de CONTRAATAQUE — turno cedido!');
+  showToast('⚡ Contraataque listo — turno del enemigo');
+  updateCombatBtns();
+  setTimeout(enemyTurn, 700);
+}
+
+function checkBossPhase(){
+  if(!BT||!BT.isBoss) return;
+  if(BT.e.phase===1 && BT.e.chp<=BT.e.mhp*0.5){
+    BT.e.phase=2;
+    BT.e.atk=Math.round(BT.e.atk*1.4);
+    bLog('sys','💀 ¡KURAI ENTRA EN FASE 2!! Su poder se DUPLICA.');
+    const ef=document.getElementById('ef');
+    if(ef){ef.style.filter='brightness(5) hue-rotate(200deg)';setTimeout(()=>ef.style.filter='',600);}
+    showToast('💀 ¡FASE 2! Kurai se vuelve más poderoso!');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  BOSS FINAL — KURAI
+// ═══════════════════════════════════════════════════════════
+const BOSS_LORE=[
+  {spk:'📜 Pergamino Ancestral', txt:'Desde tiempos inmemoriales, una sombra corrompe el mundo ninja. Su nombre es Kurai — el Vacío Encarnado.'},
+  {spk:'👴 Maestro Roshi', txt:'Has llegado lejos. Lo que enfrentás no es un simple enemigo — es la oscuridad misma.'},
+  {spk:'👴 Maestro Roshi', txt:'Cada batalla que ganaste fue para este momento. El destino del mundo ninja está en tus manos.'},
+  {spk:'💀 VOZ DE KURAI', txt:'¿Otro ninja que viene a morir? He devorado a cien como vos. ¡Vengan, héroe!'},
+  {spk:'⚔️ Narrador', txt:'El suelo tiembla. El cielo se vuelve negro. El enfrentamiento final comienza...'},
+];
+let _loreIdx=0;
+
+function showBossIntro(zi){
+  _loreIdx=0;
+  const ov=document.createElement('div');
+  ov.id='boss-intro';
+  ov.style.cssText='position:fixed;inset:0;background:#000;z-index:9990;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 60px;';
+  ov.innerHTML=`
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.1">💀</div>
+    <div id="bl-box" style="background:rgba(10,0,0,.95);border:1px solid #ff000066;max-width:500px;width:92%;padding:22px;margin-bottom:14px;position:relative;z-index:1">
+      <div id="bl-spk" style="font-family:'Cinzel Decorative',serif;font-size:11px;color:#ff6666;letter-spacing:2px;margin-bottom:10px">—</div>
+      <div id="bl-txt" style="font-size:13px;color:#eee;line-height:1.8">—</div>
+    </div>
+    <button onclick="advanceLore(${zi})" id="bl-btn" style="font-family:'Cinzel Decorative',serif;font-size:12px;letter-spacing:2px;background:rgba(255,0,0,.12);border:1px solid #ff0000;color:#ff6666;padding:13px 40px;cursor:pointer;position:relative;z-index:1">Continuar ▶</button>`;
+  document.body.appendChild(ov);
+  renderLore();
+}
+
+function renderLore(){
+  const l=BOSS_LORE[_loreIdx];
+  const spk=document.getElementById('bl-spk');
+  const txt=document.getElementById('bl-txt');
+  const btn=document.getElementById('bl-btn');
+  if(spk) spk.textContent=l.spk;
+  if(txt) txt.textContent=l.txt.replace('{name}', H?H.name:'Ninja');
+  if(btn) btn.textContent=_loreIdx>=BOSS_LORE.length-1?'⚔ ¡COMBATIR!':'Continuar ▶';
+}
+
+function advanceLore(zi){
+  _loreIdx++;
+  if(_loreIdx>=BOSS_LORE.length){
+    const ov=document.getElementById('boss-intro');
+    if(ov) ov.remove();
+    startBossFight(zi);
+    return;
+  }
+  renderLore();
+}
+
+function startBossFight(zi){
+  const zone=ZONES[zi];
+  const boss={...ENEMIES[10]};
+  CBT_CD.dodge=0; CBT_CD.block=0; CBT_CD.counter=0;
+  CBT_STATE.dodging=false; CBT_STATE.blocking=false; CBT_STATE.countering=false;
+  BT={zone,combo:0,energy:0,isBoss:true,
+    e:{...boss,chp:boss.hp,mhp:boss.hp,atk:boss.atk,def:boss.def,phase:1},
+    pTurn:gSpd()>=boss.spd,pBuff:{},eDebuff:{},turn:1,counterReady:false};
+  combo=0;
+  showScreen('battle');
+  document.getElementById('b-zone').textContent='💀 KURAI — JEFE FINAL';
+  document.getElementById('pf-name').textContent=H.name;
+  document.getElementById('pf-sp').textContent=CLS[H.cls].em;
+  document.getElementById('ef-name').textContent='Kurai';
+  document.getElementById('ef-sp').textContent='💀';
+  renderBSkills();updateBUI();updatePetBattleSlot();
+  bLog('sys','💀 ¡EL ENFRENTAMIENTO FINAL COMIENZA!');
+  bLog('sys','⚠️ Al 50% de HP entra en Fase 2 — ¡más peligroso!');
+}
+
+function showBossVictory(){
+  const ov=document.createElement('div');
+  ov.style.cssText='position:fixed;inset:0;background:#000;z-index:9995;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center;';
+  ov.innerHTML=`
+    <div style="font-size:80px;margin-bottom:14px;animation:glow 1.5s infinite">⭐</div>
+    <div style="font-family:'Cinzel Decorative',serif;font-size:28px;color:#ffcc00;text-shadow:0 0 40px #ffcc00;margin-bottom:10px">¡VICTORIA!</div>
+    <div style="font-family:'Cinzel Decorative',serif;font-size:14px;color:#fff;margin-bottom:8px">Leyenda del Mundo Ninja</div>
+    <div style="font-size:12px;color:#aaa;line-height:1.8;max-width:360px;margin-bottom:20px">
+      Kurai ha caído. La oscuridad se disipa.<br><br>
+      <span style="color:#ffcc00;font-family:'Cinzel Decorative',serif">${H?H.name:'Ninja'}</span>, tu nombre será grabado para siempre en los pergaminos ancestrales.
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px">
+      <div style="background:rgba(255,204,0,.1);border:1px solid #ffcc00;padding:8px 14px;font-size:12px;color:#ffcc00">+2000 XP</div>
+      <div style="background:rgba(255,204,0,.1);border:1px solid #ffcc00;padding:8px 14px;font-size:12px;color:#ffcc00">+1500 🪙</div>
+    </div>
+    <button onclick="this.parentElement.remove();showScreen('game');showTab('map')" style="font-family:'Cinzel Decorative',serif;font-size:13px;letter-spacing:2px;background:rgba(255,204,0,.15);border:1px solid #ffcc00;color:#ffcc00;padding:14px 40px;cursor:pointer;">
+      ↩ Volver al Mundo
+    </button>`;
+  document.body.appendChild(ov);
+  if(H){H.bossDefeated=(H.bossDefeated||0)+1;saveGame();}
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DERROTA CON PENALIZACIÓN DE ORO
+// ═══════════════════════════════════════════════════════════
+let _defeatInterval=null;
+
+function showDefeatScreen(enemyName){
+  if(!H) return;
+  const goldLost=Math.min(H.gld, Math.max(0,Math.round(H.gld*0.15)));
+  H.gld-=goldLost;
+  H.hp=Math.max(1,Math.round(gMhp()*0.25));
+  const isBroke=H.gld<5;
+  const ov=document.getElementById('defeat-overlay');
+  document.getElementById('defeat-enemy-lbl').textContent='☠️ '+enemyName+' te derrotó';
+  document.getElementById('defeat-gold-amt').textContent='-'+goldLost+' 🪙';
+  const brokeEl=document.getElementById('defeat-broke');
+  const btn=document.getElementById('defeat-btn');
+  if(brokeEl) brokeEl.style.display=isBroke?'block':'none';
+  if(btn) btn.disabled=isBroke;
+  if(isBroke) startDefeatTimer(btn);
+  if(ov) ov.classList.add('show');
+  saveGame(); updateHUD();
+}
+
+function startDefeatTimer(btn){
+  const WAIT=90000;
+  const startHp=H.hp;
+  const target=Math.round(gMhp()*0.50);
+  let elapsed=0;
+  if(_defeatInterval) clearInterval(_defeatInterval);
+  _defeatInterval=setInterval(()=>{
+    elapsed+=1000;
+    const rem=Math.max(0,WAIT-elapsed);
+    const s=Math.ceil(rem/1000);
+    const tmEl=document.getElementById('defeat-timer');
+    const hpEl=document.getElementById('defeat-hp-fill');
+    const prog=Math.min(1,elapsed/WAIT);
+    H.hp=Math.min(gMhp(),Math.round(startHp+(target-startHp)*prog));
+    if(tmEl) tmEl.textContent=Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60);
+    if(hpEl) hpEl.style.width=Math.round(prog*100)+'%';
+    updateHUD();
+    if(rem<=0){
+      clearInterval(_defeatInterval); _defeatInterval=null;
+      const b=document.getElementById('defeat-btn');
+      if(b) b.disabled=false;
+      showToast('💚 ¡HP recuperado! Ya podés combatir.');
+    }
+  },1000);
+}
+
+function closeDefeat(){
+  const ov=document.getElementById('defeat-overlay');
+  if(ov) ov.classList.remove('show');
+  if(_defeatInterval){clearInterval(_defeatInterval);_defeatInterval=null;}
+  BT=null; showScreen('game'); updateHUD(); showTab('map');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  FARMEO ENCADENADO
+// ═══════════════════════════════════════════════════════════
+
+function startFarm(zi){
+  if(H&&H.gld<5&&H.hp<gMhp()*0.50){showToast('⚠️ Sin oro — esperá a recuperar HP');return;}
+  if(ZONES[zi].isBossZone){showToast('⚠️ No se puede farmear la zona del boss');return;}
+  FARM.active=true; FARM.zoneIdx=zi;
+  FARM.fights=0; FARM.xpGained=0; FARM.goldGained=0;
+  updateFarmBar();
+  showToast('🔄 Farmeo iniciado en '+ZONES[zi].n+' — tocá ⏹ para parar');
+  enterZone(zi);
+}
+
+function stopFarm(){
+  FARM.active=false;
+  if(FARM._t){clearTimeout(FARM._t);FARM._t=null;}
+  updateFarmBar();
+  const nb=document.getElementById('farm-next-bar');
+  if(nb) nb.style.display='none';
+  if(FARM.fights>0){
+    showToast('⏹ Farmeo detenido — '+FARM.fights+' combates · +'+FARM.xpGained+'XP · +'+FARM.goldGained+'🪙');
+  }
+}
+
+function updateFarmBar(){
+  const bar=document.getElementById('farm-bar');
+  const stats=document.getElementById('farm-stats');
+  if(!bar) return;
+  if(FARM.active){
+    bar.classList.add('active');
+    if(stats) stats.textContent='Combates: '+FARM.fights+' · XP: +'+FARM.xpGained+' · Oro: +'+FARM.goldGained+'🪙';
+  } else {
+    bar.classList.remove('active');
+  }
+}
+
+function farmNextFight(){
+  if(!FARM.active){
+    // Si el farmeo se detuvo pero seguimos en batalla, volver al mapa
+    if(document.getElementById('battle') && document.getElementById('battle').classList.contains('active')){
+      BT=null; showScreen('game'); updateHUD(); showTab('map');
+    }
+    return;
+  }
+  if(H.hp<gMhp()*0.30){
+    stopFarm();
+    showToast('⚠️ HP bajo — farmeo pausado. ¡Usá una poción!');
+    BT=null; showScreen('game'); updateHUD(); showTab('map');
+    return;
+  }
+  if(H.gld<5&&H.hp<gMhp()*0.50){
+    stopFarm();
+    BT=null; showScreen('game'); updateHUD(); showTab('map');
+    return;
+  }
+  const nb=document.getElementById('farm-next-bar');
+  const nf=document.getElementById('farm-next-fill');
+  if(nb&&nf){
+    nb.style.display='block';
+    nf.style.transition='none'; nf.style.width='0%';
+    setTimeout(()=>{nf.style.transition='width '+(FARM.DELAY-100)+'ms linear';nf.style.width='100%';},30);
+  }
+  FARM._t=setTimeout(()=>{
+    if(nb) nb.style.display='none';
+    if(FARM.active) enterZone(FARM.zoneIdx);
+  },FARM.DELAY);
+}
+
+
+// ═══════════════════════════════════════════════════════════
+//  MODO AUTO — usa solo ataque básico
+// ═══════════════════════════════════════════════════════════
+const AUTO = {
+  on: false,
+  _timer: null,
+  DELAY: 900,        // ms entre cada acción auto
+  HP_THRESHOLD: 0.3, // pausa si HP < 30%
+};
+
+function toggleAuto(){
+  AUTO.on = !AUTO.on;
+  updateAutoUI();
+  if(AUTO.on){
+    // Arrancar inmediatamente si es turno del jugador
+    if(BT && BT.pTurn) scheduleAutoAction();
+  } else {
+    cancelAutoAction();
+  }
+}
+
+function updateAutoUI(){
+  const btn  = document.getElementById('auto-toggle');
+  const lbl  = document.getElementById('auto-lbl');
+  const msg  = document.getElementById('auto-paused-msg');
+  if(!btn) return;
+  if(AUTO.on){
+    btn.classList.add('on');
+    if(lbl) lbl.textContent = 'AUTO ON';
+  } else {
+    btn.classList.remove('on');
+    if(lbl) lbl.textContent = 'AUTO';
+    if(msg) msg.classList.remove('show');
+  }
+}
+
+function scheduleAutoAction(){
+  cancelAutoAction();
+  if(!AUTO.on) return;
+  AUTO._timer = setTimeout(doAutoAction, AUTO.DELAY);
+}
+
+function cancelAutoAction(){
+  if(AUTO._timer){ clearTimeout(AUTO._timer); AUTO._timer = null; }
+}
+
+function doAutoAction(){
+  // Validaciones antes de actuar
+  if(!AUTO.on || !BT || !BT.pTurn || H.hp <= 0 || BT.e.chp <= 0) return;
+
+  // Pausar si HP muy bajo — el jugador tiene que decidir
+  if(H.hp < gMhp() * AUTO.HP_THRESHOLD){
+    AUTO.on = false;
+    updateAutoUI();
+    const msg = document.getElementById('auto-paused-msg');
+    if(msg) msg.classList.add('show');
+    showToast('⚠️ Auto pausado — HP bajo. Usá una poción o huí!');
+    return;  // El jugador mantiene control — puede atacar, usar poción o huir
+  }
+
+  // Usar siempre ataque básico
+  // Si no tiene MP (básico cuesta 0 normalmente, pero por si acaso)
+  const basicStats = getSkillStats('basic');
+  if(H.mp < basicStats.cost){
+    // Sin MP ni para básico — pausar
+    AUTO.on = false;
+    updateAutoUI();
+    showToast('⚠️ Auto pausado — sin MP para ataque básico');
+    return;
+  }
+
+  useSkill('basic');
+}
+
+// Hook en updateBUI: cuando es turno del jugador y auto está on, programar acción
+// Usamos el final de updateBUI donde ya sabemos el estado del turno
+const _autoOrigUpdateBUI = updateBUI;
+updateBUI = function(){
+  _autoOrigUpdateBUI();
+  // Si es turno del jugador y auto está activo, programar siguiente acción
+  if(AUTO.on && BT && BT.pTurn && H.hp > 0 && BT.e.chp > 0){
+    scheduleAutoAction();
+  }
+};
+
+// Resetear auto al iniciar/terminar batalla
+const _autoOrigEnterZone = enterZone;
+enterZone = function(zi){
+  cancelAutoAction();
+  // Mantener el estado ON/OFF entre combates si farmeo está activo
+  // Si no es farmeo, apagar auto al entrar a nueva zona manualmente
+  if(!FARM.active) AUTO.on = false;
+  updateAutoUI();
+  _autoOrigEnterZone(zi);
+};
+
+const _autoOrigEndBattle = endBattle;
+endBattle = function(won){
+  // Cancelar timer pendiente antes de terminar batalla
+  cancelAutoAction();
+  // Audio
+  if(won){
+    if(!FARM.active){ AUDIO.sfx.victory(); setTimeout(function(){ AUDIO.playTheme('map'); }, 1500); }
+  } else {
+    AUDIO.sfx.defeat(); setTimeout(function(){ AUDIO.playTheme('map'); }, 1500);
+  }
+  _autoOrigEndBattle(won);
+};
+
+
+// ═══════════════════════════════════════════════════════════
+//  SISTEMA DE ETAPAS
+// ═══════════════════════════════════════════════════════════
+
+// Estado actual de etapa (qué zona y nodo se está jugando)
+const STAGE = {
+  zi: -1,       // zona activa
+  node: -1,     // nodo activo dentro de la zona
+  inStage: false,
+};
+
+// Progreso guardado en H.stageProgress[zi] = nodo más alto completado (-1 = ninguno)
+function getStageProgress(zi){
+  if(!H.stageProgress) H.stageProgress = {};
+  return (H.stageProgress[zi] !== undefined) ? H.stageProgress[zi] : -1;
+}
+function setStageProgress(zi, nodeIdx){
+  if(!H.stageProgress) H.stageProgress = {};
+  H.stageProgress[zi] = nodeIdx;
+}
+
+// ── Abrir la pantalla de etapa de una zona ──────────────────
+function openStage(zi){
+  if(H && H.gld < 5 && H.hp < gMhp()*0.50){
+    showToast('⚠️ Sin oro — esperá a recuperar HP'); return;
+  }
+  STAGE.zi = zi;
+  STAGE.inStage = true;
+  renderStageScreen(zi);
+}
+
+function renderStageScreen(zi){
+  const v = document.getElementById('main-col');
+  const zone = ZONES[zi];
+  const stageDef = ZONE_STAGES[zi];
+  if(!stageDef){ v.innerHTML='<div class="sec">Error: zona sin datos</div>'; return; }
+
+  const progress = getStageProgress(zi);  // índice del último nodo completado
+  const nodes = stageDef.nodes;
+  // Nodo actual = progress + 1 (o 0 si no hay progreso)
+  const activeNode = Math.min(progress + 1, nodes.length - 1 + 1); // +1 incluye farm
+  // Total incluyendo nodo farm
+  const totalNodes = nodes.length + 1; // +1 por el nodo de farmeo libre al final
+  const completedCount = progress + 1;
+  const progPct = Math.round((completedCount / nodes.length) * 100);
+  const allDone = progress >= nodes.length - 1;
+
+  let html = '<div class="stage-screen">';
+
+  // Header
+  html += '<div class="stage-header">'
+    + '<button class="stage-back" onclick="closeStage()">← Volver</button>'
+    + '<div>'
+    + '<div class="stage-title">' + zone.em + ' ' + zone.n + '</div>'
+    + '<div class="stage-subtitle">Nv. ' + zone.minLv + '+ · ' + nodes.length + ' combates + farmeo libre</div>'
+    + '</div>'
+    + '</div>';
+
+  // Barra de progreso
+  html += '<div class="stage-progress-bar">'
+    + '<div class="stage-prog-track"><div class="stage-prog-fill" style="width:' + Math.min(100, progPct) + '%"></div></div>'
+    + '<div class="stage-prog-lbl">' + completedCount + '/' + nodes.length + (allDone ? ' ✓' : '') + '</div>'
+    + '</div>';
+
+  // Nodos
+  html += '<div class="stage-path">';
+
+  nodes.forEach(function(node, ni){
+    const isDone   = ni <= progress;
+    const isActive = ni === activeNode && !isDone;
+    const isLocked = ni > activeNode;
+    const isMini   = node.isMiniboss;
+    const isFinal  = node.isFinalBoss;
+    const enemy    = ENEMIES[node.e];
+    const scale    = 1 + (H.lv - 1) * 0.12;
+    const scaledXp = Math.round(enemy.xp * (1 + (H.lv-1)*0.03));
+
+    let nodeClass = 'stage-node';
+    if(isDone)   nodeClass += ' sn-done';
+    if(isActive) nodeClass += ' sn-active';
+    if(isLocked) nodeClass += ' sn-locked';
+    if(isMini)   nodeClass += ' sn-miniboss';
+    if(isFinal)  nodeClass += ' sn-finalboss';
+
+    let icon = enemy.em;
+    if(isDone) icon = '✅';
+
+    let badge = '';
+    if(isDone)        badge = '<span class="sn-badge sn-b-done">COMPLETADO</span>';
+    else if(isActive && isFinal) badge = '<span class="sn-badge sn-b-fboss">☠ BOSS FINAL</span>';
+    else if(isActive && isMini)  badge = '<span class="sn-badge sn-b-boss">⚔ MINIBOSS</span>';
+    else if(isActive) badge = '<span class="sn-badge sn-b-active">▶ DISPONIBLE</span>';
+    else if(isLocked) badge = '<span class="sn-badge sn-b-locked">🔒 BLOQUEADO</span>';
+
+    const clickable = !isDone && !isLocked;
+    const onclick = clickable ? 'onclick="enterStageNode(' + zi + ',' + ni + ')"' : '';
+
+    html += '<div class="' + nodeClass + '" ' + onclick + '>'
+      + '<div class="sn-icon">' + icon + '</div>'
+      + '<div class="sn-body">'
+      + '<div class="sn-label">' + (ni+1) + '. ' + node.lbl + '</div>'
+      + '<div class="sn-enemy">' + enemy.em + ' ' + enemy.n + (isMini?' · Miniboss':'') + (isFinal?' · JEFE FINAL':'') + '</div>'
+      + badge
+      + '</div>'
+      + '<div class="sn-right">'
+      + (isDone ? '<span class="sn-done-check">✅</span>' : '<span class="sn-xp">+' + scaledXp + ' XP</span>')
+      + '</div>'
+      + '</div>';
+  });
+
+  // Nodo extra — FARMEO LIBRE
+  const farmUnlocked = allDone;
+  let farmClass = 'stage-node sn-farm' + (farmUnlocked ? ' sn-active' : ' sn-locked');
+  let farmBadge = farmUnlocked
+    ? '<span class="sn-badge sn-b-farm">🔄 FARMEO LIBRE</span>'
+    : '<span class="sn-badge sn-b-locked">🔒 Completá la etapa</span>';
+  let farmOnclick = farmUnlocked ? 'onclick="startFarmInStage(' + zi + ')"' : '';
+
+  html += '<div class="' + farmClass + '" ' + farmOnclick + '>'
+    + '<div class="sn-icon">🔄</div>'
+    + '<div class="sn-body">'
+    + '<div class="sn-label">Zona Libre</div>'
+    + '<div class="sn-enemy">Enemigos aleatorios · XP y oro ilimitados</div>'
+    + farmBadge
+    + '</div>'
+    + '<div class="sn-right"><span class="sn-xp">∞</span></div>'
+    + '</div>';
+
+  html += '</div></div>'; // stage-path + stage-screen
+  v.innerHTML = html;
+}
+
+function closeStage(){
+  STAGE.inStage = false;
+  STAGE.zi = -1;
+  STAGE.node = -1;
+  showTab('map');
+}
+
+// ── Entrar a un nodo específico ─────────────────────────────
+function enterStageNode(zi, ni){
+  if(H && H.gld < 5 && H.hp < gMhp()*0.50){
+    showToast('⚠️ Sin oro — esperá a recuperar HP'); return;
+  }
+  const zone = ZONES[zi];
+  const node = ZONE_STAGES[zi].nodes[ni];
+  const enemy = ENEMIES[node.e];
+
+  STAGE.zi = zi;
+  STAGE.node = ni;
+  STAGE.inStage = true;
+
+  // Boss final — mostrar intro
+  if(node.isFinalBoss){ showBossIntro(zi); return; }
+
+  const scale = 1 + (H.lv - 1) * 0.12;
+  // Miniboss: más HP y ATK que el enemigo base
+  const bossScale = node.isMiniboss ? 1.6 : 1.0;
+
+  CBT_CD.dodge=0; CBT_CD.block=0; CBT_CD.counter=0;
+  CBT_STATE.dodging=false; CBT_STATE.blocking=false; CBT_STATE.countering=false;
+
+  BT = {
+    zone, combo:0, energy:0,
+    isStageNode: true,
+    stageZi: zi,
+    stageNi: ni,
+    isMiniboss: node.isMiniboss || false,
+    e:{
+      ...enemy,
+      n: node.isMiniboss ? '⚔ ' + enemy.n + ' (Miniboss)' : enemy.n,
+      chp:  Math.round(enemy.hp  * scale * bossScale),
+      mhp:  Math.round(enemy.hp  * scale * bossScale),
+      atk:  Math.round(enemy.atk * scale * (node.isMiniboss ? 1.3 : 1.0)),
+      def:  Math.round(enemy.def * scale),
+    },
+    pTurn: gSpd() >= enemy.spd,
+    pBuff:{}, eDebuff:{}, turn:1, counterReady:false,
+  };
+  combo = 0;
+
+  showScreen('battle');
+  document.getElementById('b-zone').textContent =
+    (node.isMiniboss ? '⚔ MINIBOSS — ' : '') + zone.n + ' · ' + node.lbl;
+  document.getElementById('pf-name').textContent = H.name;
+  document.getElementById('pf-sp').textContent   = CLS[H.cls].em;
+  document.getElementById('ef-name').textContent  = BT.e.n;
+  document.getElementById('ef-sp').textContent    = enemy.em;
+
+  renderBSkills(); updateBUI(); updatePetBattleSlot();
+  bLog('sys', '⚔ ' + node.lbl + (node.isMiniboss?' — ¡MINIBOSS!':''));
+  bLog('sys', BT.pTurn ? '⚡ ¡TU TURNO!' : enemy.n + ' ataca primero...');
+  if(!BT.pTurn) setTimeout(enemyTurn, 900);
+}
+
+// Farmeo libre dentro de una etapa completada
+function startFarmInStage(zi){
+  startFarm(zi);
+}
+
+
+// ═══════════════════════════════════════════════════════════
+//  MOTOR DE AUDIO — Web Audio API
+//  Música épica generativa + efectos sintetizados
+// ═══════════════════════════════════════════════════════════
+const AUDIO = (function(){
+  let ctx = null;
+  let musicVol = 0.40;
+  let sfxVol   = 0.70;
+  let musicOn  = true;
+  let sfxOn    = true;
+  let _musicNodes = null;  // nodos activos de música
+  let _currentTheme = null;
+
+  // ── Inicializar contexto (requiere gesto del usuario) ──
+  function init(){
+    if(!ctx){
+      try{
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+      } catch(e){ return null; }
+    }
+    return (ctx && ctx.state !== 'closed') ? ctx : null;
+  }
+
+  // ── Utilidades de síntesis ────────────────────────────
+  function masterGain(vol){
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(vol * sfxVol, ctx.currentTime);
+    g.connect(ctx.destination);
+    return g;
+  }
+
+  // Oscilador simple con envolvente ADSR
+  function playTone(freq, type, attack, decay, sustain, release, vol, startTime){
+    if(!ctx) return;
+    const t = startTime || ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(vol * sfxVol, t + attack);
+    gain.gain.linearRampToValueAtTime(vol * sfxVol * sustain, t + attack + decay);
+    gain.gain.linearRampToValueAtTime(0, t + attack + decay + release);
+    osc.start(t);
+    osc.stop(t + attack + decay + release + 0.01);
+  }
+
+  // Ruido blanco para impactos
+  function playNoise(duration, vol, startTime){
+    if(!ctx) return;
+    const t = startTime || ctx.currentTime;
+    const bufSize = ctx.sampleRate * duration;
+    const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for(let i=0;i<bufSize;i++) data[i] = (Math.random()*2-1);
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(800, t);
+    src.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+    gain.gain.setValueAtTime(vol * sfxVol, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    src.start(t); src.stop(t + duration);
+  }
+
+  // ── EFECTOS DE SONIDO ─────────────────────────────────
+
+  // Golpe del jugador — corte de espada
+  function sfxPlayerHit(){
+    if(!sfxOn || !init()) return;
+    // Swoosh
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sawtooth';
+    const t = ctx.currentTime;
+    osc.frequency.setValueAtTime(800, t);
+    osc.frequency.exponentialRampToValueAtTime(200, t + 0.12);
+    gain.gain.setValueAtTime(0.3 * sfxVol, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+    osc.start(t); osc.stop(t + 0.13);
+    // Impacto
+    playNoise(0.08, 0.4, t + 0.08);
+  }
+
+  // Golpe crítico — más dramático
+  function sfxCrit(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    playTone(440, 'square', 0.01, 0.05, 0.3, 0.1, 0.4, t);
+    playTone(660, 'square', 0.01, 0.05, 0.3, 0.1, 0.3, t+0.05);
+    playTone(880, 'sine',   0.01, 0.1,  0.2, 0.2, 0.3, t+0.1);
+    playNoise(0.1, 0.5, t+0.05);
+  }
+
+  // Recibir daño — golpe sordo
+  function sfxPlayerDamage(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    playNoise(0.15, 0.6, t);
+    playTone(150, 'sine', 0.005, 0.1, 0.1, 0.15, 0.5, t);
+  }
+
+  // Esquivar
+  function sfxDodge(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    playTone(600, 'sine', 0.005, 0.05, 0.3, 0.1, 0.3, t);
+    playTone(900, 'sine', 0.005, 0.05, 0.3, 0.1, 0.2, t+0.05);
+  }
+
+  // Bloquear — golpe metálico
+  function sfxBlock(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    playNoise(0.05, 0.7, t);
+    playTone(300, 'square', 0.005, 0.08, 0.1, 0.1, 0.4, t);
+    playTone(450, 'square', 0.005, 0.06, 0.1, 0.1, 0.3, t+0.02);
+  }
+
+  // Contraataque — flash de energía
+  function sfxCounter(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    [220,330,440,550,660].forEach((f,i)=>{
+      playTone(f, 'sawtooth', 0.005, 0.04, 0.2, 0.06, 0.25, t + i*0.04);
+    });
+  }
+
+  // Victoria
+  function sfxVictory(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    const melody = [523,659,784,1047,784,1047,1319];
+    melody.forEach((f,i)=>{
+      playTone(f, 'triangle', 0.01, 0.1, 0.6, 0.2, 0.5, t + i*0.15);
+    });
+  }
+
+  // Derrota
+  function sfxDefeat(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    [400,320,240,180].forEach((f,i)=>{
+      playTone(f, 'sawtooth', 0.01, 0.15, 0.3, 0.3, 0.4, t + i*0.2);
+    });
+  }
+
+  // Subida de nivel — fanfarria
+  function sfxLevelUp(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    const fanfare = [523,523,523,659,523,659,784];
+    fanfare.forEach((f,i)=>{
+      playTone(f, 'triangle', 0.01, 0.08, 0.7, 0.15, 0.6, t + i*0.13);
+    });
+    playTone(1047, 'sine', 0.01, 0.2, 0.8, 0.4, 0.7, t + fanfare.length*0.13);
+  }
+
+  // Comprar / obtener item
+  function sfxBuy(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    playTone(880, 'sine', 0.005, 0.05, 0.5, 0.15, 0.4, t);
+    playTone(1100,'sine', 0.005, 0.05, 0.5, 0.15, 0.3, t+0.08);
+  }
+
+  // UI — click en botón
+  function sfxClick(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    playTone(660, 'sine', 0.005, 0.03, 0.2, 0.05, 0.25, t);
+  }
+
+  // Habilidad especial / magia
+  function sfxSkill(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    // Sweep mágico
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(200, t);
+    osc.frequency.exponentialRampToValueAtTime(1200, t + 0.3);
+    gain.gain.setValueAtTime(0.4 * sfxVol, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
+    osc.start(t); osc.stop(t + 0.36);
+  }
+
+  // Entrada a zona / etapa
+  function sfxEnterZone(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    playTone(220, 'triangle', 0.01, 0.2, 0.4, 0.4, 0.4, t);
+    playTone(330, 'triangle', 0.01, 0.2, 0.4, 0.4, 0.3, t+0.1);
+    playTone(440, 'triangle', 0.01, 0.2, 0.4, 0.5, 0.3, t+0.2);
+  }
+
+  // Boss intro — tensión
+  function sfxBossIntro(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    [80,80,80,60].forEach((f,i)=>{
+      playTone(f, 'sawtooth', 0.02, 0.3, 0.6, 0.5, 0.6, t + i*0.5);
+    });
+    playNoise(0.4, 0.3, t + 1.5);
+  }
+
+  // Drop / recompensa
+  function sfxDrop(){
+    if(!sfxOn || !init()) return;
+    const t = ctx.currentTime;
+    playTone(1047, 'sine', 0.005, 0.1, 0.5, 0.2, 0.5, t);
+    playTone(1319, 'sine', 0.005, 0.1, 0.5, 0.2, 0.4, t+0.1);
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  MÚSICA GENERATIVA — motor robusto
+  // ══════════════════════════════════════════════════════
+
+  function stopMusic(){
+    if(!_musicNodes) return;
+    const t = ctx ? ctx.currentTime + 0.05 : 0;
+    _musicNodes.forEach(function(n){
+      try{
+        if(n.gain)  n.gain.setTargetAtTime(0, t, 0.1);
+        if(n.stop)  n.stop(t + 0.2);
+      }catch(e){}
+    });
+    _musicNodes = null;
+    _currentTheme = null;
+  }
+
+  // ── Primitivas ─────────────────────────────────────────
+
+  // Crear oscilador simple y conectarlo a un destino
+  function osc(freq, type, dest, vol, detune){
+    const o  = ctx.createOscillator();
+    const gn = ctx.createGain();
+    o.type = type || 'sine';
+    o.frequency.value = freq;
+    if(detune) o.detune.value = detune;
+    gn.gain.value = vol || 0.2;
+    o.connect(gn); gn.connect(dest);
+    o.start();
+    return [o, gn];
+  }
+
+  // Nota con envolvente: inicia en 't', dura 'dur' segundos
+  function playNote(freq, type, t, dur, vol, dest, detune){
+    const o  = ctx.createOscillator();
+    const gn = ctx.createGain();
+    o.type = type || 'sine';
+    o.frequency.value = freq;
+    if(detune) o.detune.value = detune || 0;
+    gn.gain.value = 0;
+    o.connect(gn); gn.connect(dest);
+    const atk = Math.min(0.015, dur * 0.08);
+    const rel = Math.min(0.12,  dur * 0.35);
+    // Importante: setValueAtTime en t para anclar el ramp
+    gn.gain.setValueAtTime(0, t);
+    gn.gain.linearRampToValueAtTime(vol, t + atk);
+    gn.gain.setValueAtTime(vol * 0.75, t + dur - rel);
+    gn.gain.linearRampToValueAtTime(0, t + dur);
+    o.start(t);
+    o.stop(t + dur + 0.02);
+    return [o, gn];
+  }
+
+  // Ruido coloreado
+  function noise(t, dur, vol, freqHP, dest){
+    const len = Math.ceil(ctx.sampleRate * dur);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const d   = buf.getChannelData(0);
+    for(let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const flt = ctx.createBiquadFilter();
+    flt.type = freqHP > 2000 ? 'highpass' : 'bandpass';
+    flt.frequency.value = freqHP || 1000;
+    const gn = ctx.createGain();
+    gn.gain.setValueAtTime(0, t);
+    gn.gain.linearRampToValueAtTime(vol, t + 0.005);
+    gn.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(flt); flt.connect(gn); gn.connect(dest);
+    src.start(t); src.stop(t + dur + 0.01);
+    return [src, flt, gn];
+  }
+
+  // Kick drum
+  function kick(t, vol, dest){
+    const o  = ctx.createOscillator();
+    const gn = ctx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(180, t);
+    o.frequency.exponentialRampToValueAtTime(40, t + 0.12);
+    gn.gain.setValueAtTime(vol, t);
+    gn.gain.exponentialRampToValueAtTime(0.0001, t + 0.28);
+    o.connect(gn); gn.connect(dest);
+    o.start(t); o.stop(t + 0.30);
+    return [o, gn];
+  }
+
+  // Snare drum
+  function snare(t, vol, dest){
+    const ns = noise(t, 0.12, vol * 0.6, 2000, dest);
+    const o  = ctx.createOscillator();
+    const gn = ctx.createGain();
+    o.type = 'sine'; o.frequency.value = 200;
+    gn.gain.setValueAtTime(vol * 0.3, t);
+    gn.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
+    o.connect(gn); gn.connect(dest);
+    o.start(t); o.stop(t + 0.09);
+    return [...ns, o, gn];
+  }
+
+  // Hihat
+  function hihat(t, vol, dest){
+    return noise(t, 0.035, vol, 8000, dest);
+  }
+
+  // Compresor estándar
+  function compressor(){
+    const c = ctx.createDynamicsCompressor();
+    c.threshold.value = -16;
+    c.knee.value = 10;
+    c.ratio.value = 4;
+    c.attack.value  = 0.003;
+    c.release.value = 0.2;
+    c.connect(ctx.destination);
+    return c;
+  }
+
+  // ── Scheduler universal ───────────────────────────────
+  // steps: array de funciones (t, dest) => [nodos]
+  // Llama a steps[i % steps.length] cada beatDur segundos
+  function scheduler(steps, beatDur, dest, initialDelay){
+    const nodes = [];
+    let step = 0;
+    let nextT = ctx.currentTime + (initialDelay || 0.05);
+    const LOOK = 0.20;
+
+    function tick(){
+      if(!_musicNodes){ return; }
+      while(nextT < ctx.currentTime + LOOK){
+        const fn = steps[step % steps.length];
+        if(fn){
+          const ns = fn(nextT, dest);
+          if(ns) ns.forEach(function(n){ nodes.push(n); });
+        }
+        step++;
+        nextT += beatDur;
+      }
+    }
+    const id = setInterval(function(){
+      if(!_musicNodes){ clearInterval(id); return; }
+      tick();
+    }, 40);
+    tick();
+    return { id: id, nodes: nodes };
+  }
+
+  // ── TEMA: TÍTULO — Do menor, 72 BPM ──────────────────
+  // Épico y amenazante: melodía de flauta + pad + taiko
+  function buildTitle(){
+    const nodes = [];
+    const C = compressor(); nodes.push(C);
+    const beat = 60/72;
+
+    // Pentatónica menor de Do
+    const PEN = [261.6,311.1,349.2,392.0,466.2,523.3,622.3,698.5,784.0];
+    // Melodía — 16 notas, 2 compases de 4/4
+    const MEL = [
+      [4,1.5],[6,0.5],[7,1],[6,0.5],[4,0.5],
+      [8,2],  [7,0.5],[4,0.5],
+      [5,1.5],[4,0.5],[2,1],[4,0.5],[5,0.5],
+      [7,2],  [5,0.5],[2,0.5],
+    ];
+    // Progresión de acordes — 4 acordes, 1 comp cada uno (4 beats)
+    const CHORDS = [
+      [261.6,311.1,392.0],   // Cm
+      [174.6,261.6,349.2],   // Fm
+      [196.0,329.6,392.0],   // G
+      [233.1,311.1,392.0],   // Cm7
+    ];
+    // Línea de bajo
+    const BASS = [130.8,0,130.8,0, 87.3,0,87.3,0, 98.0,0,98.0,0, 130.8,0,116.5,0];
+    // Taiko — 16 pasos
+    const KICK  = [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0];
+    const RIM   = [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0];
+
+    // --- Melodía (cada nota individual)
+    let melIdx = 0;
+    let melT   = ctx.currentTime + 0.1;
+    function nextMelNote(){
+      if(!_musicNodes) return;
+      const [si, dur] = MEL[melIdx % MEL.length];
+      const freq = PEN[si];
+      const d = dur * beat;
+      const ns = playNote(freq, 'sine', melT, d * 0.88, musicVol * 0.55, C, 3);
+      // Armónico suave
+      const ns2 = playNote(freq * 2, 'sine', melT, d * 0.7, musicVol * 0.12, C, -3);
+      nodes.push(...ns, ...ns2);
+      melT += d;
+      melIdx++;
+      // Programar la siguiente nota
+      const delay = Math.max(0, (melT - ctx.currentTime - 0.05) * 1000);
+      setTimeout(nextMelNote, delay);
+    }
+    nextMelNote();
+
+    // --- Acordes de cuerdas (cada 4 beats)
+    let chIdx = 0;
+    let chT   = ctx.currentTime + 0.05;
+    function nextChord(){
+      if(!_musicNodes) return;
+      const chord = CHORDS[chIdx % CHORDS.length];
+      chord.forEach(function(freq, vi){
+        const ns = playNote(freq, 'triangle', chT + vi*0.025, beat*3.8, musicVol*0.22, C, vi*2-2);
+        nodes.push(...ns);
+      });
+      chT += beat * 4;
+      chIdx++;
+      const delay = Math.max(0, (chT - ctx.currentTime - 0.05) * 1000);
+      setTimeout(nextChord, delay);
+    }
+    nextChord();
+
+    // --- Bajo
+    let bassIdx = 0;
+    let bassT   = ctx.currentTime + 0.05;
+    function nextBass(){
+      if(!_musicNodes) return;
+      const freq = BASS[bassIdx % BASS.length];
+      if(freq > 0){
+        const ns = playNote(freq, 'triangle', bassT, beat*0.5*0.85, musicVol*0.45, C);
+        nodes.push(...ns);
+      }
+      bassT += beat * 0.5;
+      bassIdx++;
+      const delay = Math.max(0, (bassT - ctx.currentTime - 0.05) * 1000);
+      setTimeout(nextBass, delay);
+    }
+    nextBass();
+
+    // --- Percusión (scheduling en bloques de 16 pasos)
+    let percT = ctx.currentTime + 0.05;
+    function nextPercBlock(){
+      if(!_musicNodes) return;
+      for(let i = 0; i < 16; i++){
+        const t = percT + i * beat * 0.5;
+        if(KICK[i]) nodes.push(...kick(t, musicVol * 0.85, C));
+        if(RIM[i])  nodes.push(...noise(t, 0.06, musicVol * 0.3, 3000, C));
+      }
+      percT += 16 * beat * 0.5;
+      const delay = Math.max(0, (percT - ctx.currentTime - 0.3) * 1000);
+      setTimeout(nextPercBlock, delay);
+    }
+    nextPercBlock();
+
+    return nodes;
+  }
+
+  // ── TEMA: MAPA — Re menor, 80 BPM ────────────────────
+  // Heroico y épico: koto + cuerdas + marcha
+  function buildMap(){
+    const nodes = [];
+    const C = compressor(); nodes.push(C);
+    const beat = 60/80;
+
+    const PEN = [293.7,329.6,370.0,440.0,493.9,587.3,659.3,740.0,880.0];
+    const MEL = [
+      [2,0.5],[4,0.5],[5,1],[4,0.5],[2,0.5],
+      [5,1.5],[4,0.5],[2,0.5],[0,0.5],
+      [6,0.5],[5,0.5],[4,1],[5,0.5],[6,0.5],
+      [8,2],[6,0.5],[4,0.5],
+      [7,0.5],[6,0.5],[5,1],[4,0.5],[2,0.5],
+      [5,1.5],[4,0.5],[2,1],
+      [0,0.5],[2,0.5],[4,1],[5,0.5],[6,0.5],
+      [5,2],[2,0.5],[0,1.5],
+    ];
+    const CHORDS = [
+      [146.8,220.0,293.7],
+      [130.8,196.0,261.6],
+      [164.8,246.9,329.6],
+      [146.8,220.0,293.7],
+    ];
+    const BASS = [73.4,0,73.4,73.4,65.4,0,65.4,0,82.4,0,82.4,0,73.4,0,61.7,0];
+    const KK   = [1,0,0,0,1,0,0,1,1,0,0,0,1,0,0,0];
+    const SN   = [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0];
+    const HH   = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+
+    // Melodía koto — ataque rápido, decae
+    let mi=0, mT=ctx.currentTime+0.15;
+    function nextMel(){
+      if(!_musicNodes) return;
+      const [si,dur] = MEL[mi%MEL.length];
+      const d = dur*beat;
+      const ns = playNote(PEN[si],'triangle',mT,d*0.75,musicVol*0.65,C,5);
+      nodes.push(...ns);
+      mT+=d; mi++;
+      setTimeout(nextMel, Math.max(0,(mT-ctx.currentTime-0.05)*1000));
+    }
+    nextMel();
+
+    // Cuerdas
+    let ci=0, cT=ctx.currentTime+0.05;
+    function nextChord(){
+      if(!_musicNodes) return;
+      CHORDS[ci%CHORDS.length].forEach(function(f,v){
+        nodes.push(...playNote(f,'sawtooth',cT+v*0.02,beat*3.85,musicVol*0.18,C,v*3-3));
+      });
+      cT+=beat*4; ci++;
+      setTimeout(nextChord, Math.max(0,(cT-ctx.currentTime-0.05)*1000));
+    }
+    nextChord();
+
+    // Bajo
+    let bi=0, bT=ctx.currentTime+0.05;
+    function nextBass(){
+      if(!_musicNodes) return;
+      const f=BASS[bi%BASS.length];
+      if(f>0) nodes.push(...playNote(f,'sine',bT,beat*0.45,musicVol*0.5,C));
+      bT+=beat*0.5; bi++;
+      setTimeout(nextBass, Math.max(0,(bT-ctx.currentTime-0.05)*1000));
+    }
+    nextBass();
+
+    // Batería
+    let pT=ctx.currentTime+0.05;
+    function nextPerc(){
+      if(!_musicNodes) return;
+      for(let i=0;i<16;i++){
+        const t=pT+i*beat*0.5;
+        if(KK[i]) nodes.push(...kick(t,musicVol*0.7,C));
+        if(SN[i]) nodes.push(...snare(t,musicVol*0.55,C));
+        if(HH[i]) nodes.push(...hihat(t,musicVol*0.35,C));
+      }
+      pT+=16*beat*0.5;
+      setTimeout(nextPerc, Math.max(0,(pT-ctx.currentTime-0.3)*1000));
+    }
+    nextPerc();
+
+    return nodes;
+  }
+
+  // ── TEMA: BATALLA — Mi menor, 110 BPM ─────────────────
+  function buildBattle(){
+    const nodes = [];
+    const C = compressor(); nodes.push(C);
+    const beat = 60/110;
+
+    // Escala menor de Mi
+    const SC = [164.8,185.0,196.0,220.0,246.9,261.6,311.1,329.6,370.0,392.0];
+    // Riff de 8 compases
+    const RIFF = [
+      [0,.25],[0,.25],[2,.25],[3,.25],[4,.5],[3,.25],[2,.25],
+      [0,.25],[0,.25],[2,.25],[4,.25],[5,.5],[4,.25],[3,.25],
+      [7,.25],[6,.25],[5,.25],[4,.25],[7,.5],[6,.25],[4,.25],
+      [3,.25],[4,.25],[5,.25],[7,.25],[9,1],[4,.5],[0,.5],
+    ];
+    const BASS  = [82.4,0,82.4,82.4,73.4,0,73.4,0,82.4,0,82.4,0,98.0,0,82.4,0];
+    const KK    = [1,0,0,1,1,0,0,0,1,0,0,1,1,0,1,0];
+    const SN    = [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0];
+    const HH    = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+
+    // Riff agresivo
+    let ri=0, rT=ctx.currentTime+0.1;
+    function nextRiff(){
+      if(!_musicNodes) return;
+      const [si,dur] = RIFF[ri%RIFF.length];
+      const d=dur*beat;
+      const f=SC[si];
+      nodes.push(...playNote(f,'sawtooth',rT,d*0.8,musicVol*0.5,C,-6));
+      nodes.push(...playNote(f,'sawtooth',rT,d*0.8,musicVol*0.3,C,6));
+      nodes.push(...playNote(f*0.5,'square',rT,d*0.7,musicVol*0.2,C,0));
+      rT+=d; ri++;
+      setTimeout(nextRiff, Math.max(0,(rT-ctx.currentTime-0.05)*1000));
+    }
+    nextRiff();
+
+    // Bajo
+    let bi=0, bT=ctx.currentTime+0.05;
+    function nextBass(){
+      if(!_musicNodes) return;
+      const f=BASS[bi%BASS.length];
+      if(f>0) nodes.push(...playNote(f,'square',bT,beat*0.4,musicVol*0.45,C));
+      bT+=beat*0.5; bi++;
+      setTimeout(nextBass, Math.max(0,(bT-ctx.currentTime-0.05)*1000));
+    }
+    nextBass();
+
+    // Batería
+    let pT=ctx.currentTime+0.05;
+    function nextPerc(){
+      if(!_musicNodes) return;
+      for(let i=0;i<16;i++){
+        const t=pT+i*beat*0.5;
+        if(KK[i]) nodes.push(...kick(t,musicVol*0.9,C));
+        if(SN[i]) nodes.push(...snare(t,musicVol*0.7,C));
+        if(HH[i]) nodes.push(...hihat(t,musicVol*0.4,C));
+      }
+      pT+=16*beat*0.5;
+      setTimeout(nextPerc, Math.max(0,(pT-ctx.currentTime-0.3)*1000));
+    }
+    nextPerc();
+
+    return nodes;
+  }
+
+  // ── TEMA: MINIBOSS — La menor, 125 BPM ───────────────
+  function buildMiniboss(){
+    const nodes = [];
+    const C = compressor(); nodes.push(C);
+    const beat = 60/125;
+
+    const SC = [110.0,123.5,130.8,146.8,164.8,174.6,207.7,220.0,246.9,261.6,293.7];
+    const RIFF = [
+      [0,.25],[0,.125],[2,.125],[3,.25],[4,.25],
+      [0,.25],[5,.25],[4,.25],[3,.5],
+      [7,.25],[7,.125],[9,.125],[10,.25],[9,.25],
+      [7,.25],[5,.25],[4,.25],[3,.5],
+      [10,.25],[9,.25],[8,.25],[7,.25],
+      [9,.5],[8,.25],[7,.25],
+      [5,.25],[7,.25],[8,.25],[10,.25],
+      [12,.75],[5,.25],
+    ];
+    const BASS  = [55,0,55,55,49,0,49,0,55,0,55,0,61.7,55,49,0];
+    const KK    = [1,0,0,1,1,0,0,0,1,0,0,1,1,0,1,0];
+    const SN    = [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0];
+
+    let ri=0,rT=ctx.currentTime+0.05;
+    function nextRiff(){
+      if(!_musicNodes) return;
+      const [si,d]=RIFF[ri%RIFF.length]; const dur=d*beat; const f=SC[si];
+      nodes.push(...playNote(f,'sawtooth',rT,dur*0.82,musicVol*0.52,C,-7));
+      nodes.push(...playNote(f,'sawtooth',rT,dur*0.82,musicVol*0.32,C,7));
+      nodes.push(...playNote(f*0.5,'sine',rT,dur*0.7,musicVol*0.22,C,0));
+      rT+=dur; ri++;
+      setTimeout(nextRiff,Math.max(0,(rT-ctx.currentTime-0.05)*1000));
+    }
+    nextRiff();
+
+    let bi=0,bT=ctx.currentTime+0.05;
+    function nextBass(){
+      if(!_musicNodes) return;
+      const f=BASS[bi%BASS.length];
+      if(f>0) nodes.push(...playNote(f,'square',bT,beat*0.4,musicVol*0.5,C));
+      bT+=beat*0.5; bi++;
+      setTimeout(nextBass,Math.max(0,(bT-ctx.currentTime-0.05)*1000));
+    }
+    nextBass();
+
+    let pT=ctx.currentTime+0.05;
+    function nextPerc(){
+      if(!_musicNodes) return;
+      for(let i=0;i<16;i++){
+        const t=pT+i*beat*0.5;
+        if(KK[i]) nodes.push(...kick(t,musicVol*1.0,C));
+        if(SN[i]) nodes.push(...snare(t,musicVol*0.8,C));
+        nodes.push(...hihat(t,musicVol*0.45,C));
+      }
+      pT+=16*beat*0.5;
+      setTimeout(nextPerc,Math.max(0,(pT-ctx.currentTime-0.3)*1000));
+    }
+    nextPerc();
+    return nodes;
+  }
+
+  // ── TEMA: BOSS FINAL — La menor frigio, 140 BPM ───────
+  function buildBoss(){
+    const nodes = [];
+    const C = compressor(); nodes.push(C);
+    const beat = 60/140;
+
+    const SC = [110.0,116.5,130.8,146.8,164.8,174.6,196.0,220.0,233.1,261.6,293.7,329.6];
+    const RIFF = [
+      [0,.25],[0,.25],[2,.25],[0,.25],[3,.25],[0,.25],[4,.25],[0,.25],
+      [0,.25],[0,.25],[5,.25],[0,.25],[6,.25],[5,.25],[4,.25],[3,.25],
+      [7,.25],[7,.25],[9,.25],[7,.25],[10,.25],[7,.25],[9,.25],[7,.25],
+      [11,.25],[10,.25],[9,.25],[8,.25],[10,.5],[9,.25],[8,.25],
+    ];
+    const BASS  = [55,0,55,55,55,0,49,55,55,0,55,55,65.4,55,49,0];
+    const KK    = [1,0,1,0,1,0,0,1,1,0,1,0,1,0,1,0];
+    const SN    = [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0];
+
+    // Pad oscuro de fondo
+    [55,65.4,82.4].forEach(function(f,i){
+      const gn = ctx.createGain();
+      gn.gain.value = 0;
+      gn.gain.linearRampToValueAtTime(musicVol*0.08, ctx.currentTime+2.5);
+      gn.connect(C);
+      const o = ctx.createOscillator();
+      o.type = 'sine'; o.frequency.value = f; o.detune.value = i*4-4;
+      o.connect(gn); o.start();
+      nodes.push(o, gn);
+    });
+
+    let ri=0,rT=ctx.currentTime+0.05;
+    function nextRiff(){
+      if(!_musicNodes) return;
+      const [si,d]=RIFF[ri%RIFF.length]; const dur=d*beat; const f=SC[si];
+      [[f,-8,0.38],[f,8,0.28],[f*1.5,0,0.18],[f*0.5,0,0.22]].forEach(function(p){
+        nodes.push(...playNote(p[0],'sawtooth',rT,dur*0.82,musicVol*p[2],C,p[1]));
+      });
+      rT+=dur; ri++;
+      setTimeout(nextRiff,Math.max(0,(rT-ctx.currentTime-0.05)*1000));
+    }
+    nextRiff();
+
+    let bi=0,bT=ctx.currentTime+0.05;
+    function nextBass(){
+      if(!_musicNodes) return;
+      const f=BASS[bi%BASS.length];
+      if(f>0) nodes.push(...playNote(f,'sine',bT,beat*0.88,musicVol*0.65,C));
+      bT+=beat*0.5; bi++;
+      setTimeout(nextBass,Math.max(0,(bT-ctx.currentTime-0.05)*1000));
+    }
+    nextBass();
+
+    let pT=ctx.currentTime+0.05;
+    function nextPerc(){
+      if(!_musicNodes) return;
+      for(let i=0;i<16;i++){
+        const t=pT+i*beat*0.5;
+        if(KK[i]) nodes.push(...kick(t,musicVol*1.1,C));
+        if(SN[i]) nodes.push(...snare(t,musicVol*0.9,C));
+        nodes.push(...hihat(t,musicVol*0.5,C));
+      }
+      pT+=16*beat*0.5;
+      setTimeout(nextPerc,Math.max(0,(pT-ctx.currentTime-0.3)*1000));
+    }
+    nextPerc();
+    return nodes;
+  }
+
+  // ── TEMA: VICTORIA / DERROTA ──────────────────────────
+  function buildVictory(){
+    const nodes=[];
+    const C=compressor(); nodes.push(C);
+    const T=ctx.currentTime;
+    [523.3,659.3,784.0,1046.5,784.0,1046.5,1318.5].forEach(function(f,i){
+      const dur=i===6?0.7:0.16;
+      nodes.push(...playNote(f,'triangle',T+i*0.17,dur,musicVol*0.65,C,i%2?4:-4));
+      nodes.push(...playNote(f/2,'sine',T+i*0.17,dur,musicVol*0.25,C,0));
+    });
+    return nodes;
+  }
+  function buildDefeat(){
+    const nodes=[];
+    const C=compressor(); nodes.push(C);
+    const T=ctx.currentTime;
+    [261.6,220.0,196.0,174.6,155.6,130.8].forEach(function(f,i){
+      nodes.push(...playNote(f,'sawtooth',T+i*0.30,0.45,musicVol*0.5,C,i*3));
+    });
+    return nodes;
+  }
+
+  // ── Dispatcher ────────────────────────────────────────
+  function playTheme(themeName){
+    if(!musicOn){ _pendingTheme=themeName; return; }
+    var c = init();
+    // Sin contexto activo (antes del primer click) — ignorar silenciosamente
+    if(!c || c.state !== 'running'){ _pendingTheme=themeName; return; }
+    if(_currentTheme===themeName) return;
+    stopMusic();
+    _currentTheme=themeName;
+    _pendingTheme=null;
+    const B={title:buildTitle,map:buildMap,battle:buildBattle,
+             miniboss:buildMiniboss,boss:buildBoss,
+             victory:buildVictory,defeat:buildDefeat};
+    const fn=B[themeName];
+    if(!fn) return;
+    _musicNodes=fn();
+  }
+
+  let _pendingTheme=null;
+  function resumePending(){
+    if(_pendingTheme){
+      const t=_pendingTheme; _pendingTheme=null; _currentTheme=null;
+      playTheme(t);
+    }
+  }
+
+  // ── API PÚBLICA ───────────────────────────────────────
+
+  function toggleMusic(){
+    musicOn = !musicOn;
+    const btn = document.getElementById('audio-music-btn');
+    if(musicOn){
+      if(btn) btn.classList.remove('muted');
+      if(_currentTheme){ const t = _currentTheme; _currentTheme=null; playTheme(t); }
+    } else {
+      if(btn) btn.classList.add('muted');
+      stopMusic();
+    }
+  }
+
+  function toggleSfx(){
+    sfxOn = !sfxOn;
+    const btn = document.getElementById('audio-sfx-btn');
+    if(btn) sfxOn ? btn.classList.remove('muted') : btn.classList.add('muted');
+  }
+
+  function toggleVolPanel(){
+    const panel = document.getElementById('audio-vol-panel');
+    if(panel) panel.classList.toggle('show');
+  }
+
+  function setMusicVol(v){
+    musicVol = v;
+    if(_musicNodes){
+      // Actualizar gain del master node
+      _musicNodes.forEach(function(n){
+        if(n.gain && n.gain.value !== undefined){
+          try{ n.gain.setTargetAtTime(v * 0.3, ctx.currentTime, 0.1); }catch(e){}
+        }
+      });
+    }
+  }
+
+  function setSfxVol(v){ sfxVol = v; }
+
+  return {
+    init, playTheme, stopMusic, resumePending,
+    toggleMusic, toggleSfx, toggleVolPanel,
+    setMusicVol, setSfxVol,
+    getSfxVol: function(){ return sfxVol; },
+    getMusicVol: function(){ return musicVol; },
+    sfx:{
+      playerHit:  sfxPlayerHit,
+      crit:       sfxCrit,
+      damage:     sfxPlayerDamage,
+      dodge:      sfxDodge,
+      block:      sfxBlock,
+      counter:    sfxCounter,
+      victory:    sfxVictory,
+      defeat:     sfxDefeat,
+      levelUp:    sfxLevelUp,
+      buy:        sfxBuy,
+      click:      sfxClick,
+      skill:      sfxSkill,
+      enterZone:  sfxEnterZone,
+      bossIntro:  sfxBossIntro,
+      drop:       sfxDrop,
+    }
+  };
+})();
+
+// ── HOOKS DE AUDIO EN FUNCIONES DEL JUEGO ────────────────
+
+// Inicializar audio con el primer click del usuario
+document.addEventListener('click', function initAudioOnce(){
+  // Crear contexto SOLO aquí (primer gesto del usuario)
+  var c = AUDIO.init();
+  if(!c) return;
+  var doMusic = function(){
+    // Determinar qué música tocar según la pantalla activa
+    var screen = document.querySelector('.screen.active');
+    var id = screen ? screen.id : 'title';
+    var theme = 'title';
+    if(id === 'game' || id === 'battle') theme = 'map';
+    AUDIO.playTheme(theme);
+  };
+  if(c.state === 'suspended'){
+    c.resume().then(function(){ setTimeout(doMusic, 50); });
+  } else {
+    setTimeout(doMusic, 50);
+  }
+}, {once: true});
+
+// Música según pantalla
+(function(){
+  const _origShowScreen = showScreen;
+  showScreen = function(id){
+    _origShowScreen(id);
+    if(id === 'title')  AUDIO.playTheme('title');
+    else if(id === 'game') {
+      // Solo cambiar a mapa si no hay batalla activa
+      if(!BT) AUDIO.playTheme('map');
+    }
+  };
+})();
+
+// Música de batalla al entrar
+(function(){
+  const _origEnterStageNode = enterStageNode;
+  enterStageNode = function(zi, ni){
+    AUDIO.sfx.enterZone();
+    const node = ZONE_STAGES[zi] && ZONE_STAGES[zi].nodes[ni];
+    if(node && node.isFinalBoss) AUDIO.sfx.bossIntro();
+    else if(node && node.isMiniboss) setTimeout(function(){ AUDIO.playTheme('miniboss'); }, 300);
+    else setTimeout(function(){ AUDIO.playTheme('battle'); }, 300);
+    _origEnterStageNode(zi, ni);
+  };
+})();
+
+// SFX en useSkill
+(function(){
+  const _origUseSkill = useSkill;
+  useSkill = function(sid){
+    if(BT && BT.pTurn){
+      const s = getSkillStats(sid);
+      if(s.type === 'atk') AUDIO.sfx.playerHit();
+      else AUDIO.sfx.skill();
+    }
+    _origUseSkill(sid);
+  };
+})();
+
+// SFX en combate reactivo
+(function(){
+  const _origDodge   = combatDodge;
+  const _origBlock   = combatBlock;
+  const _origCounter = combatCounter;
+  combatDodge   = function(){ AUDIO.sfx.dodge();   _origDodge();   };
+  combatBlock   = function(){ AUDIO.sfx.block();   _origBlock();   };
+  combatCounter = function(){ AUDIO.sfx.counter(); _origCounter(); };
+})();
+
+// SFX crítico — hookeado en bLog
+(function(){
+  const _origBLog = bLog;
+  bLog = function(type, msg){
+    _origBLog(type, msg);
+    if(type === 'player' && msg && msg.indexOf('CRÍTICO') >= 0) AUDIO.sfx.crit();
+    if(type === 'enemy')  AUDIO.sfx.damage();
+    if(type === 'sys' && msg && msg.indexOf('✨') >= 0){
+      AUDIO.sfx.drop && AUDIO.sfx.drop();
+      const log = document.getElementById('b-log');
+      if(log){ const r = log.getBoundingClientRect(); FX.dropSparkle(r.left + r.width/2, r.top + 20); }
+    }
+  };
+})();
+
+// Música y SFX en endBattle — integrado en el patch del modo auto
+
+// SFX subida de nivel
+(function(){
+  const _origLvlUp = showLvlUp;
+  showLvlUp = function(lv){
+    AUDIO.sfx.levelUp();
+    _origLvlUp(lv);
+  };
+})();
+
+// SFX comprar
+
+
+// Boss — música especial
+(function(){
+  const _origBossIntro = showBossIntro;
+  showBossIntro = function(zi){
+    AUDIO.sfx.bossIntro();
+    setTimeout(function(){ AUDIO.playTheme('boss'); }, 1000);
+    _origBossIntro(zi);
+  };
+})();
+
+// Música título al cargar
+// La música arranca en el primer click del usuario (requerimiento del navegador)
+// Ver initAudioOnce abajo
+
+
+// ═══════════════════════════════════════════════════════════
+//  SISTEMA DE FEEDBACK — partículas, ripple, sonidos globales
+// ═══════════════════════════════════════════════════════════
+
+// ── Nuevos sonidos en el motor de audio ──────────────────
+// Se agregan al objeto sfx del AUDIO ya existente
+(function extendAudio(){
+  if(!AUDIO || !AUDIO.sfx) return;
+
+  const ctx_ = () => AUDIO.init();
+
+  function _tone(freq, type, a, d, s, r, vol, t0){
+    const c = ctx_(); if(!c) return;
+    const t = t0 || c.currentTime;
+    const osc = c.createOscillator();
+    const g   = c.createGain();
+    osc.connect(g); g.connect(c.destination);
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vol, t + a);
+    g.gain.linearRampToValueAtTime(vol * s, t + a + d);
+    g.gain.linearRampToValueAtTime(0, t + a + d + r);
+    osc.start(t); osc.stop(t + a + d + r + 0.01);
+  }
+
+  // Menu hover — suave
+  AUDIO.sfx.hover = function(){
+    const c = ctx_(); if(!c) return;
+    _tone(880, 'sine', 0.005, 0.02, 0.3, 0.05, 0.08 * (AUDIO.getSfxVol ? AUDIO.getSfxVol() : 0.7));
+  };
+
+  // Click genérico de UI
+  AUDIO.sfx.uiClick = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    _tone(660, 'sine', 0.005, 0.03, 0.2, 0.06, 0.18 * 0.7, t);
+    _tone(880, 'sine', 0.005, 0.03, 0.2, 0.06, 0.12 * 0.7, t + 0.04);
+  };
+
+  // Selección de clase — épico
+  AUDIO.sfx.selectClass = function(cls){
+    const c = ctx_(); if(!c) return;
+    const freqs = {katon:[392,494,587], suiton:[349,440,523], raiton:[440,554,659]};
+    const f = freqs[cls] || [440,554,659];
+    const t = c.currentTime;
+    f.forEach(function(freq, i){
+      _tone(freq, 'triangle', 0.01, 0.1, 0.5, 0.2, 0.35, t + i*0.07);
+    });
+  };
+
+  // Crear personaje — fanfarria corta
+  AUDIO.sfx.createChar = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    [523,659,784,1047].forEach(function(f, i){
+      _tone(f, 'triangle', 0.01, 0.08, 0.6, 0.15, 0.5, t + i*0.1);
+    });
+  };
+
+  // Cargar partida
+  AUDIO.sfx.loadGame = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    [330,440,554,659,880].forEach(function(f, i){
+      _tone(f, 'sine', 0.005, 0.06, 0.5, 0.12, 0.35, t + i*0.06);
+    });
+  };
+
+  // Comprar / venta — coin sound
+  AUDIO.sfx.coin = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    _tone(1318, 'sine', 0.005, 0.04, 0.3, 0.12, 0.45, t);
+    _tone(1568, 'sine', 0.005, 0.04, 0.3, 0.12, 0.35, t+0.06);
+    _tone(2093, 'sine', 0.005, 0.06, 0.2, 0.15, 0.3,  t+0.12);
+  };
+
+  // Vender material — coin descendente
+  AUDIO.sfx.sell = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    [1047, 880, 659].forEach(function(f, i){
+      _tone(f, 'sine', 0.005, 0.05, 0.3, 0.1, 0.35, t + i*0.08);
+    });
+  };
+
+  // Equipar item — metálico
+  AUDIO.sfx.equip = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    _tone(440, 'square', 0.005, 0.04, 0.2, 0.1, 0.3, t);
+    _tone(660, 'square', 0.005, 0.04, 0.2, 0.1, 0.25, t+0.05);
+    _tone(880, 'triangle',0.005,0.06, 0.4, 0.2, 0.3, t+0.1);
+  };
+
+  // Usar poción — burbujeo
+  AUDIO.sfx.potion = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    [523,622,698,784,880,1047].forEach(function(f,i){
+      _tone(f, 'sine', 0.005, 0.04, 0.3, 0.08, 0.3, t + i*0.05);
+    });
+  };
+
+  // Desbloquear habilidad — mágico
+  AUDIO.sfx.unlockSkill = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    const osc = c.createOscillator();
+    const g = c.createGain();
+    osc.connect(g); g.connect(c.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(400, t);
+    osc.frequency.exponentialRampToValueAtTime(1600, t + 0.4);
+    g.gain.setValueAtTime(0.5, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
+    osc.start(t); osc.stop(t+0.61);
+    _tone(1600, 'triangle', 0.01, 0.1, 0.5, 0.3, 0.4, t+0.35);
+  };
+
+  // Mejorar habilidad — power up
+  AUDIO.sfx.upgradeSkill = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    [330,440,554,698,880,1108].forEach(function(f,i){
+      _tone(f, 'triangle', 0.005, 0.05, 0.4, 0.1, 0.35, t + i*0.05);
+    });
+  };
+
+  // Reclamar misión — fanfarria de quest
+  AUDIO.sfx.questClaim = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    [523,659,784,659,784,1047].forEach(function(f,i){
+      _tone(f, 'triangle', 0.01, 0.07, 0.6, 0.15, 0.45, t + i*0.09);
+    });
+  };
+
+  // Forja / upgrade — heavy metal
+  AUDIO.sfx.forge = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    const osc = c.createOscillator();
+    const g = c.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(150, t);
+    osc.frequency.exponentialRampToValueAtTime(80, t+0.2);
+    g.gain.setValueAtTime(0.5, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+0.3);
+    osc.connect(g); g.connect(c.destination);
+    osc.start(t); osc.stop(t+0.31);
+    // Chispa
+    _tone(1200, 'sine', 0.005, 0.05, 0.1, 0.15, 0.3, t+0.15);
+    _tone(1600, 'sine', 0.005, 0.04, 0.1, 0.12, 0.25, t+0.2);
+  };
+
+  // Encantamiento
+  AUDIO.sfx.enchant = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    const osc = c.createOscillator();
+    const g = c.createGain();
+    const lfo = c.createOscillator();
+    const lg = c.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(660, t);
+    lfo.frequency.setValueAtTime(8, t);
+    lg.gain.setValueAtTime(40, t);
+    lfo.connect(lg); lg.connect(osc.frequency);
+    g.gain.setValueAtTime(0.4, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+0.8);
+    osc.connect(g); g.connect(c.destination);
+    osc.start(t); lfo.start(t);
+    osc.stop(t+0.81); lfo.stop(t+0.81);
+  };
+
+  // Adoptar / activar mascota
+  AUDIO.sfx.pet = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    [880,1108,1318,1760].forEach(function(f,i){
+      _tone(f, 'sine', 0.005, 0.06, 0.4, 0.15, 0.35, t + i*0.07);
+    });
+  };
+
+  // Rival aparece — dramático
+  AUDIO.sfx.rival = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    _tone(110, 'sawtooth', 0.01, 0.3, 0.5, 0.4, 0.5, t);
+    _tone(165, 'sawtooth', 0.01, 0.3, 0.5, 0.4, 0.4, t+0.1);
+    _tone(220, 'square',   0.01, 0.2, 0.4, 0.5, 0.45, t+0.2);
+  };
+
+  // Guardar — confirmación suave
+  AUDIO.sfx.save = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    _tone(440, 'sine', 0.005, 0.05, 0.5, 0.15, 0.3, t);
+    _tone(554, 'sine', 0.005, 0.05, 0.5, 0.15, 0.25, t+0.08);
+    _tone(659, 'sine', 0.005, 0.08, 0.6, 0.2, 0.3, t+0.16);
+  };
+
+  // Tab change — whoosh
+  AUDIO.sfx.tab = function(){
+    const c = ctx_(); if(!c) return;
+    const osc = c.createOscillator();
+    const g = c.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(300, c.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(600, c.currentTime + 0.08);
+    g.gain.setValueAtTime(0.15, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 0.1);
+    osc.connect(g); g.connect(c.destination);
+    osc.start(c.currentTime); osc.stop(c.currentTime + 0.11);
+  };
+
+  // Farmeo start
+  AUDIO.sfx.farmStart = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    [220,330,440,330,440,660].forEach(function(f,i){
+      _tone(f, 'triangle', 0.005, 0.04, 0.3, 0.08, 0.3, t + i*0.055);
+    });
+  };
+
+  // Error / no puedo
+  AUDIO.sfx.error = function(){
+    const c = ctx_(); if(!c) return;
+    const t = c.currentTime;
+    _tone(200, 'square', 0.005, 0.05, 0.3, 0.1, 0.35, t);
+    _tone(180, 'square', 0.005, 0.05, 0.3, 0.1, 0.3, t+0.1);
+  };
+
+  console.log('[AUDIO] Sonidos extendidos OK');
+})();
+
+// ── Sistema de partículas y efectos visuales ─────────────
+
+const FX = {
+
+  // Ripple en elemento
+  ripple: function(el, color){
+    if(!el) return;
+    el.classList.add('ripple-container');
+    const r = document.createElement('div');
+    r.className = 'ripple';
+    const size = Math.max(el.offsetWidth, el.offsetHeight);
+    r.style.cssText = 'width:'+size+'px;height:'+size+'px;'
+      + 'left:'+((el.offsetWidth-size)/2)+'px;'
+      + 'top:'+((el.offsetHeight-size)/2)+'px;'
+      + (color ? 'background:'+color+'55;' : '');
+    el.appendChild(r);
+    setTimeout(function(){ r.remove(); }, 600);
+  },
+
+  // Partículas flotantes desde posición
+  particles: function(x, y, emojis, count){
+    count = count || 5;
+    emojis = emojis || ['✨','⭐','💫'];
+    for(let i=0; i<count; i++){
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const em = emojis[Math.floor(Math.random()*emojis.length)];
+      p.textContent = em;
+      const angle = (Math.random() * 360) * Math.PI/180;
+      const dist  = 40 + Math.random() * 60;
+      const dist2 = dist + 20 + Math.random() * 40;
+      const px  = Math.round(Math.cos(angle) * dist);
+      const py  = Math.round(Math.sin(angle) * dist);
+      const px2 = Math.round(Math.cos(angle) * dist2);
+      const py2 = Math.round(Math.sin(angle) * dist2);
+      p.style.cssText = 'left:'+x+'px;top:'+y+'px;'
+        + '--px:'+px+'px;--py:'+py+'px;'
+        + '--px2:'+px2+'px;--py2:'+py2+'px;'
+        + 'font-size:'+(12+Math.random()*10)+'px;'
+        + 'animation-delay:'+(Math.random()*0.15)+'s;'
+        + 'animation-duration:'+(0.8+Math.random()*0.5)+'s;';
+      document.body.appendChild(p);
+      setTimeout(function(){ p.remove(); }, 1500);
+    }
+  },
+
+  // Flash de pantalla
+  flash: function(color){
+    const f = document.createElement('div');
+    f.className = 'screen-flash';
+    f.style.background = color || 'rgba(232,192,64,.15)';
+    document.body.appendChild(f);
+    setTimeout(function(){ f.remove(); }, 500);
+  },
+
+  // Lluvia de monedas desde posición
+  coins: function(x, y, count){
+    count = count || 4;
+    for(let i=0; i<count; i++){
+      const c = document.createElement('div');
+      c.className = 'coin-pop';
+      c.textContent = '🪙';
+      c.style.cssText = 'left:'+(x + (Math.random()-0.5)*60)+'px;'
+        + 'top:'+y+'px;'
+        + 'animation-delay:'+(i*0.08)+'s;'
+        + 'animation-duration:'+(0.6+Math.random()*0.3)+'s;';
+      document.body.appendChild(c);
+      setTimeout(function(){ c.remove(); }, 1200);
+    }
+  },
+
+  // Burst de quest
+  questBurst: function(x, y){
+    ['🏆','⭐','✨','💛','🎯'].forEach(function(em, i){
+      const p = document.createElement('div');
+      p.className = 'quest-burst';
+      p.textContent = em;
+      const angle = (i / 5) * Math.PI * 2;
+      p.style.cssText = 'left:'+(x + Math.cos(angle)*30)+'px;'
+        + 'top:'+(y + Math.sin(angle)*20)+'px;'
+        + 'animation-delay:'+(i*0.06)+'s;';
+      document.body.appendChild(p);
+      setTimeout(function(){ p.remove(); }, 1200);
+    });
+  },
+
+  // Sparkle de drop
+  dropSparkle: function(x, y){
+    ['✨','💎','🌟'].forEach(function(em, i){
+      const p = document.createElement('div');
+      p.className = 'drop-sparkle';
+      p.textContent = em;
+      p.style.cssText = 'left:'+(x + (i-1)*20)+'px;top:'+y+'px;'
+        + 'font-size:20px;animation-delay:'+(i*0.1)+'s;';
+      document.body.appendChild(p);
+      setTimeout(function(){ p.remove(); }, 1200);
+    });
+  },
+
+  // Posición del centro de un elemento
+  center: function(el){
+    if(!el) return {x: window.innerWidth/2, y: window.innerHeight/2};
+    const r = el.getBoundingClientRect();
+    return {x: r.left + r.width/2, y: r.top + r.height/2};
+  },
+
+  // XP flash en la barra
+  xpFlash: function(){
+    const bar = document.getElementById('h-xpb') || document.querySelector('.xp-bar');
+    if(bar){ bar.classList.add('xp-flash'); setTimeout(function(){ bar.classList.remove('xp-flash'); }, 500); }
+  },
+};
+
+// ── Añadir ripple a todos los botones automáticamente ────
+function addRippleToButtons(){
+  document.querySelectorAll('button, .menu-btn, .nav-btn, .bnav-btn, .zone-card, .cls-card, .stage-node, .cbt-btn, .fight-btn, .farm-btn').forEach(function(el){
+    if(el._hasRipple) return;
+    el._hasRipple = true;
+    el.addEventListener('click', function(e){
+      if(el.disabled) return;
+      FX.ripple(el);
+    });
+  });
+}
+
+// Re-añadir ripple después de cada render
+const _origInnerHTML = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
+// No parchear innerHTML — en vez de eso, llamar addRippleToButtons en showTab
+(function(){
+  const _origShowTab = showTab;
+  showTab = function(t){
+    AUDIO.sfx.tab && AUDIO.sfx.tab();
+    _origShowTab(t);
+    setTimeout(addRippleToButtons, 100);
+  };
+})();
+
+// Inicialización
+setTimeout(addRippleToButtons, 500);
+
+// ── HOOKS DE SONIDO EN TODAS LAS INTERACCIONES ───────────
+
+// Pantalla de título — hover en menu-btns
+document.addEventListener('mouseover', function(e){
+  const btn = e.target.closest('.menu-btn');
+  if(btn) AUDIO.sfx.hover && AUDIO.sfx.hover();
+});
+
+// Elegir clase
+(function(){
+  const _orig = selCls;
+  selCls = function(el){
+    _orig(el);
+    const cls = el.dataset.cls;
+    AUDIO.sfx.selectClass && AUDIO.sfx.selectClass(cls);
+    el.classList.add('cls-selected');
+    setTimeout(function(){ el.classList.remove('cls-selected'); }, 300);
+    const c = FX.center(el);
+    const emojis = {katon:['🔥','💥','✨'], suiton:['💧','🌊','✨'], raiton:['⚡','💫','✨']};
+    FX.particles(c.x, c.y, emojis[cls] || ['✨'], 6);
+  };
+})();
+
+// Crear personaje
+(function(){
+  const _orig = createChar;
+  createChar = function(){
+    AUDIO.sfx.createChar && AUDIO.sfx.createChar();
+    FX.flash('rgba(232,192,64,.2)');
+    const btn = document.querySelector('[onclick*="createChar"]');
+    const c = FX.center(btn);
+    FX.particles(c.x, c.y, ['⚔️','🥷','✨','⭐','🔥'], 10);
+    _orig();
+  };
+})();
+
+// Cargar partida
+(function(){
+  const _orig = loadGame;
+  loadGame = function(){
+    AUDIO.sfx.loadGame && AUDIO.sfx.loadGame();
+    _orig();
+  };
+})();
+
+// Guardar
+(function(){
+  const _orig = saveGame;
+  saveGame = function(){
+    AUDIO.sfx.save && AUDIO.sfx.save();
+    _orig();
+  };
+})();
+
+// showTab combinado arriba
+
+(function(){
+  const _origBuy = buyEq;
+  buyEq = function(id){
+    AUDIO.sfx.coin && AUDIO.sfx.coin();
+    const c = FX.center(event && event.target);
+    FX.coins(c.x, c.y, 5);
+    FX.particles(c.x, c.y, ['⚔️','🛡️','✨'], 4);
+    _origBuy(id);
+  };
+})();
+
+// Comprar consumible
+(function(){
+  const _orig = buyCon;
+  buyCon = function(id){
+    AUDIO.sfx.coin && AUDIO.sfx.coin();
+    const c = FX.center(event && event.target);
+    FX.coins(c.x, c.y, 3);
+    _orig(id);
+  };
+})();
+
+// Vender material
+(function(){
+  const _orig = sellMat;
+  sellMat = function(id){
+    AUDIO.sfx.sell && AUDIO.sfx.sell();
+    const c = FX.center(event && event.target);
+    FX.coins(c.x, c.y, 4);
+    FX.particles(c.x, c.y, ['🪙','💰'], 3);
+    _orig(id);
+  };
+})();
+
+// Equipar item
+(function(){
+  const _orig = equipItem;
+  equipItem = function(id){
+    AUDIO.sfx.equip && AUDIO.sfx.equip();
+    const c = FX.center(event && event.target);
+    FX.particles(c.x, c.y, ['⚔️','🛡️','✨','💫'], 6);
+    FX.flash('rgba(51,170,255,.1)');
+    _orig(id);
+  };
+})();
+
+// Poción rápida
+(function(){
+  const _orig = quickPot;
+  quickPot = function(id){
+    AUDIO.sfx.potion && AUDIO.sfx.potion();
+    const c = FX.center(event && event.target);
+    FX.particles(c.x, c.y, ['🍶','💚','✨'], 5);
+    _orig(id);
+  };
+})();
+
+// Poción en batalla
+(function(){
+  const _orig = battlePotion;
+  battlePotion = function(){
+    AUDIO.sfx.potion && AUDIO.sfx.potion();
+    const c = FX.center(document.getElementById('btn-pot'));
+    FX.particles(c.x, c.y, ['🍶','💚','✨'], 5);
+    _orig();
+  };
+})();
+
+// Reclamar misión
+(function(){
+  const _orig = claimQuest;
+  claimQuest = function(id){
+    AUDIO.sfx.questClaim && AUDIO.sfx.questClaim();
+    FX.flash('rgba(255,204,0,.15)');
+    const c = FX.center(event && event.target);
+    FX.questBurst(c.x, c.y);
+    _orig(id);
+  };
+})();
+
+// Aplicar encantamiento
+(function(){
+  const _orig = applyEnchant;
+  applyEnchant = function(encId){
+    AUDIO.sfx.enchant && AUDIO.sfx.enchant();
+    FX.flash('rgba(200,50,255,.12)');
+    const c = FX.center(event && event.target);
+    FX.particles(c.x, c.y, ['✨','💜','🔮','💫'], 8);
+    _orig(encId);
+  };
+})();
+
+// Quitar encantamiento
+(function(){
+  const _orig = removeEnchant;
+  removeEnchant = function(){
+    AUDIO.sfx.uiClick && AUDIO.sfx.uiClick();
+    _orig();
+  };
+})();
+
+// Desafiar rival
+(function(){
+  const _orig = fightRival;
+  fightRival = function(rid){
+    AUDIO.sfx.rival && AUDIO.sfx.rival();
+    FX.flash('rgba(255,51,51,.12)');
+    _orig(rid);
+  };
+})();
+
+// Iniciar farmeo
+(function(){
+  const _orig = startFarm;
+  startFarm = function(zi){
+    AUDIO.sfx.farmStart && AUDIO.sfx.farmStart();
+    const c = FX.center(event && event.target);
+    FX.particles(c.x, c.y, ['⚔️','🔄','💫'], 5);
+    _orig(zi);
+  };
+})();
+
+// Toggle auto
+(function(){
+  const _orig = toggleAuto;
+  toggleAuto = function(){
+    AUDIO.sfx.uiClick && AUDIO.sfx.uiClick();
+    _orig();
+    if(AUTO.on){
+      const c = FX.center(document.getElementById('auto-toggle'));
+      FX.particles(c.x, c.y, ['⚡','🤖','💫'], 4);
+    }
+  };
+})();
+
+// Abrir etapa
+(function(){
+  const _orig = openStage;
+  openStage = function(zi){
+    AUDIO.sfx.tab && AUDIO.sfx.tab();
+    _orig(zi);
+  };
+})();
+
+// Confirmar nivel — ya tiene sfxLevelUp, agregar partículas
+(function(){
+  const _orig = confirmLvlUp;
+  confirmLvlUp = function(){
+    FX.flash('rgba(232,192,64,.25)');
+    const c = {x: window.innerWidth/2, y: window.innerHeight/2};
+    FX.particles(c.x, c.y, ['⬆️','⭐','✨','💫','🔥','⚡'], 15);
+    _orig();
+  };
+})();
+
+// Drop de item — agregar sparkle al log
+
+
+// XP flash al ganar XP en batalla
+(function(){
+  const _origUpdateHUD = updateHUD;
+  let _lastXp = 0;
+  updateHUD = function(){
+    _origUpdateHUD();
+    if(H && H.xp > _lastXp + 5){
+      FX.xpFlash();
+      _lastXp = H.xp;
+    }
+  };
+})();
+
+// Sonido al entrar al menú de título
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    // Música ya inicia en AUDIO, agregar hover a los botones
+    addRippleToButtons();
+  }, 800);
+});
+
+console.log('[FX] Sistema de feedback cargado OK');
+
 </script>
+
+<!-- BARRA FARMEO -->
+<div class="farm-bar" id="farm-bar">
+  <span class="farm-bar-ico">⚔️</span>
+  <div class="farm-bar-info">
+    <div class="farm-bar-title">MODO FARMEO</div>
+    <div class="farm-bar-stats" id="farm-stats">—</div>
+  </div>
+  <button class="farm-stop-btn" onclick="stopFarm()">⏹ Parar</button>
+</div>
+<div class="farm-next-bar" id="farm-next-bar">
+  <div class="farm-next-fill" id="farm-next-fill" style="width:0%"></div>
+</div>
+
+<!-- DERROTA -->
+<div id="defeat-overlay">
+  <div class="defeat-skull">💀</div>
+  <div class="defeat-title">DERROTADO</div>
+  <div class="defeat-sub" id="defeat-enemy-lbl">—</div>
+  <div class="defeat-gold">
+    <div class="defeat-gold-amt" id="defeat-gold-amt">-0 🪙</div>
+    <div class="defeat-gold-lbl">ORO PERDIDO</div>
+  </div>
+  <div class="defeat-broke" id="defeat-broke">
+    <div class="defeat-broke-title">⚠️ Sin oro para recuperarte</div>
+    <div class="defeat-broke-desc">Tu cuerpo necesita sanar.<br>Esperá a que el HP se recupere.</div>
+    <div class="defeat-timer" id="defeat-timer">1:30</div>
+    <div class="defeat-hp-track"><div class="defeat-hp-fill" id="defeat-hp-fill" style="width:0%"></div></div>
+  </div>
+  <button class="defeat-btn" id="defeat-btn" onclick="closeDefeat()">↩ Continuar</button>
+</div>
+
+
+<!-- CONTROLES DE AUDIO -->
+<div class="audio-controls" id="audio-controls">
+  <div class="audio-vol" id="audio-vol-panel">
+    <div class="audio-vol-row">
+      <span>🎵</span>
+      <input type="range" id="vol-music" min="0" max="100" value="40"
+        oninput="AUDIO.setMusicVol(this.value/100)">
+    </div>
+    <div class="audio-vol-row">
+      <span>🔊</span>
+      <input type="range" id="vol-sfx" min="0" max="100" value="70"
+        oninput="AUDIO.setSfxVol(this.value/100)">
+    </div>
+  </div>
+  <div class="audio-btn" id="audio-music-btn" onclick="AUDIO.toggleMusic()" title="Música">🎵</div>
+  <div class="audio-btn" id="audio-sfx-btn" onclick="AUDIO.toggleSfx()" title="Efectos">🔊</div>
+  <div class="audio-btn" onclick="AUDIO.toggleVolPanel()" title="Volumen">⚙️</div>
+</div>
+
 </body>
 </html>
