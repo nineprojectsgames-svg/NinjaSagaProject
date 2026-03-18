@@ -732,21 +732,22 @@ html { font-size: 14px; }
   display:none;
   position:fixed;bottom:0;left:0;right:0;z-index:200;
   background:var(--panel);border-top:1px solid var(--border);
-  height:60px;overflow-x:auto;overflow-y:hidden;
+  height:58px;overflow-x:auto;overflow-y:visible;
   scrollbar-width:none;-webkit-overflow-scrolling:touch;
   padding-bottom:env(safe-area-inset-bottom);
 }
 .bottom-nav::-webkit-scrollbar{display:none;}
 .bottom-nav-inner{
-  display:flex;min-width:100%;height:100%;padding:0 2px;
+  display:flex;min-width:max-content;height:100%;padding:0 4px;
+  align-items:stretch;
 }
 .bnav-btn{
-  flex:0 0 auto;min-width:64px;height:100%;
+  flex:0 0 auto;min-width:62px;height:100%;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;cursor:pointer;padding:0 8px;
+  gap:2px;cursor:pointer;padding:0 6px;
   background:transparent;border:none;color:var(--text2);
   font-family:'Noto Sans JP',sans-serif;font-size:9px;letter-spacing:.3px;
-  transition:color .2s;position:relative;
+  transition:color .2s;position:relative;overflow:hidden;
   -webkit-tap-highlight-color:transparent;
 }
 .bnav-btn.on{color:var(--gold);}
@@ -754,11 +755,13 @@ html { font-size: 14px; }
   content:'';position:absolute;top:0;left:15%;right:15%;
   height:2px;background:var(--gold);border-radius:0 0 2px 2px;
 }
-.bnav-ico{font-size:22px;line-height:1;}
+.bnav-ico{font-size:21px;line-height:1;}
 .bnav-lk{
-  position:absolute;top:4px;right:4px;
+  position:absolute;top:2px;right:2px;
   font-size:8px;color:var(--red);background:rgba(255,51,51,.15);
   padding:1px 3px;border-radius:2px;
+  /* contenido dentro del botón, no sobresale */
+  overflow:hidden;max-width:24px;
 }
 
 @media (max-width: 700px) {
@@ -784,23 +787,34 @@ html { font-size: 14px; }
     max-height:none;
   }
 
-  /* ── HUD ── */
+  /* ── HUD: dos filas en mobile ── */
   .hud{
-    padding:8px 12px;gap:10px;
-    flex-wrap:nowrap;overflow-x:auto;
-    scrollbar-width:none;
+    padding:6px 10px;gap:6px;
+    flex-wrap:wrap;
+    align-items:center;
   }
-  .hud::-webkit-scrollbar{display:none;}
-  .hud-avatar{width:44px;height:44px;font-size:24px;flex-shrink:0;}
-  .hud-bars{min-width:140px;gap:5px;}
-  .bar{gap:5px;}
-  .bar-lbl{font-size:11px;}
-  .bar-track{height:10px;}
-  .bar-num{display:none;}
-  .hud-nums{gap:8px;flex-wrap:nowrap;flex-shrink:0;}
-  .num-box{padding:5px 10px;min-width:56px;}
+  /* Fila 1: avatar + nombre/clase + nums de oro/nivel */
+  .hud-avatar{width:40px;height:40px;font-size:22px;flex-shrink:0;}
+  .hud-nums{
+    display:flex;gap:6px;
+    flex-wrap:nowrap;flex-shrink:0;
+    margin-left:auto;
+  }
+  .num-box{padding:4px 8px;min-width:50px;}
   .num-lbl{font-size:10px;}
-  .num-val{font-size:14px;}
+  .num-val{font-size:13px;}
+  /* Fila 2: barras HP/MP/XP ocupan todo el ancho */
+  .hud-bars{
+    width:100%;
+    flex-basis:100%;
+    order:10;
+    gap:4px;
+    min-width:unset;
+  }
+  .bar{gap:6px;}
+  .bar-lbl{font-size:11px;width:22px;}
+  .bar-track{height:10px;flex:1;}
+  .bar-num{display:block;font-size:10px;width:70px;text-align:right;}
   .regen-pill{display:none;}
   .stamina-pill{display:none;}
 
@@ -813,16 +827,27 @@ html { font-size: 14px; }
   .menu-btn{padding:16px 44px;font-size:14px;margin:10px auto;}
 
   /* ── Crear personaje ── */
-  #create{padding:20px 14px;overflow-y:auto;}
-  .create-panel{padding:24px 18px;}
-  .create-title{font-size:16px;margin-bottom:20px;}
+  #create{padding:16px 10px;overflow-y:auto;}
+  .create-panel{padding:20px 14px;width:100%;max-width:100%;box-sizing:border-box;}
+  .create-title{font-size:16px;margin-bottom:18px;}
   .field-label{font-size:12px;margin-bottom:8px;}
-  .name-input{font-size:18px;padding:12px 14px;margin-bottom:22px;}
+  .name-input{font-size:17px;padding:11px 12px;margin-bottom:20px;width:100%;box-sizing:border-box;}
   .class-row{grid-template-columns:1fr;gap:10px;}
-  .cls-card{display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;}
-  .cls-em{font-size:32px;margin-bottom:0;flex-shrink:0;}
-  .cls-name{font-size:13px;margin-bottom:4px;}
-  .cls-stats{font-size:11px;line-height:1.7;}
+  .cls-card{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    grid-template-rows:auto auto;
+    align-items:start;
+    gap:0 12px;
+    padding:14px;
+    text-align:left;
+    width:100%;
+    box-sizing:border-box;
+    overflow:hidden;
+  }
+  .cls-em{font-size:34px;margin-bottom:0;grid-row:1/3;align-self:center;}
+  .cls-name{font-size:13px;margin-bottom:3px;grid-column:2;}
+  .cls-stats{font-size:11px;line-height:1.7;grid-column:2;word-break:break-word;}
 
   /* ── Mapa ── */
   .map-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
