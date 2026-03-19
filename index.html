@@ -158,8 +158,8 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .regen-cd-fill{height:100%;background:var(--green);transition:width 1s linear;}
 
 /* GAME BODY */
-.game-body{display:grid;grid-template-columns:180px 1fr 220px;flex:1;overflow:hidden;}
-.nav-col{background:var(--panel);border-right:1px solid var(--border);padding:10px;display:flex;flex-direction:column;gap:3px;overflow-y:auto;}
+.game-body{display:grid;grid-template-columns:180px 1fr 220px;flex:1;overflow:hidden;min-height:0;}
+.nav-col{background:var(--panel);border-right:1px solid var(--border);padding:10px;display:flex;flex-direction:column;gap:3px;overflow-y:auto;min-height:0;}
 .nav-btn{background:transparent;border:1px solid transparent;padding:10px 12px;cursor:pointer;color:var(--text2);
   font-family:'Noto Sans JP',sans-serif;font-size:11px;text-align:left;display:flex;align-items:center;gap:8px;transition:all .2s;}
 .nav-btn:hover,.nav-btn.on{background:var(--panel2);border-color:var(--border);color:var(--gold);}
@@ -167,8 +167,8 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .nav-regen{margin-top:auto;background:var(--panel2);border:1px solid var(--border);padding:9px;font-size:10px;}
 .nav-regen-title{color:var(--gold);letter-spacing:1px;margin-bottom:5px;}
 .nav-regen-row{display:flex;justify-content:space-between;color:var(--text2);margin-bottom:2px;}
-.main-col{overflow-y:auto;padding:16px;background:var(--bg);}
-.right-col{background:var(--panel);border-left:1px solid var(--border);padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
+.main-col{overflow-y:auto;padding:16px;background:var(--bg);min-height:0;}
+.right-col{background:var(--panel);border-left:1px solid var(--border);padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;min-height:0;}
 
 /* SECTION HEADERS */
 .sec{font-family:'Cinzel Decorative',serif;font-size:10px;color:var(--gold);letter-spacing:2px;
@@ -350,9 +350,9 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .skill-card.locked-card::after{content:'🔒';position:absolute;top:8px;right:8px;font-size:14px;}
 
 /* ── BATTLE SCREEN ── */
-#battle{flex-direction:column;overflow:hidden;
+#battle{flex-direction:column;overflow-y:auto;overflow-x:hidden;
   background:radial-gradient(ellipse at 50% 100%,#1a0808 0%,var(--bg) 55%);}
-.battle-wrap{display:flex;flex-direction:column;max-width:900px;margin:0 auto;width:100%;height:100%;padding:14px;gap:10px;}
+.battle-wrap{display:flex;flex-direction:column;max-width:860px;margin:0 auto;width:100%;min-height:100%;padding:14px 16px 80px;gap:8px;box-sizing:border-box;}
 
 /* combatants */
 .fighters{display:grid;grid-template-columns:1fr 60px 1fr;gap:12px;align-items:stretch;}
@@ -400,8 +400,12 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .turn-label.enemy-turn{color:var(--red);}
 
 /* battle log */
+
+/* Blog section */
+.blog-section{flex-shrink:0;display:flex;flex-direction:column;gap:4px;}
+
 .blog{background:var(--panel);border:1px solid var(--border);padding:8px 10px;
-  font-size:11px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:2px;}
+  font-size:11px;overflow-y:auto;height:120px;display:flex;flex-direction:column;gap:2px;}
 .blog-entry{padding:1px 0;line-height:1.5;animation:fadein .2s ease;}
 @keyframes fadein{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:translateX(0)}}
 .be-player{color:var(--green);}.be-enemy{color:#ff6666;}.be-sys{color:var(--gold);font-style:italic;}.be-heal{color:#88ffaa;}
@@ -412,8 +416,8 @@ canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 @keyframes dmgup{0%{opacity:1;transform:translateY(0) scale(.6)}15%{transform:translateY(-20px) scale(1.4)}100%{opacity:0;transform:translateY(-80px) scale(1)}}
 
 /* battle action bar */
-.bactions{display:flex;gap:8px;justify-content:flex-end;align-items:center;}
-.battle-header{display:flex;justify-content:space-between;align-items:center;}
+.bactions{display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-wrap:wrap;}
+.battle-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:2px;}
 
 /* OVERLAYS */
 #toast{position:fixed;top:14px;right:14px;background:var(--panel);border:1px solid var(--gold);
@@ -859,7 +863,7 @@ html { font-size: 14px; }
   .fight-btn{font-size:11px;padding:9px;margin-top:12px;}
 
   /* ── Batalla ── */
-  .battle-wrap{padding:10px;gap:8px;padding-bottom:14px;}
+  .battle-wrap{padding:10px 10px 80px;gap:6px;}
   .battle-header > *{font-size:12px!important;}
   .combo-count{font-size:18px!important;}
   .fighters{grid-template-columns:1fr 40px 1fr;gap:8px;}
@@ -894,7 +898,7 @@ html { font-size: 14px; }
   .ult-desc{display:none;}
 
   /* Log de batalla */
-  .blog{height:80px;font-size:11px;padding:8px 10px;}
+  .blog{min-height:90px;max-height:130px;font-size:11px;padding:8px 10px;overflow-y:auto;}
   .blog-entry{line-height:1.6;}
 
   /* Botones de acción */
@@ -1050,7 +1054,7 @@ html { font-size: 14px; }
 
 /* ── CONTROLES DE AUDIO ── */
 .audio-controls{
-  position:fixed;bottom:68px;right:10px;z-index:300;
+  position:fixed;bottom:8px;right:10px;z-index:250;
   display:flex;flex-direction:column;align-items:flex-end;gap:6px;
 }
 .audio-btn{
@@ -1244,6 +1248,175 @@ html { font-size: 14px; }
   .auto-toggle{padding:6px 10px;font-size:9px;}
 }
 
+/* ── PRESTIGIO ── */
+.prestige-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:9996;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;text-align:center;overflow-y:auto;
+}
+.prestige-title{
+  font-family:'Cinzel Decorative',serif;font-size:28px;
+  color:#ff8800;letter-spacing:3px;margin-bottom:6px;
+  text-shadow:0 0 30px rgba(255,136,0,.6);
+  animation:glow 2s ease-in-out infinite;
+}
+.prestige-sub{
+  font-size:12px;color:#888;letter-spacing:3px;margin-bottom:20px;
+  text-transform:uppercase;
+}
+.prestige-stars{
+  display:flex;gap:6px;justify-content:center;margin-bottom:20px;
+}
+.pstar{font-size:24px;opacity:.3;transition:opacity .3s;}
+.pstar.active{opacity:1;animation:glow 1.5s ease-in-out infinite;}
+.prestige-info{
+  background:rgba(255,136,0,.06);border:1px solid rgba(255,136,0,.2);
+  padding:16px 20px;max-width:400px;width:100%;margin-bottom:18px;
+  font-size:12px;color:#aaa;line-height:1.9;
+}
+.prestige-info strong{color:#ff8800;}
+.prestige-warn{
+  background:rgba(255,51,51,.06);border:1px solid rgba(255,51,51,.2);
+  padding:12px 18px;max-width:400px;width:100%;margin-bottom:18px;
+  font-size:11px;color:#ff8866;line-height:1.8;
+}
+.prestige-counter{
+  font-family:'Cinzel Decorative',serif;font-size:40px;
+  color:#ff8800;text-shadow:0 0 20px rgba(255,136,0,.5);
+  margin-bottom:4px;
+}
+.prestige-counter-lbl{font-size:10px;color:#666;letter-spacing:2px;margin-bottom:20px;}
+.prestige-btn{
+  font-family:'Cinzel Decorative',serif;font-size:13px;letter-spacing:2px;
+  background:rgba(255,136,0,.15);border:1px solid #ff8800;color:#ff8800;
+  padding:15px 44px;cursor:pointer;transition:all .25s;margin-bottom:10px;
+}
+.prestige-btn:hover{
+  background:rgba(255,136,0,.3);
+  box-shadow:0 0 30px rgba(255,136,0,.4);transform:scale(1.03);
+}
+.prestige-skip{
+  font-family:'Cinzel Decorative',serif;font-size:10px;letter-spacing:1px;
+  background:transparent;border:1px solid #333;color:#555;
+  padding:10px 28px;cursor:pointer;transition:all .2s;
+}
+.prestige-skip:hover{border-color:#666;color:#888;}
+
+/* Badge de prestigio en HUD y mapa */
+.prestige-badge{
+  font-size:9px;padding:2px 6px;
+  background:linear-gradient(135deg,rgba(255,136,0,.2),rgba(255,204,0,.15));
+  border:1px solid rgba(255,136,0,.4);color:#ff8800;
+  font-family:'Cinzel Decorative',serif;letter-spacing:1px;
+}
+/* Zona con dificultad aumentada */
+.zone-card.ng-plus .zone-name::after{
+  content:' ⚠';color:#ff8800;font-size:10px;
+}
+.difficulty-badge{
+  display:inline-block;font-size:9px;padding:2px 8px;
+  background:rgba(255,136,0,.1);border:1px solid rgba(255,136,0,.3);
+  color:#ff8800;font-family:'Cinzel Decorative',serif;letter-spacing:1px;
+  margin-bottom:8px;
+}
+
+
+/* ── SISTEMA DE PERFIL ── */
+
+/* Avatar con borde dinámico */
+.hud-avatar{
+  position:relative;transition:border .3s,box-shadow .3s;
+}
+.profile-title-hud{
+  font-size:9px;letter-spacing:1px;margin-top:2px;
+  font-family:'Cinzel Decorative',serif;
+}
+
+/* Pantalla de perfil */
+.profile-screen{padding:14px 12px 20px;}
+.profile-hero-card{
+  display:flex;align-items:center;gap:16px;
+  background:var(--panel);border:1px solid var(--border);
+  padding:16px;margin-bottom:16px;position:relative;overflow:hidden;
+}
+.profile-hero-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at left,rgba(232,192,64,.06),transparent 70%);
+  pointer-events:none;
+}
+.profile-avatar-big{
+  width:68px;height:68px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;flex-shrink:0;position:relative;z-index:1;
+  transition:border .3s,box-shadow .3s;
+}
+.profile-hero-info{flex:1;}
+.profile-hero-name{
+  font-family:'Cinzel Decorative',serif;font-size:16px;
+  color:var(--gold);margin-bottom:3px;
+}
+.profile-hero-title{
+  font-family:'Cinzel Decorative',serif;font-size:10px;
+  letter-spacing:2px;margin-bottom:6px;
+}
+.profile-hero-stats{font-size:10px;color:var(--text2);line-height:1.8;}
+.profile-edit-btn{
+  font-family:'Cinzel Decorative',serif;font-size:9px;letter-spacing:1px;
+  background:transparent;border:1px solid var(--border);color:var(--text2);
+  padding:5px 12px;cursor:pointer;transition:all .2s;position:relative;z-index:1;
+}
+.profile-edit-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Secciones de cosméticos */
+.profile-section{margin-bottom:18px;}
+.profile-section-title{
+  font-family:'Cinzel Decorative',serif;font-size:10px;color:var(--gold);
+  letter-spacing:2px;padding-bottom:8px;border-bottom:1px solid var(--border);
+  margin-bottom:10px;
+}
+.cosmetic-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;
+}
+.cosmetic-card{
+  background:var(--panel2);border:1px solid var(--border);
+  padding:10px 6px;text-align:center;cursor:pointer;
+  transition:all .2s;position:relative;
+}
+.cosmetic-card:hover:not(.cc-locked){
+  border-color:var(--gold);transform:translateY(-2px);
+}
+.cosmetic-card.cc-active{
+  border-color:var(--gold);
+  background:rgba(232,192,64,.08);
+  box-shadow:0 0 12px rgba(232,192,64,.2);
+}
+.cosmetic-card.cc-locked{
+  opacity:.35;cursor:not-allowed;filter:grayscale(.6);
+}
+.cc-preview{font-size:28px;margin-bottom:5px;line-height:1;}
+.cc-name{font-size:9px;color:var(--text);line-height:1.3;}
+.cc-desc{font-size:8px;color:var(--text2);margin-top:3px;line-height:1.3;}
+.cc-lock{position:absolute;top:3px;right:3px;font-size:10px;}
+.cc-check{position:absolute;top:3px;right:3px;font-size:10px;color:var(--gold);}
+
+/* Título preview en cosmetic card */
+.cc-title-preview{
+  font-family:'Cinzel Decorative',serif;font-size:8px;
+  letter-spacing:1px;line-height:1;
+}
+
+/* Border preview */
+.cc-border-preview{
+  width:36px;height:36px;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 5px;font-size:16px;
+}
+
+@media(max-width:700px){
+  .cosmetic-grid{grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px;}
+  .cc-preview{font-size:24px;}
+}
+
 /* ── COMBATE REACTIVO ── */
 .combat-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;}
 .cbt-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -1266,7 +1439,7 @@ html { font-size: 14px; }
 #btn-counter .cbt-cd{background:#ff3333;}
 
 /* ── FARMEO ── */
-.farm-bar{display:none;position:fixed;bottom:60px;left:0;right:0;z-index:190;
+.farm-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:190;
   background:linear-gradient(135deg,#0a0a1a,#141428);border-top:1px solid #e8c04044;
   padding:8px 14px;flex-direction:row;align-items:center;gap:10px;}
 .farm-bar.active{display:flex;}
@@ -1319,13 +1492,15 @@ html { font-size: 14px; }
 .zone-card.boss-zone .zone-name{color:#ff6666!important;}
 
 @media(max-width:700px){
-  .combat-actions{gap:5px;}
+  .combat-actions{gap:5px;margin-bottom:3px;}
   .cbt-btn{padding:8px 3px;}
   .cbt-btn-ico{font-size:18px;}
   .cbt-btn-name{font-size:8px;}
   .cbt-btn-hint{font-size:7px;}
-  .farm-bar{bottom:58px;}
-  .farm-next-bar{bottom:102px;}
+  .farm-bar{bottom:0;padding:6px 10px;}
+  .farm-next-bar{bottom:44px;}
+  .farm-bar-title{font-size:9px;}
+  .farm-bar-stats{font-size:9px;}
 }
 
 
@@ -1456,6 +1631,53 @@ html { font-size: 14px; }
   100%{transform:scale(1);}
 }
 
+
+/* ── MEJORAS UI GENERALES ── */
+
+/* PC: batalla con mejor jerarquía visual */
+.battle-wrap .sec{
+  font-size:9px;padding-bottom:5px;margin-bottom:5px;
+}
+
+/* Fighters más proporcionados */
+.fighter{
+  min-height:130px;
+}
+
+/* Log de batalla — siempre scrolleable */
+.blog{
+  scroll-behavior:smooth;
+}
+.blog::-webkit-scrollbar{width:3px;}
+.blog::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* Auto-toggle más compacto */
+.auto-toggle{
+  padding:6px 10px;font-size:9px;
+}
+
+/* Bactions alineados al centro en mobile */
+@media(max-width:700px){
+  .bactions{justify-content:center;gap:6px;}
+  .bactions button{font-size:9px!important;padding:8px 12px!important;}
+  .auto-toggle{padding:7px 10px;}
+}
+
+/* PC: skill bar mejor espaciado */
+.skill-bar{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+}
+
+/* Modo infinito — wave badge no solapado */
+.inf-bar,
+#inf-bar{
+  position:fixed;
+  bottom:60px;left:0;right:0;
+  z-index:188;
+}
+
 </style>
 </head>
 <body>
@@ -1508,7 +1730,7 @@ html { font-size: 14px; }
     <div class="field-label">Nombre</div>
     <input id="ninja-name" class="name-input" placeholder="Nombre del ninja..." maxlength="16">
     <div class="field-label" style="margin-bottom:10px">Clase — elige tu camino</div>
-    <div class="class-row">
+    <div class="class-row" style="grid-template-columns:repeat(2,1fr);">
       <div class="cls-card sel" data-cls="katon" onclick="selCls(this)">
         <div class="cls-em">🔥</div><div class="cls-name">Katon</div>
         <div class="cls-stats">ATK: ████░<br>DEF: ██░░░<br>VEL: ███░░<br><br>Alto daño, quema enemigos</div>
@@ -1520,6 +1742,10 @@ html { font-size: 14px; }
       <div class="cls-card" data-cls="raiton" onclick="selCls(this)">
         <div class="cls-em">⚡</div><div class="cls-name">Raiton</div>
         <div class="cls-stats">ATK: ███░░<br>DEF: ██░░░<br>VEL: █████<br><br>Velocidad máxima, críticos</div>
+      </div>
+      <div class="cls-card" data-cls="genjutsu" onclick="selCls(this)">
+        <div class="cls-em">🌸</div><div class="cls-name">Genjutsu</div>
+        <div class="cls-stats">ATK: ██░░░<br>DEF: ███░░<br>MP:  █████<br><br>Ilusiones, confundir, evadir</div>
       </div>
     </div>
     <div class="create-btns">
@@ -1536,10 +1762,11 @@ html { font-size: 14px; }
 <div id="game" class="screen">
   <!-- HUD -->
   <div class="hud">
-    <div class="hud-avatar" id="h-av">🥷</div>
+    <div class="hud-avatar" id="h-av" onclick="showTab('profile')" style="cursor:pointer" title="Ver perfil">🥷</div>
     <div>
       <div style="font-family:'Cinzel Decorative',serif;font-size:14px;color:var(--gold)" id="h-name">—</div>
       <div style="font-size:10px;color:var(--text2)" id="h-cls">—</div>
+      <div class="profile-title-hud" id="h-profile-title" style="display:none"></div>
     </div>
     <div class="hud-bars">
       <div class="bar"><div class="bar-lbl">HP</div><div class="bar-track"><div class="bar-inner hp-bar" id="h-hpb" style="width:100%"></div></div><div class="bar-num" id="h-hpn">—</div></div>
@@ -1585,6 +1812,9 @@ html { font-size: 14px; }
       <div class="nav-btn" id="nav-dungeon" onclick="showTab('dungeon')"><span class="nav-ico">🏚️</span> Mazmorra <span id="nav-dungeon-lk" style="font-size:9px;color:var(--red);margin-left:auto"></span></div>
       <div class="nav-btn" id="nav-rivals" onclick="showTab('rivals')"><span class="nav-ico">⚔️</span> Rivales <span id="nav-rivals-lk" style="font-size:9px;color:var(--red);margin-left:auto"></span></div>
       <div class="nav-btn" id="nav-rank" onclick="showTab('rank')"><span class="nav-ico">🏅</span> Rango</div>
+      <div class="nav-btn" id="nav-profile" onclick="showTab('profile')"><span class="nav-ico">👤</span> Perfil</div>
+      <div class="nav-btn" id="nav-infinite" onclick="showTab('infinite')"><span class="nav-ico">♾️</span> Infinito <span id="nav-infinite-lk" style="font-size:9px;color:var(--red);margin-left:auto"></span></div>
+      <div class="nav-btn" id="nav-story" onclick="showTab('story')"><span class="nav-ico">📖</span> Historia</div>
       <div class="nav-regen" style="margin-top:auto">
         <div class="nav-regen-title">♻ REGEN / 10s</div>
         <div class="nav-regen-row"><span>HP</span><span style="color:var(--green)" id="nr-hp">+1</span></div>
@@ -1635,6 +1865,9 @@ html { font-size: 14px; }
       <button class="bnav-btn"    id="bnav-dungeon"  onclick="showTab('dungeon')">  <span class="bnav-ico">🏚️</span>Mazmorra<span class="bnav-lk" id="bnav-dungeon-lk"></span></button>
       <button class="bnav-btn"    id="bnav-rivals"   onclick="showTab('rivals')">   <span class="bnav-ico">⚔️</span>Rivales<span class="bnav-lk" id="bnav-rivals-lk"></span></button>
       <button class="bnav-btn"    id="bnav-rank"     onclick="showTab('rank')">     <span class="bnav-ico">🏅</span>Rango</button>
+      <button class="bnav-btn"    id="bnav-profile"  onclick="showTab('profile')">  <span class="bnav-ico">👤</span>Perfil</button>
+      <button class="bnav-btn"    id="bnav-infinite"  onclick="showTab('infinite')"> <span class="bnav-ico">♾️</span>Infinito<span class="bnav-lk" id="bnav-infinite-lk"></span></button>
+      <button class="bnav-btn"    id="bnav-story"     onclick="showTab('story')">    <span class="bnav-ico">📖</span>Historia</button>
     </div>
   </nav>
 </div>
@@ -1750,8 +1983,10 @@ html { font-size: 14px; }
     </div>
     <div class="auto-paused-msg" id="auto-paused-msg">⚠️ Auto pausado — HP bajo</div>
 
-    <div class="sec">📜 BATALLA</div>
-    <div class="blog" id="b-log"></div>
+    <div class="blog-section">
+      <div class="sec" style="margin-bottom:6px">📜 BATALLA</div>
+      <div class="blog" id="b-log"></div>
+    </div>
   </div>
 </div>
 
@@ -1792,12 +2027,14 @@ const CBT_STATE = {dodging:false, blocking:false, countering:false};
 const CBT_MAX   = {dodge:3, block:2, counter:4};
 
 const CLS = {
-  katon:  { n:'Katon', em:'🔥', base:{hp:110,mp:80,atk:20,def:8,spd:10,crit:12},  g:{hp:10,mp:5,atk:2,def:1,spd:.5,crit:.3},
-            skills:['basic','fireball','explosion','ash_storm'], unlocks:{8:'great_katon',14:'nova',20:'fire_dance'} },
-  suiton: { n:'Suiton', em:'💧', base:{hp:125,mp:100,atk:14,def:14,spd:11,crit:8}, g:{hp:12,mp:7,atk:1.5,def:1.5,spd:.5,crit:.25},
-            skills:['basic','tsunami','water_shield','needle_rain'], unlocks:{8:'typhoon',14:'dark_tide',20:'water_dragon'} },
-  raiton: { n:'Raiton', em:'⚡', base:{hp:95,mp:105,atk:17,def:6,spd:18,crit:20},  g:{hp:9,mp:6,atk:1.8,def:.8,spd:.8,crit:.6},
-            skills:['basic','thunder','storm','lightning_speed'], unlocks:{8:'chain_lightning',14:'plasma',20:'final_storm'} },
+  katon:    { n:'Katon',    em:'🔥', base:{hp:110,mp:80, atk:20,def:8, spd:10,crit:12}, g:{hp:10,mp:5, atk:2,  def:1,  spd:.5, crit:.3},
+              skills:['basic','fireball','explosion','ash_storm'], unlocks:{8:'great_katon',14:'nova',20:'fire_dance'} },
+  suiton:   { n:'Suiton',  em:'💧', base:{hp:125,mp:100,atk:14,def:14,spd:11,crit:8},  g:{hp:12,mp:7, atk:1.5,def:1.5,spd:.5, crit:.25},
+              skills:['basic','tsunami','water_shield','needle_rain'], unlocks:{8:'typhoon',14:'dark_tide',20:'water_dragon'} },
+  raiton:   { n:'Raiton',  em:'⚡', base:{hp:95, mp:105,atk:17,def:6, spd:18,crit:20}, g:{hp:9, mp:6, atk:1.8,def:.8, spd:.8, crit:.6},
+              skills:['basic','thunder','storm','lightning_speed'], unlocks:{8:'chain_lightning',14:'plasma',20:'final_storm'} },
+  genjutsu: { n:'Genjutsu',em:'🌸', base:{hp:100,mp:130,atk:13,def:10,spd:14,crit:15}, g:{hp:10,mp:8, atk:1.5,def:1,  spd:.6, crit:.7},
+              skills:['basic','illusion_strike','confuse','phantom_step'], unlocks:{8:'mirror_clone',14:'nightmare',20:'infinite_illusion'} },
 };
 
 // ─── SKILL TREE ───────────────────────────────────────────────────────────────
@@ -1910,6 +2147,37 @@ const SKILL_TREE = {
     scale:{pow:0.35, costMinus:4},
     classes:['raiton'],
   },
+  // ── GENJUTSU ──
+  illusion_strike: {
+    prereq:'basic', minLv:1, spBase:2, maxLv:5,
+    scale:{pow:0.18, costMinus:1},
+    classes:['genjutsu'],
+  },
+  confuse: {
+    prereq:'basic', minLv:2, spBase:2, maxLv:5,
+    scale:{pow:0, durBonus:0.5},
+    classes:['genjutsu'],
+  },
+  phantom_step: {
+    prereq:'illusion_strike', minLv:4, spBase:4, maxLv:5,
+    scale:{pow:0, durBonus:0.5},
+    classes:['genjutsu'],
+  },
+  mirror_clone: {
+    prereq:'illusion_strike', minLv:8, spBase:6, maxLv:5,
+    scale:{pow:0.22, costMinus:2},
+    classes:['genjutsu'],
+  },
+  nightmare: {
+    prereq:'confuse', minLv:14, spBase:10, maxLv:5,
+    scale:{pow:0, durBonus:0.5},
+    classes:['genjutsu'],
+  },
+  infinite_illusion: {
+    prereq:'mirror_clone', minLv:20, spBase:12, maxLv:5,
+    scale:{pow:0.28, costMinus:3, hitsBonus:0.5},
+    classes:['genjutsu'],
+  },
 };
 
 // Returns effective skill stats for a given skill + hero skill level
@@ -1993,6 +2261,13 @@ const SK = {
   chain_lightning:{n:'Cadena Rayos',  em:'🔗', cost:34, type:'atk', pow:2.6, desc:'5 descargas — 5 golpes',    c:'#ffdd00',gw:'rgba(255,221,0,.4)',hits:5},
   plasma:        {n:'Plasma',         em:'🔵', cost:42, type:'atk', pow:3.8, desc:'Energía pura',              c:'#00ffff',gw:'rgba(0,255,255,.4)'},
   final_storm:   {n:'Tormenta Final', em:'🌪️', cost:55, type:'atk', pow:5.2, desc:'EL jutsu definitivo',       c:'#ffffff',gw:'rgba(255,255,255,.5)'},
+  // ── GENJUTSU ──
+  illusion_strike:{n:'Golpe Ilusorio',  em:'🌸', cost:12, type:'atk', pow:1.6, desc:'Ataque ilusorio — 20% confunde',c:'#ff88cc',gw:'rgba(255,100,200,.3)',eff:'confuse'},
+  confuse:        {n:'Confusión',       em:'😵', cost:16, type:'debuff',pow:0,  desc:'Enemigo ataca aleatoriamente 2t', c:'#aa44ff',gw:'rgba(170,68,255,.3)',eff:'confused'},
+  phantom_step:   {n:'Paso Fantasmal',  em:'👻', cost:20, type:'buff', pow:0,  desc:'Esquiva 1 ataque + +30% daño 2t', c:'#cc88ff',gw:'rgba(200,136,255,.3)',eff:'phantom'},
+  mirror_clone:   {n:'Clon Espejo',     em:'🪞', cost:30, type:'atk', pow:2.2, desc:'Duplica el daño si crit',        c:'#ff44aa',gw:'rgba(255,68,170,.4)',eff:'mirror'},
+  nightmare:      {n:'Pesadilla',       em:'💀', cost:38, type:'debuff',pow:0,  desc:'−50% ATK enemigo 3t + terror',   c:'#8800cc',gw:'rgba(136,0,204,.4)', eff:'nightmare'},
+  infinite_illusion:{n:'Ilusión Infinita',em:'🌌',cost:52,type:'atk', pow:4.6, desc:'El genjutsu definitivo — caos total',c:'#ff00ff',gw:'rgba(255,0,255,.5)',hits:3},
 };
 
 // Enemies: varied behaviors, some have counter-attacks or specials
@@ -2298,8 +2573,30 @@ function showRegenTick(icon){
 function updateHUD(){
   if(!H)return;
   const mhp=gMhp(),mmp=gMmp(),cl=CLS[H.cls];
-  document.getElementById('h-av').textContent=cl.em;
+  // Avatar se aplica con cosméticos más abajo
   document.getElementById('h-name').textContent=H.name;
+  // Cosméticos de perfil — definir localmente para evitar errores de scope
+  const _hudAv  = typeof getActiveAvatar === 'function' ? getActiveAvatar()  : null;
+  const _hudBrd = typeof getActiveBorder === 'function' ? getActiveBorder()  : null;
+  const _hudTtl = typeof getActiveTitle  === 'function' ? getActiveTitle()   : null;
+  // Aplicar avatar
+  const _avEl2 = document.getElementById('h-av');
+  if(_avEl2 && _hudAv) _avEl2.textContent = _hudAv.em;
+  // Aplicar borde
+  if(_avEl2 && _hudBrd){
+    _avEl2.style.border = _hudBrd.style || '2px solid var(--gold)';
+    if(_hudBrd.extra && _hudBrd.extra.includes('box-shadow')){
+      var _bsMatch = _hudBrd.extra.match(/box-shadow:[^;}]+/);
+      _avEl2.style.boxShadow = _bsMatch ? _bsMatch[0].replace('box-shadow:','').trim() : '';
+    } else { _avEl2.style.boxShadow = ''; }
+  }
+  // Aplicar título
+  const _ptEl = document.getElementById('h-profile-title');
+  if(_ptEl && _hudTtl && _hudTtl.id !== 't_default'){
+    _ptEl.style.display='block';
+    _ptEl.textContent=_hudTtl.text;
+    _ptEl.style.color=_hudTtl.color;
+  } else if(_ptEl){ _ptEl.style.display='none'; }
   document.getElementById('h-cls').textContent=`${cl.em} ${cl.n} · Nv.${H.lv}`;
   document.getElementById('h-hpb').style.width=Math.max(0,H.hp/mhp*100)+'%';
   document.getElementById('h-mpb').style.width=Math.max(0,H.mp/mmp*100)+'%';
@@ -2311,7 +2608,8 @@ function updateHUD(){
   document.getElementById('h-gld').textContent=H.gld;
   document.getElementById('h-streak').textContent=H.streak||0;
   const spEl=document.getElementById('h-sp');if(spEl)spEl.textContent=H.skillSP||0;
-  renderPotPanel();renderAchPanel();
+  if(typeof renderPotPanel==='function') try{renderPotPanel();}catch(e){}
+  if(typeof renderAchPanel==='function') try{renderAchPanel();}catch(e){}
   // Rank badge in HUD
   const rank=getCurrentRank();
   const rkEl=document.getElementById('h-rank');if(rkEl){rkEl.textContent=rank.em+' '+rank.short;rkEl.style.color=rank.color;}
@@ -2323,13 +2621,14 @@ function updateHUD(){
   const flk=document.getElementById('nav-forge-lk');if(flk)flk.textContent=H.lv<4?'Nv.4':'';
   const dlk=document.getElementById('nav-dungeon-lk');if(dlk)dlk.textContent=H.lv<5?'Nv.5':'';
   const rvlk=document.getElementById('nav-rivals-lk');if(rvlk)rvlk.textContent=H.lv<6?'Nv.6':'';
+  const inlk=document.getElementById('nav-infinite-lk');if(inlk)inlk.textContent=H.lv<8?'Nv.8':'';
   // Bottom nav lock badges
-  ['rhythm','pets','forge','dungeon','rivals','achieve'].forEach(id=>{
+  ['rhythm','pets','forge','dungeon','rivals','achieve','infinite'].forEach(id=>{
     const b=document.getElementById('bnav-'+id+'-lk');if(!b)return;
     const d=document.getElementById('nav-'+id+'-lk');
     if(d)b.textContent=d.textContent;
   });
-  updateDailyPanel();
+  if(typeof updateDailyPanel==='function') try{updateDailyPanel();}catch(e){}
 }
 
 function renderPotPanel(){
@@ -2384,19 +2683,24 @@ function showTab(t){
   else if(t==='inv')renderInv(v);
   else if(t==='bestiary')renderBestiary(v);
   else if(t==='achieve')renderAchievements(v);
+  else if(t==='profile')renderProfile(v);
   else if(t==='rhythm')renderRhythmLobby(v);
   else if(t==='pets')renderPets(v);
   else if(t==='forge')renderForge(v);
   else if(t==='dungeon')renderDungeon(v);
   else if(t==='rivals')renderRivals(v);
   else if(t==='rank')renderRank(v);
+  else if(t==='infinite')renderInfinite(v);
+  else if(t==='story')renderStory(v);
 }
 
 // ═══════════════════════════════════════
 //  MAP — shows enemy roster per zone
 // ═══════════════════════════════════════
 function renderMap(v){
-  let mapHtml = '<div class="sec" style="margin-bottom:12px">🗾 MAPA DEL MUNDO</div><div class="map-grid">';
+  const _pres = typeof getPrestige === 'function' ? getPrestige() : 0;
+  const _diffBadge = _pres > 0 ? '<div style="font-size:10px;text-align:center;padding:5px;background:rgba(255,136,0,.08);border:1px solid rgba(255,136,0,.25);color:#ff8800;font-family:Cinzel Decorative,serif;letter-spacing:1px;margin-bottom:10px">🔥 Prestigio '+_pres+' — Enemigos x'+Math.round((1+_pres*0.3)*100)+'%</div>' : '';
+  let mapHtml = '<div class="sec" style="margin-bottom:8px">🗾 MAPA DEL MUNDO</div>'+_diffBadge+'<div class="map-grid">';
   ZONES.forEach(function(z,i){
     const locked = H.lv < z.minLv;
     const isBoss = z.isBossZone || false;
@@ -3287,8 +3591,14 @@ function enterZone(zi){
     zone, combo:0, energy:0,
     e:{...eBase,chp:Math.round(eBase.hp*scale),mhp:Math.round(eBase.hp*scale),atk:Math.round(eBase.atk*scale)},
     pTurn:gSpd()>=eBase.spd,
-    pBuff:{},eDebuff:{},turn:1, counterReady:false
+    pBuff:{},eDebuff:{},turn:1, counterReady:false,
+    firstHit:true, kageStacks:0,
   };
+  // Apply passive abilities at battle start
+  const startPassive=getCurrentRank().passive;
+  if(startPassive.id==='chakra_flow'){H.mp=gMmp();bLog('sys','🐉 Flujo de Chakra: MP al máximo.');}
+  if(startPassive.id==='legend_will'){BT.energy=50;bLog('sys','⭐ Voluntad Legendaria: energía al 50%.');}
+  if(startPassive.id==='dragon_soul'){H.hp=Math.min(gMhp(),H.hp+Math.round(gMhp()*0.2));H.mp=Math.min(gMmp(),H.mp+Math.round(gMmp()*0.2));bLog('sys','🐉 Alma del Dragón: HP/MP restaurados.');}
   combo=0;
   showScreen('battle');
   document.getElementById('b-zone').textContent=`⚔ ${zone.n}`;
@@ -3515,8 +3825,15 @@ function useSkill(sid){
     let baseDmg=Math.round(gAtk()*s.pow);
     if(BT.pBuff.haste>0)baseDmg=Math.round(baseDmg*1.55);
     if(BT.pBuff.kage>0) baseDmg=Math.round(baseDmg*2.0);
+    if(BT.pBuff.phantom>0)baseDmg=Math.round(baseDmg*1.3);
     if(BT.eDebuff.weakened>0)baseDmg=Math.round(baseDmg*1.4);
-    baseDmg=Math.max(1,baseDmg-Math.round(BT.e.def*0.4));
+    // PASIVA: Concentración — primer ataque +30%
+    const _ap=getCurrentRank().passive;
+    if(_ap.id==='focus'&&BT.firstHit){baseDmg=Math.round(baseDmg*1.3);BT.firstHit=false;bLog('sys','⚔️ ¡Concentración! +30% primer golpe.');}
+    // PASIVA: Kage Aura — +5% ATK por turno limpio (máx +25%)
+    if(_ap.id==='kage_aura'&&!BT.tookDmg){BT.kageStacks=Math.min(5,(BT.kageStacks||0)+1);baseDmg=Math.round(baseDmg*(1+BT.kageStacks*0.05));if(BT.kageStacks>1)bLog('sys',`👑 Aura del Kage: +${BT.kageStacks*5}% ATK`);}
+    baseDmg=Math.max(1,baseDmg-Math.round(BT.e.def*(BT._critIgnoreDef?0:0.4)));
+    BT._critIgnoreDef=false;
     const isCrit=Math.random()*100<gCrit();
     if(isCrit)baseDmg=Math.round(baseDmg*1.9);
     const hits=(s.hits||1)+(s._hitsBonus||0);
@@ -3540,13 +3857,24 @@ function useSkill(sid){
       },h*160);
     }
 
-    if(isCrit){combo++;showCombo();H.totalCrits=(H.totalCrits||0)+1;}
+    if(isCrit){
+      combo++;showCombo();H.totalCrits=(H.totalCrits||0)+1;
+      // PASIVA: Chakra Flow (Sannin) — crits regen 8% MP
+      const cp=getCurrentRank().passive;
+      if(cp.id==='chakra_flow'){H.mp=Math.min(gMmp(),H.mp+Math.round(gMmp()*0.08));bLog('sys','🐉 Flujo de Chakra: +MP');}
+      // PASIVA: Dragon Soul — crits ignore DEF
+      if(cp.id==='dragon_soul')BT._critIgnoreDef=true;
+    }
     // Energy gain: base per hit + bonus for crits
     gainEnergy(isCrit ? 18 : 10);
     bLog('player',`${H.name} → ${s.em} ${s.n}${isCrit?' ⚡CRÍTICO!':''} — ${total} daño${hits>1?` (x${hits})`:''}${s.hits?' 🎯':''}`);
 
     if(s.eff==='burn'){BT.eDebuff.burn=3;bLog('sys',`🔥 ${BT.e.n} arde — 3 turnos`);}
     if(s.eff==='paralysis'){BT.eDebuff.paralysis=2;bLog('sys',`⚡ ${BT.e.n} paralizado — 2 turnos`);}
+    // Genjutsu — illusion_strike has 20% confuse on hit
+    if(s.eff==='confuse'&&Math.random()<0.2){BT.eDebuff.confused=2;bLog('sys',`😵 ${BT.e.n} está confundido — 2 turnos`);}
+    // Mirror clone — double damage on crit
+    if(s.eff==='mirror'&&isCrit){const bonusDmg=Math.round(total*.8);BT.e.chp=Math.max(0,BT.e.chp-bonusDmg);spawnDmg(bonusDmg,false,true,false);bLog('player',`🪞 ¡Clon espejo! +${bonusDmg} daño extra`);}
 
     const delay=hits*160+350;
     setTimeout(()=>{
@@ -3574,10 +3902,13 @@ function useSkill(sid){
 
   } else if(s.type==='buff'){
     if(s.eff==='haste'){BT.pBuff.haste=3;bLog('player',`${H.name} → ${s.em} ${s.n} — velocidad ×1.55 por 3 turnos`);}
+    if(s.eff==='phantom'){BT.pBuff.phantom=2;bLog('player',`${H.name} → ${s.em} ${s.n} — 👻 Paso Fantasmal! Esquiva + daño ×1.3 por 2t`);}
     setTimeout(()=>{applyDoT();setTimeout(enemyTurn,500);},350);
 
   } else if(s.type==='debuff'){
     if(s.eff==='weakened'){BT.eDebuff.weakened=3;bLog('player',`${H.name} → ${s.em} ${s.n} — ${BT.e.n} debilitado`);}
+    if(s.eff==='confused'){BT.eDebuff.confused=2;bLog('player',`${H.name} → ${s.em} ${s.n} — 😵 ${BT.e.n} confundido 2 turnos`);}
+    if(s.eff==='nightmare'){BT.eDebuff.nightmare=3;bLog('player',`${H.name} → ${s.em} ${s.n} — 💀 ${BT.e.n} en pesadilla − 50% ATK 3t`);}
     setTimeout(()=>{applyDoT();setTimeout(enemyTurn,500);},350);
   }
   updateBUI();
@@ -3644,6 +3975,22 @@ function enemyTurn(){
     applyDoT(); setTimeout(()=>{BT.pTurn=true;updateBUI();renderBSkills();},500); return;
   }
   let dmg=Math.max(1,Math.round(BT.e.atk-gDef()*0.5));
+  // Nightmare: −50% enemy ATK
+  if(BT.eDebuff.nightmare>0)dmg=Math.round(dmg*0.5);
+  // Phantom step: dodge this attack
+  if(BT.pBuff.phantom>0){
+    BT.pBuff.phantom--;
+    bLog('player',`👻 ¡Paso Fantasmal! ${H.name} esquiva el ataque.`);
+    spawnDmg(0,true,false,false);
+    // Phantom also gives ATK bonus next player turn (already in buff tracking)
+    petAttack();if(BT.e.chp<=0){endBattle(true);return;}
+    BT.pTurn=true;BT.turn++;updateBUI();updatePetBattleSlot();renderBSkills();return;
+  }
+  // Confused: enemy attacks randomly (50% chance to miss or hit themselves)
+  if(BT.eDebuff.confused>0&&Math.random()<0.5){
+    bLog('sys',`😵 ${BT.e.n} está confundido — ¡ataca al vacío!`);
+    BT.pTurn=true;BT.turn++;updateBUI();renderBSkills();return;
+  }
   const spec=Math.random()<0.18;
   if(spec)dmg=Math.round(dmg*1.65);
   if(CBT_STATE.blocking){
@@ -3655,7 +4002,28 @@ function enemyTurn(){
   if(CBT_STATE.countering){
     CBT_STATE.countering=false;
   }
+  // PASIVA: Resiliencia (Jonin) — sobrevive fatal una vez por combate
+  const passive=getCurrentRank().passive;
+  if(passive.id==='resilience'&&H.hp-dmg<=0&&!BT.usedResilience){
+    BT.usedResilience=true; dmg=H.hp-1;
+    bLog('sys',`🌟 ¡Resiliencia! Sobrevives con 1 HP.`); showToast('🌟 ¡Resiliencia activada!');
+  }
+  // PASIVA: Leyenda — no puede morir en combate normal
+  if(passive.id==='legend_will'&&H.hp-dmg<=0){
+    dmg=H.hp-1; bLog('sys',`⭐ ¡Voluntad Legendaria! Imposible morir.`);
+  }
+  // PASIVA: Void Body (Kage de Sombra) — 30% absorber daño como energía
+  if(passive.id==='void_body'&&Math.random()<0.30){
+    gainEnergy(Math.min(20,Math.round(dmg*0.5))); dmg=Math.round(dmg*0.5);
+    bLog('sys',`🌑 Cuerpo del Vacío absorbe parte del daño.`);
+  }
+  // PASIVA: ANBU shadow_step — 25% esquivar
+  if(passive.id==='shadow_step'&&Math.random()<0.25){
+    bLog('sys',`🌑 ¡Paso de Sombra! Esquiva automática.`); spawnDmg(0,true,false,false);
+    BT.pTurn=true;BT.turn++;updateBUI();renderBSkills();return;
+  }
   H.hp=Math.max(0,H.hp-dmg);
+  // PASIVA: Void Body — gana energía al recibir daño
   gainEnergy(spec ? 14 : 8);
   if(BT)BT.tookDmg=true;
   spawnDmg(dmg,true,spec,false);
@@ -3722,7 +4090,15 @@ function flee(){
   } else {
     showToast('❌ ¡No pudiste escapar!');
     bLog('sys',`${H.name} intentó huir pero falló`);
-    if(BT){ BT.pTurn=false; updateBUI(); setTimeout(enemyTurn,600); }
+    if(BT){
+      BT.pTurn=false;
+      tickCombatCDs();
+      updateBUI();
+      setTimeout(enemyTurn, 600);
+    } else {
+      // BT null inesperado — volver al mapa
+      showScreen('game'); updateHUD(); showTab('map');
+    }
   }
 }
 
@@ -3765,6 +4141,9 @@ function endBattle(won){
     while(H.xp>=H.xpN){H.xp-=H.xpN;H.lv++;H.xpN=Math.round(H.xpN*1.55);applyLvlBonus();leveled=true;newLv=H.lv;}
     if(BT.isDungeon&&DG){
       setTimeout(()=>{BT=null;const done=onDungeonRoomWon();if(!done)updateHUD();if(leveled)setTimeout(()=>showLvlUp(newLv),500);},1400);
+    } else if(BT.isInfinite&&INF){
+      // Infinite mode — chain waves
+      setTimeout(()=>{onInfiniteWaveWon();if(leveled)setTimeout(()=>showLvlUp(newLv),500);},1200);
     } else {
       setTimeout(()=>{
         const _wasFarming = FARM.active;
@@ -3812,11 +4191,16 @@ function endBattle(won){
     H.streak=0;combo=0;
     if(BT.isRival){if(!H.rivalData)H.rivalData={};if(!H.rivalData[BT.isRival])H.rivalData[BT.isRival]={wins:0,losses:0};H.rivalData[BT.isRival].losses++;H.rivalData[BT.isRival].lastResult='loss';}
     if(BT.isDungeon){DG=null;showToast('💀 Mazmorra fallida.');}
+    if(BT.isInfinite&&INF){const wv=INF.wave;if(wv>(H.infBest||0)){H.infBest=wv;H.infBestXP=INF.xpGained;showToast(`🏆 ¡Nuevo récord: ${wv} oleadas!`);}INF=null;}
     // Parar farmeo si estaba activo
     if(FARM.active){ FARM.active=false; updateFarmBar(); }
     bLog('sys',`☠️ ${H.name} fue derrotado...`);
-    const _defeatedBy = BT.e ? BT.e.n : 'el enemigo';
-    setTimeout(()=>{ showDefeatScreen(_defeatedBy); }, 900);
+    const _defeatedBy = BT && BT.e ? BT.e.n : 'el enemigo';
+    const _btRef = BT;
+    setTimeout(()=>{
+      if(typeof showDefeatScreen === 'function'){ showDefeatScreen(_defeatedBy); }
+      else { BT=null; showScreen('game'); updateHUD(); showTab('map'); }
+    }, 900);
   }
 }
 
@@ -4491,15 +4875,15 @@ function renderRhythmResult(s){
 //  RANK SYSTEM
 // ═══════════════════════════════════════
 const RANKS=[
-  {id:'genin',    em:'🥷', name:'Genin',       short:'Genin',    color:'#888888', req:{lv:1,  wins:0  }, perks:{xpBonus:.00, goldBonus:.00, atkBonus:0}},
-  {id:'chunin',   em:'⚔️', name:'Chūnin',      short:'Chunin',   color:'#44aa44', req:{lv:5,  wins:20 }, perks:{xpBonus:.05, goldBonus:.05, atkBonus:1}},
-  {id:'jonin',    em:'🗡️', name:'Jōnin',       short:'Jonin',    color:'#4488ff', req:{lv:10, wins:60 }, perks:{xpBonus:.10, goldBonus:.10, atkBonus:3}},
-  {id:'anbu',     em:'🌑', name:'ANBU',         short:'ANBU',     color:'#8844ff', req:{lv:15, wins:150}, perks:{xpBonus:.18, goldBonus:.15, atkBonus:6}},
-  {id:'sannin',   em:'🐉', name:'Sannin',       short:'Sannin',   color:'#ff8844', req:{lv:20, wins:300}, perks:{xpBonus:.28, goldBonus:.25, atkBonus:10}},
-  {id:'kage',     em:'👑', name:'Kage',          short:'Kage',    color:'#ffcc00', req:{lv:25, wins:600},  perks:{xpBonus:.40, goldBonus:.40, atkBonus:18}},
-  {id:'shadow',   em:'🌑', name:'Kage de Sombra', short:'Sombra',  color:'#8866ff', req:{lv:32, wins:1000}, perks:{xpBonus:.55, goldBonus:.55, atkBonus:28}},
-  {id:'dragon',   em:'🐉', name:'Dragón Eterno',  short:'Dragón',  color:'#ff4444', req:{lv:40, wins:1800}, perks:{xpBonus:.75, goldBonus:.70, atkBonus:42}},
-  {id:'legend',   em:'⭐', name:'Leyenda Ninja',  short:'Leyenda', color:'#ffffff', req:{lv:50, wins:3000}, perks:{xpBonus:1.00,goldBonus:.90, atkBonus:60}},
+  {id:'genin',    em:'🥷', name:'Genin',        short:'Genin',   color:'#888888', req:{lv:1,  wins:0   }, perks:{xpBonus:.00, goldBonus:.00, atkBonus:0 }, passive:{id:'none',       name:'—',                    desc:'Sin habilidad pasiva aún.'}},
+  {id:'chunin',   em:'⚔️', name:'Chūnin',       short:'Chunin',  color:'#44aa44', req:{lv:5,  wins:20  }, perks:{xpBonus:.05, goldBonus:.05, atkBonus:1 }, passive:{id:'focus',      name:'Concentración',        desc:'Primer ataque de cada combate hace +30% daño.'}},
+  {id:'jonin',    em:'🗡️', name:'Jōnin',        short:'Jonin',   color:'#4488ff', req:{lv:10, wins:60  }, perks:{xpBonus:.10, goldBonus:.10, atkBonus:3 }, passive:{id:'resilience', name:'Resiliencia',          desc:'Al recibir daño fatal, sobrevives con 1 HP una vez por combate.'}},
+  {id:'anbu',     em:'🌑', name:'ANBU',          short:'ANBU',    color:'#8844ff', req:{lv:15, wins:150 }, perks:{xpBonus:.18, goldBonus:.15, atkBonus:6 }, passive:{id:'shadow_step',name:'Paso de Sombra',       desc:'25% de esquivar cualquier ataque enemigo.'}},
+  {id:'sannin',   em:'🐉', name:'Sannin',        short:'Sannin',  color:'#ff8844', req:{lv:20, wins:300 }, perks:{xpBonus:.28, goldBonus:.25, atkBonus:10}, passive:{id:'chakra_flow',name:'Flujo de Chakra',      desc:'Los críticos regeneran 8% MP. MP empieza al máximo en combate.'}},
+  {id:'kage',     em:'👑', name:'Kage',           short:'Kage',   color:'#ffcc00', req:{lv:25, wins:600 }, perks:{xpBonus:.40, goldBonus:.40, atkBonus:18}, passive:{id:'kage_aura',  name:'Aura del Kage',        desc:'Cada turno sin recibir daño acumula +5% ATK (máx +25%).'}},
+  {id:'shadow',   em:'🌑', name:'Kage de Sombra', short:'Sombra', color:'#8866ff', req:{lv:32, wins:1000}, perks:{xpBonus:.55, goldBonus:.55, atkBonus:28}, passive:{id:'void_body',  name:'Cuerpo del Vacío',     desc:'30% de absorber el daño recibido como energía ninja.'}},
+  {id:'dragon',   em:'🐉', name:'Dragón Eterno',  short:'Dragón', color:'#ff4444', req:{lv:40, wins:1800}, perks:{xpBonus:.75, goldBonus:.70, atkBonus:42}, passive:{id:'dragon_soul','name':'Alma del Dragón',    desc:'Al ganar combate, recuperas 20% HP/MP. Críticos ignoran DEF.'}},
+  {id:'legend',   em:'⭐', name:'Leyenda Ninja',  short:'Leyenda',color:'#ffffff', req:{lv:50, wins:3000}, perks:{xpBonus:1.00,goldBonus:.90, atkBonus:60}, passive:{id:'legend_will','name':'Voluntad Legendaria',desc:'No puedes morir en combate normal. HP mínimo 1. Energía empieza al 50%.'}},
 ];
 
 function getCurrentRank(){
@@ -4522,6 +4906,7 @@ function renderRank(v){
   const rank=getCurrentRank();
   const next=getNextRank();
   const p=rank.perks;
+  const pas=rank.passive;
   v.innerHTML=`
   <div class="sec" style="margin-bottom:12px">🏅 RANGO NINJA</div>
   <div class="rank-card" style="--rc:${rank.color};border-color:${rank.color}55;box-shadow:0 0 24px ${rank.color}22">
@@ -4533,22 +4918,30 @@ function renderRank(v){
       <div class="rank-perk"><span>🪙 Bonus Oro</span><span class="rank-perk-val">+${Math.round(p.goldBonus*100)}%</span></div>
       <div class="rank-perk"><span>⚔️ Bonus ATK</span><span class="rank-perk-val">+${p.atkBonus}</span></div>
     </div>
+    ${pas.id!=='none'?`
+    <div style="margin-top:12px;background:rgba(0,0,0,.3);border:1px solid ${rank.color}44;padding:10px 12px;">
+      <div style="font-size:9px;color:${rank.color};letter-spacing:2px;margin-bottom:4px">✨ HABILIDAD PASIVA</div>
+      <div style="font-family:'Cinzel Decorative',serif;font-size:12px;color:${rank.color};margin-bottom:4px">${pas.name}</div>
+      <div style="font-size:10px;color:var(--text2);line-height:1.6">${pas.desc}</div>
+    </div>`:'<div style="margin-top:10px;font-size:10px;color:var(--text2)">Alcanza Chūnin para desbloquear tu habilidad pasiva.</div>'}
   </div>
   ${next?`<div style="background:var(--panel);border:1px solid var(--border);padding:12px;margin-bottom:14px;font-size:11px">
-    <div style="color:var(--text2);margin-bottom:6px">Próximo rango: <span style="color:${next.color};font-family:'Cinzel Decorative',serif">${next.em} ${next.name}</span></div>
-    <div class="bar-row" style="gap:8px;margin-bottom:4px"><div class="bar-lbl" style="width:40px">Nv.</div><div class="bar-track" style="flex:1"><div class="bar-fill" style="width:${Math.min(100,H.lv/next.req.lv*100)}%;background:linear-gradient(90deg,#336633,#44ff88)"></div></div><div style="font-size:10px;color:var(--text2)">${H.lv}/${next.req.lv}</div></div>
-    <div class="bar-row" style="gap:8px"><div class="bar-lbl" style="width:40px">🏆</div><div class="bar-track" style="flex:1"><div class="bar-fill" style="width:${Math.min(100,(H.wins||0)/next.req.wins*100)}%;background:linear-gradient(90deg,#663333,#ff4444)"></div></div><div style="font-size:10px;color:var(--text2)">${H.wins||0}/${next.req.wins}</div></div>
+    <div style="color:var(--text2);margin-bottom:8px">Próximo rango: <span style="color:${next.color};font-family:'Cinzel Decorative',serif">${next.em} ${next.name}</span></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:9px;color:var(--text2);width:32px">Nv.</span><div class="bar-track" style="flex:1;height:8px"><div class="bar-fill" style="width:${Math.min(100,H.lv/next.req.lv*100)}%;background:linear-gradient(90deg,#336633,#44ff88);height:100%"></div></div><span style="font-size:10px;color:var(--text2)">${H.lv}/${next.req.lv}</span></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:9px;color:var(--text2);width:32px">🏆</span><div class="bar-track" style="flex:1;height:8px"><div class="bar-fill" style="width:${Math.min(100,(H.wins||0)/next.req.wins*100)}%;background:linear-gradient(90deg,#663333,#ff4444);height:100%"></div></div><span style="font-size:10px;color:var(--text2)">${H.wins||0}/${next.req.wins}</span></div>
+    <div style="font-size:9px;color:${next.color};letter-spacing:1px;margin-top:6px">Pasiva desbloqueada: <span style="color:var(--text)">${next.passive?.name||'—'}</span></div>
   </div>`:'<div style="font-size:12px;color:var(--gold);text-align:center;padding:14px">👑 ¡Rango máximo alcanzado!</div>'}
   <div class="sec" style="margin-bottom:10px">Todos los rangos</div>
   <div class="rank-progress-grid">
     ${RANKS.map(r=>{
       const done=H.lv>=r.req.lv&&(H.wins||0)>=r.req.wins;
       const isCur=r.id===getCurrentRank().id;
-      return`<div class="rank-node${isCur?' current':done?' achieved':' locked-rk'}">
-        ${isCur?'<div style="position:absolute;top:4px;right:4px;font-size:8px;color:var(--gold)">ACTUAL</div>':''}
+      return`<div class="rank-node${isCur?' current':done?' achieved':' locked-rk'}" style="${isCur?`border-color:${r.color}88;box-shadow:0 0 10px ${r.color}33`:''}">
+        ${isCur?`<div style="position:absolute;top:4px;right:4px;font-size:8px;color:${r.color}">ACTUAL</div>`:''}
         <div class="rank-node-em">${r.em}</div>
         <div class="rank-node-name" style="color:${r.color}">${r.name}</div>
-        <div class="rank-node-req">Nv.${r.req.lv} · ${r.req.wins} victorias</div>
+        <div class="rank-node-req" style="margin-bottom:3px">Nv.${r.req.lv} · ${r.req.wins}v</div>
+        ${r.passive?.id!=='none'?`<div style="font-size:7px;color:${done||isCur?r.color:'#444'};letter-spacing:.5px">${done||isCur?'✨ '+r.passive.name:'🔒 Pasiva oculta'}</div>`:''}
       </div>`;}).join('')}
   </div>`;
 }
@@ -4976,6 +5369,297 @@ function lockedScreen(em,name,lvReq){
 }
 
 // ═══════════════════════════════════════
+//  MODO INFINITO — OLEADAS
+// ═══════════════════════════════════════
+let INF = null; // infinite run state
+
+const INF_DROPS = ['mat_herb','mat_scroll','mat_claw','mat_scale','mat_crystal','mat_dscale','mat_horn'];
+
+function renderInfinite(v){
+  if(H.lv<8){
+    v.innerHTML=`<div class="sec" style="margin-bottom:14px">♾️ MODO INFINITO</div>
+    <div style="background:var(--panel);border:1px solid var(--border);padding:30px;max-width:480px;margin:0 auto;text-align:center">
+      <div style="font-size:52px;margin-bottom:10px">🔒</div>
+      <div style="font-family:'Cinzel Decorative',serif;font-size:16px;color:var(--text2);margin-bottom:10px">Modo Infinito</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.8">Se desbloquea en <span style="color:var(--gold)">Nivel 8</span>.<br>Nivel actual: <span style="color:var(--gold)">${H.lv}</span></div>
+    </div>`;return;
+  }
+  if(INF&&INF.active){renderInfiniteActive(v);return;}
+  const best=H.infBest||0;
+  const bestXP=H.infBestXP||0;
+  v.innerHTML=`
+  <div class="sec" style="margin-bottom:12px">♾️ MODO INFINITO</div>
+  <div style="background:var(--panel);border:1px solid var(--border);padding:20px;max-width:480px;margin:0 auto;text-align:center;margin-bottom:16px">
+    <div style="font-size:52px;margin-bottom:8px">♾️</div>
+    <div style="font-family:'Cinzel Decorative',serif;font-size:16px;color:var(--gold);margin-bottom:6px">Oleadas Sin Fin</div>
+    <div style="font-size:11px;color:var(--text2);margin-bottom:16px;line-height:1.8">
+      Combates encadenados que escalan de dificultad. Sin escapar.<br>
+      Cada <span style="color:var(--gold)">5 oleadas</span> recibes una recompensa especial.<br>
+      HP y MP <strong>no</strong> se recuperan entre oleadas.
+    </div>
+    <div style="display:flex;justify-content:center;gap:16px;margin-bottom:20px">
+      <div style="background:var(--panel2);border:1px solid var(--border);padding:10px 20px;text-align:center">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:22px;color:var(--gold)">${best}</div>
+        <div style="font-size:9px;color:var(--text2);letter-spacing:1px">RECORD OLEADAS</div>
+      </div>
+      <div style="background:var(--panel2);border:1px solid var(--border);padding:10px 20px;text-align:center">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:22px;color:var(--gold)">${bestXP}</div>
+        <div style="font-size:9px;color:var(--text2);letter-spacing:1px">MEJOR XP</div>
+      </div>
+    </div>
+    <button onclick="startInfinite()" style="font-family:'Cinzel Decorative',serif;font-size:12px;letter-spacing:2px;
+      background:linear-gradient(135deg,rgba(255,50,50,.15),rgba(200,0,0,.08));border:1px solid var(--red);
+      color:var(--red);padding:13px 40px;cursor:pointer;transition:all .2s;"
+      onmouseover="this.style.background='rgba(255,50,50,.2)'" onmouseout="this.style.background='linear-gradient(135deg,rgba(255,50,50,.15),rgba(200,0,0,.08))'">
+      ⚔️ Comenzar Oleadas
+    </button>
+  </div>
+  ${best>0?`
+  <div class="sec" style="margin-bottom:10px">📊 Estadísticas</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+    <div style="background:var(--panel);border:1px solid var(--border);padding:10px;text-align:center">
+      <div style="font-family:'Cinzel Decorative',serif;color:var(--gold);font-size:16px">${H.infTotalRuns||0}</div>
+      <div style="font-size:9px;color:var(--text2)">Runs totales</div>
+    </div>
+    <div style="background:var(--panel);border:1px solid var(--border);padding:10px;text-align:center">
+      <div style="font-family:'Cinzel Decorative',serif;color:var(--gold);font-size:16px">${H.infTotalWaves||0}</div>
+      <div style="font-size:9px;color:var(--text2)">Oleadas totales</div>
+    </div>
+    <div style="background:var(--panel);border:1px solid var(--border);padding:10px;text-align:center">
+      <div style="font-family:'Cinzel Decorative',serif;color:var(--gold);font-size:16px">${H.infTotalXP||0}</div>
+      <div style="font-size:9px;color:var(--text2)">XP total ganada</div>
+    </div>
+  </div>`:''}`;
+}
+
+function startInfinite(){
+  INF={active:true,wave:0,xpGained:0,gldGained:0};
+  H.infTotalRuns=(H.infTotalRuns||0)+1;
+  showToast('♾️ ¡Modo Infinito iniciado! Sobrevive todo lo que puedas.');
+  nextInfiniteWave();
+}
+
+function nextInfiniteWave(){
+  if(!INF)return;
+  INF.wave++;
+  H.infTotalWaves=(H.infTotalWaves||0)+1;
+  // Scale enemy by wave
+  const wv=INF.wave;
+  const scale=1+(wv-1)*0.18+(H.lv-1)*0.08;
+  const eIdx=Math.min(ENEMIES.length-2, Math.floor((wv-1)/3)); // progress through enemy types
+  const eBase={...ENEMIES[eIdx]};
+  // Every 5 waves is a mini-boss (stronger)
+  const isMilestone=wv%5===0;
+  const bossScale=isMilestone?1.8:1;
+  BT={
+    zone:{n:`♾️ Oleada ${wv}${isMilestone?' ⭐':''}`, isInfinite:true},
+    combo:0,energy:INF.savedEnergy||0,isInfinite:true,
+    e:{...eBase,
+      n:(isMilestone?'⭐ ':'')+eBase.n+` (Oleada ${wv})`,
+      chp:Math.round(eBase.hp*scale*bossScale),
+      mhp:Math.round(eBase.hp*scale*bossScale),
+      atk:Math.round(eBase.atk*scale*bossScale)},
+    pTurn:gSpd()>=eBase.spd,
+    pBuff:{},eDebuff:{},turn:1,firstHit:true,kageStacks:0,
+  };
+  const startPassive=getCurrentRank().passive;
+  if(startPassive.id==='chakra_flow'){H.mp=gMmp();}
+  if(startPassive.id==='legend_will'){BT.energy=50;}
+  showScreen('battle');
+  document.getElementById('b-zone').textContent=`♾️ Oleada ${wv}${isMilestone?' — JEFE DE OLEADA':''}`;
+  document.getElementById('pf-name').textContent=H.name;
+  document.getElementById('pf-sp').textContent=CLS[H.cls].em;
+  document.getElementById('ef-name').textContent=BT.e.n;
+  document.getElementById('ef-sp').textContent=BT.e.em;
+  renderBSkills();updateBUI();updatePetBattleSlot();
+  bLog('sys',`⚔️ Oleada ${wv}${isMilestone?' ⭐ ¡JEFE!':''}: ${eBase.n} aparece (escala ×${scale.toFixed(1)})`);
+  if(!BT.pTurn)setTimeout(enemyTurn,900);
+}
+
+function onInfiniteWaveWon(){
+  if(!INF)return;
+  const wv=INF.wave;
+  const xp=Math.round(ENEMIES[Math.min(ENEMIES.length-2,Math.floor((wv-1)/3))].xp*(1+(wv-1)*0.2)*(1+getCurrentRank().perks.xpBonus));
+  const gld=Math.round((10+wv*3)*(1+getCurrentRank().perks.goldBonus));
+  H.xp+=xp;H.txp=(H.txp||0)+xp;H.gld+=gld;
+  INF.xpGained+=xp;INF.gldGained+=gld;
+  H.infTotalXP=(H.infTotalXP||0)+xp;
+  // Milestone rewards every 5 waves
+  if(wv%5===0){
+    const matId=INF_DROPS[Math.floor(Math.random()*INF_DROPS.length)];
+    addInv(matId,2);
+    const m=MATS[matId];
+    showToast(`🎁 Oleada ${wv}: ${m.em}×2 + ${xp}XP + ${gld}🪙`);
+  } else {
+    showToast(`⚔️ Oleada ${wv} superada! +${xp}XP +${gld}🪙`);
+  }
+  // Level up check
+  let leveled=false,newLv=H.lv;
+  while(H.xp>=H.xpN){H.xp-=H.xpN;H.lv++;H.xpN=Math.round(H.xpN*1.55);applyLvlBonus();leveled=true;newLv=H.lv;}
+  // Save energy for next wave
+  INF.savedEnergy=Math.min(40,BT.energy);
+  BT=null;
+  updateHUD();
+  if(leveled){showLvlUp(newLv);return;}
+  // Show between-wave screen
+  showScreen('game');
+  const v=document.getElementById('main-col');
+  showTab('infinite');
+  renderInfiniteActive(v);
+}
+
+function renderInfiniteActive(v){
+  if(!INF)return;
+  const wv=INF.wave;
+  v.innerHTML=`
+  <div class="sec" style="margin-bottom:12px">♾️ MODO INFINITO — Oleada ${wv}</div>
+  <div style="background:var(--panel);border:1px solid #ff4444;padding:18px;max-width:480px;margin:0 auto;text-align:center">
+    <div style="font-size:42px;margin-bottom:8px">⚔️</div>
+    <div style="font-family:'Cinzel Decorative',serif;font-size:18px;color:var(--gold);margin-bottom:6px">Oleada ${wv} Superada</div>
+    <div style="font-size:11px;color:var(--text2);margin-bottom:14px">
+      HP: <span style="color:var(--red)">${H.hp}/${gMhp()}</span> · 
+      MP: <span style="color:var(--blue)">${H.mp}/${gMmp()}</span> · 
+      XP ganada: <span style="color:var(--gold)">${INF.xpGained}</span>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button onclick="nextInfiniteWave()" style="font-family:'Cinzel Decorative',serif;font-size:11px;letter-spacing:2px;
+        background:rgba(255,50,50,.12);border:1px solid var(--red);color:var(--red);padding:11px 28px;cursor:pointer;">
+        ⚔️ Siguiente Oleada
+      </button>
+      <button onclick="endInfinite()" style="font-family:'Cinzel Decorative',serif;font-size:11px;letter-spacing:2px;
+        background:transparent;border:1px solid var(--border);color:var(--text2);padding:11px 20px;cursor:pointer;">
+        🏳️ Rendirse
+      </button>
+    </div>
+    ${wv%5===0?`<div style="margin-top:12px;font-size:10px;color:var(--green)">🎁 ¡Recompensa especial recibida por oleada ${wv}!</div>`:''}
+    <div style="margin-top:12px;font-size:10px;color:var(--text2)">Próxima: Oleada ${wv+1} ${(wv+1)%5===0?'⭐ JEFE':''}</div>
+  </div>`;
+}
+
+function endInfinite(){
+  if(!INF)return;
+  const wv=INF.wave;
+  if(wv>(H.infBest||0)){H.infBest=wv;H.infBestXP=INF.xpGained;showToast(`🏆 ¡Nuevo récord: ${wv} oleadas!`);}
+  INF=null;BT=null;
+  showScreen('game');updateHUD();showTab('infinite');
+}
+
+// ═══════════════════════════════════════
+//  HISTORIA POR ZONA
+// ═══════════════════════════════════════
+const ZONE_STORIES = [
+  // 0 — Pueblo Hirano
+  { title:'Pueblo Hirano', em:'🏘️',
+    intro:'El polvo levanta al paso de los viajeros. Dicen que los bandidos han tomado el Cruce del Norte.',
+    miniboss:'Un samurái con armadura oxidada bloquea el camino. Sus ojos revelan años de deshonra.',
+    minibossName:'Guardia Caído',
+    victory:'El camino está libre. Los aldeanos murmuran tu nombre con alivio.',
+    lore:'Hirano fue fundado hace 200 años por ninjas retirados. Hoy solo quedan sombras de ese pasado.'},
+  // 1 — Bosque Maldito
+  { title:'Bosque Maldito', em:'🌲',
+    intro:'Los árboles aquí no crecen hacia la luz. Algo antiguo duerme en el corazón de este bosque.',
+    miniboss:'El Oni Menor se mueve entre las sombras. No es natural — alguien lo invocó deliberadamente.',
+    minibossName:'Guardián del Bosque',
+    victory:'La oscuridad retrocede un poco. El bosque no está libre aún, pero puedes respirar.',
+    lore:'Se dice que un clan ninja sellado aquí hace 500 años maldijo el suelo antes de morir.'},
+  // 2 — Montaña Sangre
+  { title:'Montaña Sangre', em:'🏔️',
+    intro:'La roca está teñida de rojo. No es óxido. Las serpientes ninja controlan cada sendero.',
+    miniboss:'La Serpiente Ninja líder te espera en la cima. Su veneno puede paralizar en segundos.',
+    minibossName:'Reina Serpiente',
+    victory:'Desde la cima ves el Templo Oscuro a lo lejos. Hay una luz que no debería estar encendida.',
+    lore:'La montaña lleva este nombre desde la Gran Batalla de los Tres Clanes, hace dos generaciones.'},
+  // 3 — Templo Oscuro
+  { title:'Templo Oscuro', em:'⛩️',
+    intro:'El aire huele a incienso quemado y algo más. Los rituales del Maestro Oscuro pervierten el chakra.',
+    miniboss:'El Sumo Sacerdote ha sacrificado su humanidad por poder. Sus ojos no tienen pupila.',
+    minibossName:'Sumo Sacerdote',
+    victory:'Los pergaminos prohibidos arden. Pero ya has visto demasiado — no puedes desaprender esto.',
+    lore:'El templo fue construido sobre una grieta natural del chakra. Amplifica cualquier jutsu en un radio de 3km.'},
+  // 4 — Fortaleza Oni
+  { title:'Fortaleza Oni', em:'🏯',
+    intro:'El Jefe Oni lleva décadas reuniendo fuerzas. Su fortaleza es impenetrable... o lo era.',
+    miniboss:'El Trono del Oni vibra con su furia. Ha consumido el chakra de cien ninjas para llegar a esto.',
+    minibossName:'Gran Oni',
+    victory:'La fortaleza se tambalea sin su señor. Hay algo más abajo — un Abismo que lleva tiempo aquí.',
+    lore:'Los Oni no son demonios del inframundo. Son ninjas que cruzaron una línea que no tiene vuelta atrás.'},
+  // 5 — Abismo Eterno
+  { title:'Abismo Eterno', em:'🌑',
+    intro:'El sonido no existe aquí. El tiempo tampoco. Solo el vacío y algo que observa desde abajo.',
+    miniboss:'El eco de tu propio miedo toma forma. Para cruzar el Abismo debes vencerte a ti mismo.',
+    minibossName:'Tu Sombra',
+    victory:'Al otro lado del Abismo hay silencio. Por fin, silencio real. Pero el camino aún no termina.',
+    lore:'El Abismo no es un lugar físico. Es el espacio entre lo que un ninja es y lo que podría llegar a ser.'},
+];
+
+function renderStory(v){
+  if(!H.storyRead)H.storyRead={};
+  v.innerHTML=`
+  <div class="sec" style="margin-bottom:14px">📖 HISTORIA DEL MUNDO</div>
+  <div style="font-size:11px;color:var(--text2);margin-bottom:16px;line-height:1.8">
+    Los secretos de cada zona, revelados al explorarlos.
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    ${ZONE_STORIES.map((s,i)=>{
+      const zone=ZONES[i];
+      const unlocked=H.lv>=zone.minLv;
+      const read=H.storyRead[i];
+      return`<div style="background:var(--panel);border:1px solid ${unlocked?'var(--border)':'#1a1a2a'};padding:14px;
+        opacity:${unlocked?1:.4};position:relative;overflow:hidden">
+        ${read?`<div style="position:absolute;top:8px;right:8px;font-size:9px;color:var(--green)">✅ Leído</div>`:''}
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:${unlocked?'10':'0'}px">
+          <span style="font-size:28px">${s.em}</span>
+          <div>
+            <div style="font-family:'Cinzel Decorative',serif;font-size:12px;color:var(--gold)">${s.title}</div>
+            <div style="font-size:9px;color:var(--text2)">Nv.${zone.minLv}+</div>
+          </div>
+        </div>
+        ${unlocked?`
+        <div style="font-size:10px;color:var(--text);line-height:1.7;margin-bottom:8px">${s.intro}</div>
+        <details style="cursor:pointer">
+          <summary style="font-size:9px;color:var(--gold);letter-spacing:1px;list-style:none;margin-bottom:6px" onclick="markStoryRead(${i})">
+            📜 Leer más ▼
+          </summary>
+          <div style="font-size:10px;color:var(--text2);line-height:1.7;border-left:2px solid var(--border);padding-left:10px;margin-bottom:8px">${s.lore}</div>
+          ${H.storyRead[i+'_boss']?`<div style="font-size:10px;color:var(--gold);line-height:1.7;border-left:2px solid var(--gold)44;padding-left:10px">${s.victory}</div>`:`<div style="font-size:9px;color:var(--text2);font-style:italic">Derrota al guardián de esta zona para descubrir el resto...</div>`}
+        </details>`:'<div style="font-size:9px;color:var(--text2)">🔒 Alcanza el nivel requerido para desbloquear esta historia</div>'}
+      </div>`;}).join('')}
+  </div>`;
+}
+
+function markStoryRead(i){if(!H.storyRead)H.storyRead={};H.storyRead[i]=true;}
+
+// Show story dialog before miniboss fight
+function showStoryDialog(zi, type, onContinue){
+  const s=ZONE_STORIES[zi];if(!s)return onContinue();
+  if(!H.storyRead)H.storyRead={};
+  // Only show miniboss story once
+  const key=zi+'_'+(type==='miniboss'?'boss':'intro');
+  if(H.storyRead[key])return onContinue();
+  H.storyRead[key]=true;
+  H.storyRead[zi]=true;
+  const text=type==='miniboss'?s.miniboss:s.intro;
+  const name=type==='miniboss'?`${s.em} ${s.minibossName}`:s.title;
+  // Create overlay
+  const overlay=document.createElement('div');
+  overlay.style.cssText=`position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,.88);
+    display:flex;align-items:center;justify-content:center;padding:20px;`;
+  overlay.innerHTML=`
+    <div style="background:var(--panel);border:1px solid var(--gold)44;max-width:460px;width:100%;padding:28px;position:relative">
+      <div style="font-size:9px;color:var(--text2);letter-spacing:3px;margin-bottom:12px">📖 ${s.title.toUpperCase()}</div>
+      <div style="font-family:'Cinzel Decorative',serif;font-size:16px;color:var(--gold);margin-bottom:14px">${name}</div>
+      <div style="font-size:11px;color:var(--text);line-height:1.8;margin-bottom:20px;border-left:2px solid var(--gold)44;padding-left:12px">${text}</div>
+      <button onclick="this.closest('div[style*=fixed]').remove();(${onContinue})()" 
+        style="font-family:'Cinzel Decorative',serif;font-size:10px;letter-spacing:2px;
+        background:rgba(232,192,64,.1);border:1px solid var(--gold);color:var(--gold);
+        padding:10px 24px;cursor:pointer;width:100%">
+        ⚔️ ${type==='miniboss'?'¡Enfrentar al guardián!':'Continuar'}
+      </button>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+// ═══════════════════════════════════════
 //  SAVE / LOAD
 // ═══════════════════════════════════════
 function saveGame(){if(!H){showToast('❌ Sin partida');return;}localStorage.setItem('ninja_v4',JSON.stringify(H));showToast('💾 Guardado');}
@@ -5211,8 +5895,14 @@ function startDefeatTimer(btn){
 function closeDefeat(){
   const ov=document.getElementById('defeat-overlay');
   if(ov) ov.classList.remove('show');
-  if(_defeatInterval){clearInterval(_defeatInterval);_defeatInterval=null;}
-  BT=null; showScreen('game'); updateHUD(); showTab('map');
+  if(typeof _defeatInterval !== 'undefined' && _defeatInterval){
+    clearInterval(_defeatInterval); _defeatInterval=null;
+  }
+  BT=null;
+  cancelAutoAction();
+  AUTO.on=false; updateAutoUI();
+  if(FARM.active){ FARM.active=false; updateFarmBar(); }
+  showScreen('game'); updateHUD(); showTab('map');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -5253,23 +5943,15 @@ function updateFarmBar(){
 }
 
 function farmNextFight(){
-  if(!FARM.active){
-    // Si el farmeo se detuvo pero seguimos en batalla, volver al mapa
-    if(document.getElementById('battle') && document.getElementById('battle').classList.contains('active')){
-      BT=null; showScreen('game'); updateHUD(); showTab('map');
-    }
-    return;
-  }
-  if(H.hp<gMhp()*0.30){
+  function _returnToMap(){ BT=null; showScreen('game'); updateHUD(); showTab('map'); }
+  if(!FARM.active){ _returnToMap(); return; }
+  if(H.hp < gMhp()*0.30){
     stopFarm();
     showToast('⚠️ HP bajo — farmeo pausado. ¡Usá una poción!');
-    BT=null; showScreen('game'); updateHUD(); showTab('map');
-    return;
+    _returnToMap(); return;
   }
-  if(H.gld<5&&H.hp<gMhp()*0.50){
-    stopFarm();
-    BT=null; showScreen('game'); updateHUD(); showTab('map');
-    return;
+  if(H.gld<5 && H.hp<gMhp()*0.50){
+    stopFarm(); _returnToMap(); return;
   }
   const nb=document.getElementById('farm-next-bar');
   const nf=document.getElementById('farm-next-fill');
@@ -5550,7 +6232,17 @@ function enterStageNode(zi, ni){
   // Boss final — mostrar intro
   if(node.isFinalBoss){ showBossIntro(zi); return; }
 
-  const scale = 1 + (H.lv - 1) * 0.12;
+  // Story dialog — first node or miniboss
+  const storyType = node.isMiniboss ? 'miniboss' : (ni===0 ? 'intro' : null);
+  if(storyType && ZONE_STORIES[zi]){
+    showStoryDialog(zi, storyType, function(){ _doEnterStageNode(zi,ni,zone,node,enemy); });
+    return;
+  }
+  _doEnterStageNode(zi,ni,zone,node,enemy);
+}
+
+function _doEnterStageNode(zi,ni,zone,node,enemy){
+  const scale = (1+(H.lv-1)*0.12)*(typeof getPrestigeDiffMult==="function"?getPrestigeDiffMult():1);
   // Miniboss: más HP y ATK que el enemigo base
   const bossScale = node.isMiniboss ? 1.6 : 1.0;
 
@@ -5563,6 +6255,7 @@ function enterStageNode(zi, ni){
     stageZi: zi,
     stageNi: ni,
     isMiniboss: node.isMiniboss || false,
+    firstHit:true, kageStacks:0,
     e:{
       ...enemy,
       n: node.isMiniboss ? '⚔ ' + enemy.n + ' (Miniboss)' : enemy.n,
@@ -5575,6 +6268,11 @@ function enterStageNode(zi, ni){
     pBuff:{}, eDebuff:{}, turn:1, counterReady:false,
   };
   combo = 0;
+  // Apply passive battle start bonuses
+  const _sp=getCurrentRank().passive;
+  if(_sp.id==='chakra_flow'){H.mp=gMmp();}
+  if(_sp.id==='legend_will'){BT.energy=50;}
+  if(_sp.id==='dragon_soul'){H.hp=Math.min(gMhp(),H.hp+Math.round(gMhp()*0.2));H.mp=Math.min(gMmp(),H.mp+Math.round(gMmp()*0.2));}
 
   showScreen('battle');
   document.getElementById('b-zone').textContent =
@@ -7178,6 +7876,324 @@ window.addEventListener('load', function(){
 });
 
 console.log('[FX] Sistema de feedback cargado OK');
+
+
+// ═══════════════════════════════════════════════════════════
+//  SISTEMA DE PRESTIGIO — New Game+
+//  El personaje NO retrocede. Se resetea el progreso de
+//  etapas y los enemigos escalan más fuerte cada run.
+// ═══════════════════════════════════════════════════════════
+
+function getPrestige(){
+  return (H && H.prestige) ? H.prestige : 0;
+}
+
+// Multiplicador de dificultad según prestigio
+// Prestigio 1: enemigos x1.3, Prestigio 2: x1.6, etc.
+function getPrestigeDiffMult(){
+  const p = getPrestige();
+  if(p === 0) return 1.0;
+  return 1.0 + p * 0.30;
+}
+
+// Mostrar pantalla de prestigio tras matar al boss
+function showPrestigeScreen(){
+  const p = getPrestige();
+  const nextP = p + 1;
+  const diffMult = (1.0 + nextP * 0.30);
+
+  const stars = Array(Math.min(nextP, 10)).fill('🔥').join(' ') || '—';
+
+  const ov = document.createElement('div');
+  ov.className = 'prestige-overlay';
+  ov.id = 'prestige-overlay';
+
+  ov.innerHTML =
+    '<div style="font-size:72px;margin-bottom:10px">🔥</div>' +
+    '<div class="prestige-title">NUEVO MUNDO+</div>' +
+    '<div class="prestige-sub">Prestigio ' + nextP + '</div>' +
+
+    '<div class="prestige-stars">' +
+      Array(Math.min(nextP,10)).fill(0).map(function(_,i){
+        return '<span class="pstar active">🔥</span>';
+      }).join('') +
+      Array(Math.max(0,10-nextP)).fill(0).map(function(){
+        return '<span class="pstar">🔥</span>';
+      }).join('') +
+    '</div>' +
+
+    '<div class="prestige-info">' +
+      '<strong>¿Qué es el Prestigio?</strong><br>' +
+      'El mundo renace con más oscuridad. Tu ninja conserva TODO — nivel, equipo, habilidades, oro — ' +
+      'pero las etapas se reinician y los enemigos son considerablemente más poderosos.<br><br>' +
+      '<strong>Prestigio ' + nextP + ':</strong> Enemigos con <strong style="color:#ff4444">' + Math.round(diffMult*100) + '% de stats</strong>' +
+    '</div>' +
+
+    '<div class="prestige-warn">' +
+      '⚠ El progreso de las etapas se reinicia<br>' +
+      '✓ Tu nivel, equipo, habilidades y oro se conservan<br>' +
+      '✓ Todos tus logros y victorias se conservan<br>' +
+      '✓ Ganás el título 🔥 Prestigio ' + nextP +
+    '</div>' +
+
+    '<button class="prestige-btn" onclick="doPrestige()">🔥 INICIAR PRESTIGIO ' + nextP + '</button>' +
+    '<button class="prestige-skip" onclick="skipPrestige()">Continuar sin prestigiar</button>';
+
+  document.body.appendChild(ov);
+  AUDIO.sfx && AUDIO.sfx.levelUp && AUDIO.sfx.levelUp();
+  FX.flash('rgba(255,136,0,.2)');
+  FX.particles(window.innerWidth/2, window.innerHeight/3,
+    ['🔥','⭐','✨','💫'], 15);
+}
+
+function doPrestige(){
+  const p = getPrestige();
+
+  // Resetear solo el progreso de etapas
+  H.stageProgress = {};
+  H.prestige = p + 1;
+
+  // Guardar
+  saveGame();
+
+  // Cerrar overlay
+  const ov = document.getElementById('prestige-overlay');
+  if(ov) ov.remove();
+
+  showScreen('game');
+  updateHUD();
+  showTab('map');
+  updateQuestLog();
+
+  setTimeout(function(){
+    showToast('🔥 ¡Prestigio ' + H.prestige + '! El mundo renació más oscuro. ¡Buena suerte!');
+    FX.flash('rgba(255,136,0,.35)');
+    FX.particles(window.innerWidth/2, window.innerHeight/2,
+      ['🔥','💀','⚡','✨','🌟'], 20);
+  }, 300);
+}
+
+function skipPrestige(){
+  const ov = document.getElementById('prestige-overlay');
+  if(ov) ov.remove();
+  showScreen('game');
+  showTab('map');
+}
+
+// Mostrar badge de prestigio en el HUD si aplica
+function renderPrestigeBadge(){
+  const p = getPrestige();
+  if(p === 0) return '';
+  return '<span class="prestige-badge">🔥 x' + p + '</span>';
+}
+
+
+
+// ═══════════════════════════════════════════════════════════
+//  SISTEMA DE PERFIL — títulos, bordes, avatares
+// ═══════════════════════════════════════════════════════════
+
+const PROFILE_TITLES = [
+  {id:'t_default',  text:'Ninja',              color:'#888888', req:null,           desc:'Título inicial'},
+  {id:'t_veteran',  text:'Veterano',            color:'#44aa44', req:'a_10wins',     desc:'Gana 10 combates'},
+  {id:'t_warrior',  text:'Guerrero Ninja',      color:'#4488ff', req:'a_50wins',     desc:'Gana 50 combates'},
+  {id:'t_warlord',  text:'Señor de la Batalla', color:'#ff4444', req:'a_100wins',    desc:'Gana 100 combates'},
+  {id:'t_falcon',   text:'Ojo de Halcón',       color:'#ffaa00', req:'a_crit50',     desc:'50 golpes críticos'},
+  {id:'t_untouched',text:'Intocable',           color:'#33ffcc', req:'a_nodmg',      desc:'Gana sin recibir daño'},
+  {id:'t_rich',     text:'Ninja Acaudalado',    color:'#ffcc00', req:'a_rich',       desc:'Acumula 1.000 oro'},
+  {id:'t_dragon',   text:'Dueño del Dragón',    color:'#cc44ff', req:'a_legendary',  desc:'Equipa un ítem legendario'},
+  {id:'t_kurai',    text:'Asesino de Kurai',    color:'#ff0000', req:null, bossReq:1,desc:'Derrota al boss final'},
+  {id:'t_beast',    text:'Arca de Noé',         color:'#88ff44', req:'a_pet_all',    desc:'Desbloquea todas las mascotas'},
+  {id:'t_legend',   text:'Leyenda',             color:'#ffffff', req:null, lvReq:50, desc:'Alcanza el nivel 50'},
+  {id:'t_prestige', text:'Renacido',            color:'#ff8800', req:null, prestiReq:1, desc:'Consigue tu primer prestigio'},
+];
+
+const PROFILE_BORDERS = [
+  {id:'b_default', name:'Sin Borde',      style:'2px solid #e8c040',                        req:null,          desc:'Borde inicial'},
+  {id:'b_silver',  name:'Plata',          style:'2px solid #aaaaaa',                        req:'a_10wins',    desc:'Gana 10 combates'},
+  {id:'b_gold',    name:'Dorado',         style:'2px solid #ffcc00',                        req:'a_50wins',    desc:'Gana 50 combates'},
+  {id:'b_fire',    name:'Llama Ninja',    style:'2px solid #ff4400',                        req:'a_streak5',   desc:'Racha de 5 victorias'},
+  {id:'b_blue',    name:'Trueno Azul',    style:'2px solid #3399ff',                        req:'a_crit50',    desc:'50 golpes críticos'},
+  {id:'b_purple',  name:'Sombra Élite',   style:'2px solid #cc44ff',                        req:'a_legendary', desc:'Equipa un ítem legendario'},
+  {id:'b_rainbow', name:'Arco Iris',      style:'3px solid transparent',                    req:'a_pet_all',   desc:'Desbloquea todas las mascotas',
+   extra:'background:linear-gradient(var(--panel),var(--panel)) padding-box, linear-gradient(135deg,#ff0000,#ff8800,#ffff00,#00ff00,#0088ff,#8800ff) border-box'},
+  {id:'b_kurai',   name:'Vacío de Kurai', style:'2px solid #ff0000',                        req:null, bossReq:1, desc:'Derrota al boss final',
+   extra:'box-shadow:0 0 12px rgba(255,0,0,.6)'},
+  {id:'b_prestige',name:'Llama Eterna',   style:'2px solid #ff8800',                        req:null, prestiReq:1, desc:'Prestigio 1',
+   extra:'box-shadow:0 0 14px rgba(255,136,0,.5),0 0 28px rgba(255,136,0,.2)'},
+];
+
+const PROFILE_AVATARS = [
+  {id:'av_katon',   em:'🔥', name:'Katon',      req:null,           desc:'Avatar inicial Katon'},
+  {id:'av_suiton',  em:'💧', name:'Suiton',      req:null,           desc:'Avatar inicial Suiton'},
+  {id:'av_raiton',  em:'⚡', name:'Raiton',      req:null,           desc:'Avatar inicial Raiton'},
+  {id:'av_ninja',   em:'🥷', name:'Ninja',       req:'a_first',      desc:'Gana tu primer combate'},
+  {id:'av_samurai', em:'⚔️', name:'Samurái',     req:'a_10wins',     desc:'Gana 10 combates'},
+  {id:'av_oni',     em:'👹', name:'Oni',         req:'a_50wins',     desc:'Gana 50 combates'},
+  {id:'av_dragon',  em:'🐉', name:'Dragón',      req:'a_legendary',  desc:'Equipa un ítem legendario'},
+  {id:'av_skull',   em:'💀', name:'Kurai',       req:null, bossReq:1,desc:'Derrota al boss final'},
+  {id:'av_star',    em:'⭐', name:'Leyenda',     req:null, lvReq:50, desc:'Alcanza nivel 50'},
+  {id:'av_ghost',   em:'👻', name:'Espectro',    req:'a_nodmg',      desc:'Gana sin recibir daño'},
+  {id:'av_cat',     em:'🐱', name:'Nekinja',     req:'a_pet1',       desc:'Desbloquea tu primera mascota'},
+  {id:'av_wolf',    em:'🐺', name:'Lobo',        req:'a_pet_all',    desc:'Desbloquea todas las mascotas'},
+  {id:'av_flame',   em:'🔥', name:'Llama Eterna',req:null,prestiReq:1,desc:'Prestigio 1'},
+];
+
+// Verificar si un cosmético está desbloqueado
+function isCosmeticUnlocked(item){
+  if(!H) return false;
+  if(!item.req && !item.bossReq && !item.lvReq && !item.prestiReq) return true;
+  if(item.req && !(H.achUnlocked && H.achUnlocked[item.req])) return false;
+  if(item.bossReq && (H.bossDefeated||0) < item.bossReq) return false;
+  if(item.lvReq && H.lv < item.lvReq) return false;
+  if(item.prestiReq && getPrestige() < item.prestiReq) return false;
+  return true;
+}
+
+// Obtener cosmético activo
+function getActiveTitle(){
+  const id = H && H.profile && H.profile.titleId;
+  return PROFILE_TITLES.find(t=>t.id===id) || PROFILE_TITLES[0];
+}
+function getActiveBorder(){
+  const id = H && H.profile && H.profile.borderId;
+  return PROFILE_BORDERS.find(b=>b.id===id) || PROFILE_BORDERS[0];
+}
+function getActiveAvatar(){
+  const id = H && H.profile && H.profile.avatarId;
+  const cls = H ? H.cls : 'katon';
+  const clsAv = {'katon':'av_katon','suiton':'av_suiton','raiton':'av_raiton'}[cls];
+  return PROFILE_AVATARS.find(a=>a.id===id)
+    || PROFILE_AVATARS.find(a=>a.id===clsAv)
+    || PROFILE_AVATARS[0];
+}
+
+
+// ── Renderizar pantalla de perfil ────────────────────────
+function renderProfile(v){
+  if(!H){ v.innerHTML='<div class="sec">Sin partida</div>'; return; }
+  const title  = getActiveTitle();
+  const border = getActiveBorder();
+  const avatar = getActiveAvatar();
+  const p = getPrestige();
+
+  // Tarjeta del héroe
+  let heroCard = '<div class="profile-screen">'
+    + '<div class="sec" style="margin-bottom:12px">👤 PERFIL NINJA</div>'
+    + '<div class="profile-hero-card">'
+    + '<div class="profile-avatar-big" style="' + border.style + ';border-radius:4px;' + (border.extra||'') + '">'
+    + avatar.em
+    + '</div>'
+    + '<div class="profile-hero-info">'
+    + '<div class="profile-hero-name">' + H.name + '</div>'
+    + '<div class="profile-hero-title" style="color:' + title.color + '">' + title.text + '</div>'
+    + '<div class="profile-hero-stats">'
+    + CLS[H.cls].em + ' ' + CLS[H.cls].n + ' · Nv.' + H.lv
+    + (p > 0 ? ' · 🔥 Prestigio ' + p : '') + '<br>'
+    + '⚔️ ' + (H.wins||0) + ' victorias · 💀 ' + (H.kills||0) + ' kills'
+    + '</div>'
+    + '</div>'
+    + '</div>';
+
+  // ── Avatares
+  heroCard += '<div class="profile-section">'
+    + '<div class="profile-section-title">🥷 FOTO DE PERFIL</div>'
+    + '<div class="cosmetic-grid">';
+
+  PROFILE_AVATARS.forEach(function(av){
+    const unlocked = isCosmeticUnlocked(av);
+    const active   = (H.profile && H.profile.avatarId === av.id) || (!H.profile && av.id === 'av_'+H.cls);
+    heroCard += '<div class="cosmetic-card' + (active?' cc-active':'') + (unlocked?'':' cc-locked') + '"'
+      + (unlocked ? ' data-av="'+av.id+'" onclick="selectAvatar(this.dataset.av)"' : '') + '>'
+      + (active ? '<span class="cc-check">✓</span>' : '')
+      + (!unlocked ? '<span class="cc-lock">🔒</span>' : '')
+      + '<div class="cc-preview">' + av.em + '</div>'
+      + '<div class="cc-name">' + av.name + '</div>'
+      + '<div class="cc-desc">' + av.desc + '</div>'
+      + '</div>';
+  });
+  heroCard += '</div></div>';
+
+  // ── Bordes
+  heroCard += '<div class="profile-section">'
+    + '<div class="profile-section-title">✨ BORDE DE PERFIL</div>'
+    + '<div class="cosmetic-grid">';
+
+  PROFILE_BORDERS.forEach(function(b){
+    const unlocked = isCosmeticUnlocked(b);
+    const active   = H.profile && H.profile.borderId === b.id;
+    const defaultActive = !H.profile && b.id === 'b_default';
+    heroCard += '<div class="cosmetic-card' + ((active||defaultActive)?' cc-active':'') + (unlocked?'':' cc-locked') + '"'
+      + (unlocked ? ' data-brd="'+b.id+'" onclick="selectBorder(this.dataset.brd)"' : '') + '>'
+      + ((active||defaultActive) ? '<span class="cc-check">✓</span>' : '')
+      + (!unlocked ? '<span class="cc-lock">🔒</span>' : '')
+      + '<div class="cc-border-preview" style="' + b.style + ';' + (b.extra||'') + '">'
+      + getActiveAvatar().em
+      + '</div>'
+      + '<div class="cc-name">' + b.name + '</div>'
+      + '<div class="cc-desc">' + b.desc + '</div>'
+      + '</div>';
+  });
+  heroCard += '</div></div>';
+
+  // ── Títulos
+  heroCard += '<div class="profile-section">'
+    + '<div class="profile-section-title">📜 TÍTULO</div>'
+    + '<div class="cosmetic-grid">';
+
+  PROFILE_TITLES.forEach(function(t){
+    const unlocked = isCosmeticUnlocked(t);
+    const active   = H.profile && H.profile.titleId === t.id;
+    const defaultActive = !H.profile && t.id === 't_default';
+    heroCard += '<div class="cosmetic-card' + ((active||defaultActive)?' cc-active':'') + (unlocked?'':' cc-locked') + '"'
+      + (unlocked ? ' data-ttl="'+t.id+'" onclick="selectTitle(this.dataset.ttl)"' : '') + '>'
+      + ((active||defaultActive) ? '<span class="cc-check">✓</span>' : '')
+      + (!unlocked ? '<span class="cc-lock">🔒</span>' : '')
+      + '<div class="cc-title-preview" style="color:'+t.color+';font-size:10px;padding:8px 0">' + t.text + '</div>'
+      + '<div class="cc-desc">' + t.desc + '</div>'
+      + '</div>';
+  });
+  heroCard += '</div></div>';
+
+  heroCard += '</div>'; // profile-screen
+  v.innerHTML = heroCard;
+}
+
+// ── Seleccionar cosméticos ────────────────────────────────
+function selectAvatar(id){
+  if(!H) return;
+  if(!H.profile) H.profile = {};
+  const av = PROFILE_AVATARS.find(a=>a.id===id);
+  if(!av || !isCosmeticUnlocked(av)){ AUDIO.sfx.error && AUDIO.sfx.error(); return; }
+  H.profile.avatarId = id;
+  AUDIO.sfx.uiClick && AUDIO.sfx.uiClick();
+  FX.particles(window.innerWidth/2, 200, ['✨','⭐'], 6);
+  saveGame(); updateHUD();
+  showTab('profile');
+}
+function selectBorder(id){
+  if(!H) return;
+  if(!H.profile) H.profile = {};
+  const b = PROFILE_BORDERS.find(x=>x.id===id);
+  if(!b || !isCosmeticUnlocked(b)){ AUDIO.sfx.error && AUDIO.sfx.error(); return; }
+  H.profile.borderId = id;
+  AUDIO.sfx.equip && AUDIO.sfx.equip();
+  FX.flash('rgba(232,192,64,.15)');
+  saveGame(); updateHUD();
+  showTab('profile');
+}
+function selectTitle(id){
+  if(!H) return;
+  if(!H.profile) H.profile = {};
+  const t = PROFILE_TITLES.find(x=>x.id===id);
+  if(!t || !isCosmeticUnlocked(t)){ AUDIO.sfx.error && AUDIO.sfx.error(); return; }
+  H.profile.titleId = id;
+  AUDIO.sfx.uiClick && AUDIO.sfx.uiClick();
+  FX.particles(window.innerWidth/2, 200, ['📜','✨'], 5);
+  saveGame(); updateHUD();
+  showTab('profile');
+}
+
 
 </script>
 
